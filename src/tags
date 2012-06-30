@@ -1,0 +1,368 @@
+!_TAG_FILE_FORMAT	2	/extended format; --format=1 will not append ;" to lines/
+!_TAG_FILE_SORTED	1	/0=unsorted, 1=sorted, 2=foldcase/
+!_TAG_PROGRAM_AUTHOR	Darren Hiebert	/dhiebert@users.sourceforge.net/
+!_TAG_PROGRAM_NAME	Exuberant Ctags	//
+!_TAG_PROGRAM_URL	http://ctags.sourceforge.net	/official site/
+!_TAG_PROGRAM_VERSION	5.8	//
+ARMOR	Map/Constants.h	/^			ARMOR,$/;"	e	enum:Wulf::StaticSprites::StaticSprite
+AmbushTile	Map/Constants.h	/^	static const word AmbushTile = 0x6A;$/;"	m	namespace:Wulf
+BABY	Game/Constants.h	/^            BABY = 1,$/;"	e	enum:Wulf::Difficulty::Type
+BARREL_GREEN	Map/Constants.h	/^			BARREL_GREEN,$/;"	e	enum:Wulf::StaticSprites::StaticSprite
+BARREL_WOOD	Map/Constants.h	/^			BARREL_WOOD,$/;"	e	enum:Wulf::StaticSprites::StaticSprite
+BED	Map/Constants.h	/^			BED,$/;"	e	enum:Wulf::StaticSprites::StaticSprite
+Backwards	Game/InputManager.h	/^            bool Backwards;$/;"	m	struct:Wulf::Input::Data
+BaseTexture	Map/Constants.h	/^		static const word BaseTexture = 98;$/;"	m	namespace:Wulf::Doors
+CAGE_EMPTY	Map/Constants.h	/^			CAGE_EMPTY,$/;"	e	enum:Wulf::StaticSprites::StaticSprite
+CAGE_SKELETON	Map/Constants.h	/^			CAGE_SKELETON,$/;"	e	enum:Wulf::StaticSprites::StaticSprite
+CollisionManager	Game/CollisionManager.h	/^		CollisionManager() {};$/;"	f	class:Wulf::CollisionManager
+CollisionManager	Game/CollisionManager.h	/^	class CollisionManager : public OpenGL::HasRenderChunk {$/;"	c	namespace:Wulf
+CompressionTools	Map/CompressionTools.h	/^	namespace CompressionTools {$/;"	n	namespace:Wulf
+Create	Game/EntityManager.h	/^            Entity* Create() { return new Derived; }$/;"	f	struct:Wulf::EntityManager::SpecificEntFactory
+DIR_SEP	Wrappers/PhysFS.h	/^  const std::string DIR_SEP = PHYSFS_getDirSeparator();$/;"	m	namespace:PhysFS
+Data	Game/InputManager.h	/^        struct Data {$/;"	s	namespace:Wulf::Input
+DeltaView	Game/InputManager.h	/^            float DeltaView;$/;"	m	struct:Wulf::Input::Data
+DeltaViewX	Game/InputManager.h	/^            float DeltaViewX;$/;"	m	struct:Wulf::Input::Data
+DeltaViewY	Game/InputManager.h	/^            float DeltaViewY;$/;"	m	struct:Wulf::Input::Data
+Difficulty	Game/Constants.h	/^    namespace Difficulty {$/;"	n	namespace:Wulf
+Direction	Map/Constants.h	/^		typedef bool Direction;$/;"	t	namespace:Wulf::Doors
+Dog	Game/Enemies.h	/^            Dog,$/;"	e	enum:Wulf::Enemies::Sprite
+DogEnd	Map/Constants.h	/^		static const word DogEnd		= 141;$/;"	m	namespace:Wulf::EnemySprites
+DogStart	Map/Constants.h	/^		static const word DogStart		= 95; $/;"	m	namespace:Wulf::EnemySprites
+DoorInfo	Map/Constants.h	/^			DoorInfo(coord x, coord y, word data) $/;"	f	struct:Wulf::Doors::DoorInfo
+DoorInfo	Map/Constants.h	/^		struct DoorInfo {$/;"	s	namespace:Wulf::Doors
+DoorOffset	Map/Constants.h	/^		static const word DoorOffset  = 0;$/;"	m	namespace:Wulf::Doors
+Doors	Map/Constants.h	/^	namespace Doors {$/;"	n	namespace:Wulf
+Doors	OpenGL/Renderer.h	/^            RenderChunk Floor, Statics, Doors, Enemies;$/;"	m	class:Wulf::OpenGL::Renderer
+DrawMode	OpenGL/RenderChunk.h	/^            GLenum DrawMode;$/;"	m	struct:Wulf::OpenGL::RenderChunk
+EASY	Game/Constants.h	/^            EASY = 2,$/;"	e	enum:Wulf::Difficulty::Type
+ElevOffset	Map/Constants.h	/^		static const word ElevOffset  = 4;$/;"	m	namespace:Wulf::Doors
+End	Map/Constants.h	/^		static const int End    = Start + Max - 1; \/\/ Last file is 049.tga$/;"	m	namespace:Wulf::StaticSprites
+Enemies	Game/Enemies.h	/^    namespace Enemies {$/;"	n	namespace:Wulf
+Enemies	OpenGL/Renderer.h	/^            RenderChunk Floor, Statics, Doors, Enemies;$/;"	m	class:Wulf::OpenGL::Renderer
+Enemy	Game/Enemies.h	/^        class Enemy : public Entity {$/;"	c	namespace:Wulf::Enemies
+EnemySprites	Map/Constants.h	/^	namespace EnemySprites {$/;"	n	namespace:Wulf
+EntFactory	Game/EntityManager.h	/^        struct EntFactory {$/;"	s	class:Wulf::EntityManager
+Entity	Game/Entity.h	/^	class Entity {$/;"	c	namespace:Wulf
+EntityManager	Game/EntityManager.h	/^		EntityManager() {}$/;"	f	class:Wulf::EntityManager
+EntityManager	Game/EntityManager.h	/^	class EntityManager {$/;"	c	namespace:Wulf
+Exception	Wrappers/PhysFS.h	/^  class Exception : public std::runtime_error { public: Exception(const std::string& what) : std::runtime_error(what) {} };$/;"	c	namespace:PhysFS
+Exception	Wrappers/PhysFS.h	/^  class Exception : public std::runtime_error { public: Exception(const std::string& what) : std::runtime_error(what) {} };$/;"	f	class:PhysFS::Exception
+Exit	Game/InputManager.h	/^            bool Exit;$/;"	m	struct:Wulf::Input::Data
+FIRSTAID	Map/Constants.h	/^			FIRSTAID,$/;"	e	enum:Wulf::StaticSprites::StaticSprite
+FLAG	Map/Constants.h	/^			FLAG,$/;"	e	enum:Wulf::StaticSprites::StaticSprite
+FONT_BOLD	OpenGL/FontRenderer.h	/^                FONT_BOLD$/;"	e	enum:Wulf::OpenGL::FontRenderer::Font
+FONT_NORMAL	OpenGL/FontRenderer.h	/^                FONT_NORMAL = 0,$/;"	e	enum:Wulf::OpenGL::FontRenderer::Font
+FOOD_GORE_1	Map/Constants.h	/^			FOOD_GORE_1, \/\/ ewwww$/;"	e	enum:Wulf::StaticSprites::StaticSprite
+FOOD_GORE_2	Map/Constants.h	/^			FOOD_GORE_2, \/\/ Tasty blood.$/;"	e	enum:Wulf::StaticSprites::StaticSprite
+FOOD_GRUEL	Map/Constants.h	/^			FOOD_GRUEL,$/;"	e	enum:Wulf::StaticSprites::StaticSprite
+FOOD_TURKEY	Map/Constants.h	/^			FOOD_TURKEY,$/;"	e	enum:Wulf::StaticSprites::StaticSprite
+FileDevice	Wrappers/PhysFS.h	/^  class FileDevice$/;"	c	namespace:PhysFS
+FileStream	Wrappers/PhysFS.h	/^  typedef boost::iostreams::stream<FileDevice> FileStream;$/;"	t	namespace:PhysFS
+First	Map/Constants.h	/^		static const word First = 23;              \/\/ First sprite block number is 0x17$/;"	m	namespace:Wulf::StaticSprites
+FirstArea	Map/Constants.h	/^	static const word FirstArea  = 0x6B; \/\/ First area is always secret area.$/;"	m	namespace:Wulf
+FirstWall	Map/Constants.h	/^	static const word FirstWall  = 1;$/;"	m	namespace:Wulf
+Floor	OpenGL/Renderer.h	/^            RenderChunk Floor, Statics, Doors, Enemies;$/;"	m	class:Wulf::OpenGL::Renderer
+Font	OpenGL/FontRenderer.h	/^            enum Font {$/;"	g	class:Wulf::OpenGL::FontRenderer
+FontRenderer	OpenGL/FontRenderer.h	/^        class FontRenderer {$/;"	c	namespace:Wulf::OpenGL
+Forwards	Game/InputManager.h	/^            bool Forwards;$/;"	m	struct:Wulf::Input::Data
+GLuintVector	OpenGL/ResourceManager.h	/^	typedef std::vector<GLuint> GLuintVector;$/;"	t	namespace:Wulf
+GUN_AMMO	Map/Constants.h	/^			GUN_AMMO,$/;"	e	enum:Wulf::StaticSprites::StaticSprite
+GUN_CHAINGUN	Map/Constants.h	/^			GUN_CHAINGUN,$/;"	e	enum:Wulf::StaticSprites::StaticSprite
+GUN_SMG	Map/Constants.h	/^			GUN_SMG,$/;"	e	enum:Wulf::StaticSprites::StaticSprite
+Game	Game/Game.h	/^    class Game {$/;"	c	namespace:Wulf
+GetActivity	Game/Enemies.h	/^            byte GetActivity() const { return mActivity; }$/;"	f	class:Wulf::Enemies::Enemy
+GetCollisionBounds	Game/Entity.h	/^		Vector GetCollisionBounds() const { return mBounds; }$/;"	f	class:Wulf::Entity
+GetDifficulty	Game/Player.h	/^        Difficulty::Type GetDifficulty() const { return mDifficulty; }$/;"	f	class:Wulf::Player
+GetEntID	Game/Entity.h	/^		EntID GetEntID() const { return mEntID; }$/;"	f	class:Wulf::Entity
+GetHeading	Game/Entity.h	/^		Vector GetHeading() const { return mDir; }$/;"	f	class:Wulf::Entity
+GetHealth	Game/Entity.h	/^		byte GetHealth() const { return mHealth; }$/;"	f	class:Wulf::Entity
+GetInstance	Game/CollisionManager.h	/^		static CollisionManager& GetInstance() { return instance; };$/;"	f	class:Wulf::CollisionManager
+GetInstance	Game/EntityManager.h	/^		static EntityManager& GetInstance() { return instance; }$/;"	f	class:Wulf::EntityManager
+GetPos	Game/Entity.h	/^		Vector GetPos() const { return mPos; }$/;"	f	class:Wulf::Entity
+GetSprite	Game/Enemies.h	/^            Sprite GetSprite() const { return mSprite; }$/;"	f	class:Wulf::Enemies::Enemy
+GetUp	Game/Player.h	/^		glm::vec3 GetUp() const { return mUp; }$/;"	f	class:Wulf::Player
+GoldKey	Map/Constants.h	/^		static const KeyType GoldKey   = true;$/;"	m	namespace:Wulf::Doors
+Guard	Game/Enemies.h	/^            Guard,$/;"	e	enum:Wulf::Enemies::Sprite
+GuardEnd	Map/Constants.h	/^		static const word GuardEnd		= 102;$/;"	m	namespace:Wulf::EnemySprites
+GuardStart	Map/Constants.h	/^		static const word GuardStart	= 54;$/;"	m	namespace:Wulf::EnemySprites
+HARD	Game/Constants.h	/^            HARD = 4$/;"	e	enum:Wulf::Difficulty::Type
+HasRenderChunk	OpenGL/HasRenderChunk.h	/^        class HasRenderChunk {$/;"	c	namespace:Wulf::OpenGL
+HoriEle	Map/Constants.h	/^		static const word HoriEle    = 0x65;$/;"	m	namespace:Wulf::Doors
+HoriGold	Map/Constants.h	/^		static const word HoriGold   = 0x5D;$/;"	m	namespace:Wulf::Doors
+HoriNormal	Map/Constants.h	/^		static const word HoriNormal = 0x5B;$/;"	m	namespace:Wulf::Doors
+HoriSilver	Map/Constants.h	/^		static const word HoriSilver = 0x5F;$/;"	m	namespace:Wulf::Doors
+Horizontal	Map/Constants.h	/^		static const Direction Horizontal = false;$/;"	m	namespace:Wulf::Doors
+Input	Game/InputManager.h	/^    namespace Input {$/;"	n	namespace:Wulf
+InventoryNext	Game/InputManager.h	/^            bool InventoryNext;$/;"	m	struct:Wulf::Input::Data
+InventoryPrev	Game/InputManager.h	/^            bool InventoryPrev;$/;"	m	struct:Wulf::Input::Data
+IsAlive	Game/Entity.h	/^		bool IsAlive() const { return mHealth > 0; }$/;"	f	class:Wulf::Entity
+IsDoor	Map/Constants.h	/^		static inline bool IsDoor(const word data) {$/;"	f	namespace:Wulf::Doors
+KEY_BLUE	Map/Constants.h	/^			KEY_BLUE, \/\/ silver?$/;"	e	enum:Wulf::StaticSprites::StaticSprite
+KEY_GOLD	Map/Constants.h	/^			KEY_GOLD,$/;"	e	enum:Wulf::StaticSprites::StaticSprite
+KeyType	Game/CollisionManager.h	/^		typedef MapType::key_type KeyType;$/;"	t	class:Wulf::CollisionManager
+KeyType	Map/Constants.h	/^		typedef bool KeyType;$/;"	t	namespace:Wulf::Doors
+LAMP_CEILING	Map/Constants.h	/^			LAMP_CEILING,$/;"	e	enum:Wulf::StaticSprites::StaticSprite
+LAMP_CHANELIER	Map/Constants.h	/^			LAMP_CHANELIER,$/;"	e	enum:Wulf::StaticSprites::StaticSprite
+LAMP_FLOOR	Map/Constants.h	/^			LAMP_FLOOR,$/;"	e	enum:Wulf::StaticSprites::StaticSprite
+Last	Map/Constants.h	/^		static const word Last  = First + Max - 1; \/\/ Last is 0x46$/;"	m	namespace:Wulf::StaticSprites
+LastArea	Map/Constants.h	/^	static const word LastArea   = FirstArea + NumAreas - 1;$/;"	m	namespace:Wulf
+LastWall	Map/Constants.h	/^	static const word LastWall   = AmbushTile - 1;$/;"	m	namespace:Wulf
+Left	Game/InputManager.h	/^            bool Left;$/;"	m	struct:Wulf::Input::Data
+LockOffset	Map/Constants.h	/^		static const word LockOffset  = 6;$/;"	m	namespace:Wulf::Doors
+MEDI	Game/Constants.h	/^            MEDI = 3,$/;"	e	enum:Wulf::Difficulty::Type
+Manager	Game/InputManager.h	/^        class Manager {$/;"	c	namespace:Wulf::Input
+Map	Map/Map.h	/^        class Map {$/;"	c	namespace:Wulf::Map
+Map	Map/Map.h	/^    namespace Map {$/;"	n	namespace:Wulf
+Map	Map/Node.h	/^    namespace Map {$/;"	n	namespace:Wulf
+Map	Map/Wall.h	/^    namespace Map {$/;"	n	namespace:Wulf
+MapType	Game/CollisionManager.h	/^		typedef std::map<std::pair<coord, coord>, TileData*> MapType;$/;"	t	class:Wulf::CollisionManager
+Max	Map/Constants.h	/^		static const int Max    = 48;              \/\/ There are 48 static sprites in wolf3d$/;"	m	namespace:Wulf::StaticSprites
+Mutant	Game/Enemies.h	/^            Mutant$/;"	e	enum:Wulf::Enemies::Sprite
+MutantEnd	Map/Constants.h	/^		static const word MutantEnd		= 241;$/;"	m	namespace:Wulf::EnemySprites
+MutantStart	Map/Constants.h	/^		static const word MutantStart	= 191;$/;"	m	namespace:Wulf::EnemySprites
+NEWLIFE	Map/Constants.h	/^			NEWLIFE,$/;"	e	enum:Wulf::StaticSprites::StaticSprite
+NONE	Game/Constants.h	/^            NONE = 0,$/;"	e	enum:Wulf::Difficulty::Type
+NONE	Map/Constants.h	/^			NONE   = -1,$/;"	e	enum:Wulf::StaticSprites::StaticSprite
+Node	Map/Node.h	/^        class Node {$/;"	c	namespace:Wulf::Map
+NumAreas	Map/Constants.h	/^	static const word NumAreas   = 0x25;$/;"	m	namespace:Wulf
+NumObjs	OpenGL/RenderChunk.h	/^            GLuint NumObjs;$/;"	m	struct:Wulf::OpenGL::RenderChunk
+OM_APPEND	Wrappers/PhysFS.h	/^    OM_APPEND$/;"	e	enum:PhysFS::OpenMode
+OM_READ	Wrappers/PhysFS.h	/^    OM_READ,$/;"	e	enum:PhysFS::OpenMode
+OM_WRITE	Wrappers/PhysFS.h	/^    OM_WRITE,$/;"	e	enum:PhysFS::OpenMode
+Officer	Game/Enemies.h	/^            Officer,$/;"	e	enum:Wulf::Enemies::Sprite
+OfficerEnd	Map/Constants.h	/^		static const word OfficerEnd	= 190;$/;"	m	namespace:Wulf::EnemySprites
+OfficerStart	Map/Constants.h	/^		static const word OfficerStart	= 142;$/;"	m	namespace:Wulf::EnemySprites
+OpenGL	OpenGL/FontRenderer.h	/^    namespace OpenGL {$/;"	n	namespace:Wulf
+OpenGL	OpenGL/HasRenderChunk.h	/^    namespace OpenGL {$/;"	n	namespace:Wulf
+OpenGL	OpenGL/RenderChunk.h	/^    namespace OpenGL {$/;"	n	namespace:Wulf
+OpenGL	OpenGL/Renderer.h	/^    namespace OpenGL {$/;"	n	namespace:Wulf
+OpenGL	OpenGL/ResourceManager.h	/^    namespace OpenGL {$/;"	n	namespace:Wulf
+OpenMode	Wrappers/PhysFS.h	/^  enum OpenMode$/;"	g	namespace:PhysFS
+Other	OpenGL/RenderChunk.h	/^            std::unordered_map<std::string, GLuint> Other;$/;"	m	struct:Wulf::OpenGL::RenderChunk
+PANS_1	Map/Constants.h	/^			PANS_1,$/;"	e	enum:Wulf::StaticSprites::StaticSprite
+PANS_2	Map/Constants.h	/^			PANS_2,$/;"	e	enum:Wulf::StaticSprites::StaticSprite
+PILLAR	Map/Constants.h	/^			PILLAR,$/;"	e	enum:Wulf::StaticSprites::StaticSprite
+POT_PLANT	Map/Constants.h	/^			POT_PLANT,$/;"	e	enum:Wulf::StaticSprites::StaticSprite
+POT_TOILET	Map/Constants.h	/^			POT_TOILET, \/\/ literally a pot o' poo$/;"	e	enum:Wulf::StaticSprites::StaticSprite
+POT_TREE	Map/Constants.h	/^			POT_TREE,$/;"	e	enum:Wulf::StaticSprites::StaticSprite
+POT_URN	Map/Constants.h	/^			POT_URN,$/;"	e	enum:Wulf::StaticSprites::StaticSprite
+PUDDLE	Map/Constants.h	/^			PUDDLE = 0,$/;"	e	enum:Wulf::StaticSprites::StaticSprite
+PhysFS	Wrappers/PhysFS.h	/^namespace PhysFS$/;"	n
+Player	Game/Player.h	/^	class Player : public Entity {$/;"	c	namespace:Wulf
+Program	OpenGL/RenderChunk.h	/^            GLuint Program;$/;"	m	struct:Wulf::OpenGL::RenderChunk
+RegisterEntity	Game/EntityManager.h	/^		void RegisterEntity(const std::string& classname) {$/;"	f	class:Wulf::EntityManager
+Render	OpenGL/RenderChunk.h	/^            void Render(const glm::mat4& ViewMatrix) const {$/;"	f	struct:Wulf::OpenGL::RenderChunk
+RenderChunk	OpenGL/RenderChunk.h	/^        struct RenderChunk {$/;"	s	namespace:Wulf::OpenGL
+RenderFunction	OpenGL/RenderChunk.h	/^            std::function<void(const RenderChunk&)> RenderFunction;$/;"	m	struct:Wulf::OpenGL::RenderChunk
+Renderer	OpenGL/Renderer.h	/^        class Renderer {$/;"	c	namespace:Wulf::OpenGL
+ResourceManager	OpenGL/ResourceManager.h	/^        class ResourceManager {$/;"	c	namespace:Wulf::OpenGL
+Right	Game/InputManager.h	/^            bool Right;$/;"	m	struct:Wulf::Input::Data
+SINK	Map/Constants.h	/^			SINK,$/;"	e	enum:Wulf::StaticSprites::StaticSprite
+SKELETON_FLAT	Map/Constants.h	/^			SKELETON_FLAT,$/;"	e	enum:Wulf::StaticSprites::StaticSprite
+SKELETON_HUNG	Map/Constants.h	/^			SKELETON_HUNG,$/;"	e	enum:Wulf::StaticSprites::StaticSprite
+SKELETON_PILE	Map/Constants.h	/^			SKELETON_PILE,$/;"	e	enum:Wulf::StaticSprites::StaticSprite
+SPEARS	Map/Constants.h	/^			SPEARS,$/;"	e	enum:Wulf::StaticSprites::StaticSprite
+SS	Game/Enemies.h	/^            SS,$/;"	e	enum:Wulf::Enemies::Sprite
+SSEnd	Map/Constants.h	/^		static const word SSEnd			= 291;$/;"	m	namespace:Wulf::EnemySprites
+SSStart	Map/Constants.h	/^		static const word SSStart		= 242;$/;"	m	namespace:Wulf::EnemySprites
+STBI_HEADER_FILE_ONLY	OpenGL/stb_image.h	/^#define STBI_HEADER_FILE_ONLY$/;"	d
+STOVE	Map/Constants.h	/^			STOVE,$/;"	e	enum:Wulf::StaticSprites::StaticSprite
+SetCollisionBounds	Game/Entity.h	/^		void SetCollisionBounds(const Vector& bounds) { mBounds = bounds; }$/;"	f	class:Wulf::Entity
+SetDifficulty	Game/Player.h	/^        void SetDifficulty(Difficulty::Type nDiff) { mDifficulty = nDiff; }$/;"	f	class:Wulf::Player
+SetHeading	Game/Entity.h	/^		void SetHeading(const Vector& heading) { mDir = heading; }$/;"	f	class:Wulf::Entity
+SetHealth	Game/Entity.h	/^		void SetHealth (const byte health) { mHealth = health; }$/;"	f	class:Wulf::Entity
+SetPos	Game/Entity.h	/^		void SetPos(const Vector& pos) { mPos = pos; }$/;"	f	class:Wulf::Entity
+SetSprite	Game/Enemies.h	/^            void SetSprite(const Sprite newspr) { mSprite = newspr; }$/;"	f	class:Wulf::Enemies::Enemy
+Shoot	Game/InputManager.h	/^            bool Shoot;$/;"	m	struct:Wulf::Input::Data
+SilverKey	Map/Constants.h	/^		static const KeyType SilverKey = false;$/;"	m	namespace:Wulf::Doors
+Slot1	Game/InputManager.h	/^            bool Slot1;$/;"	m	struct:Wulf::Input::Data
+Slot2	Game/InputManager.h	/^            bool Slot2;$/;"	m	struct:Wulf::Input::Data
+Slot3	Game/InputManager.h	/^            bool Slot3;$/;"	m	struct:Wulf::Input::Data
+Slot4	Game/InputManager.h	/^            bool Slot4;$/;"	m	struct:Wulf::Input::Data
+SpecificEntFactory	Game/EntityManager.h	/^        struct SpecificEntFactory : public EntityManager::EntFactory {$/;"	s	class:Wulf::EntityManager
+Sprite	Game/Enemies.h	/^        enum Sprite {$/;"	g	namespace:Wulf::Enemies
+Sprite	Map/Constants.h	/^		struct Sprite {$/;"	s	namespace:Wulf::StaticSprites
+Start	Map/Constants.h	/^		static const int Start  = 2;               \/\/ First file is 002.tga$/;"	m	namespace:Wulf::StaticSprites
+StaticSprite	Map/Constants.h	/^		enum StaticSprite {$/;"	g	namespace:Wulf::StaticSprites
+StaticSprites	Map/Constants.h	/^	namespace StaticSprites {$/;"	n	namespace:Wulf
+Statics	OpenGL/Renderer.h	/^            RenderChunk Floor, Statics, Doors, Enemies;$/;"	m	class:Wulf::OpenGL::Renderer
+StringVector	Wrappers/PhysFS.h	/^  typedef std::vector<std::string> StringVector;$/;"	t	namespace:PhysFS
+System	Wrappers/System.h	/^namespace System {$/;"	n
+TABLE_BARE	Map/Constants.h	/^			TABLE_BARE,$/;"	e	enum:Wulf::StaticSprites::StaticSprite
+TABLE_CHAIRS	Map/Constants.h	/^			TABLE_CHAIRS,$/;"	e	enum:Wulf::StaticSprites::StaticSprite
+TRASH_1	Map/Constants.h	/^			TRASH_1, \/\/ Previously the Call Apogee sign$/;"	e	enum:Wulf::StaticSprites::StaticSprite
+TRASH_2	Map/Constants.h	/^			TRASH_2,$/;"	e	enum:Wulf::StaticSprites::StaticSprite
+TRASH_3	Map/Constants.h	/^			TRASH_3,$/;"	e	enum:Wulf::StaticSprites::StaticSprite
+TRASH_4	Map/Constants.h	/^			TRASH_4,$/;"	e	enum:Wulf::StaticSprites::StaticSprite
+TREASURE_CHALICE	Map/Constants.h	/^			TREASURE_CHALICE,$/;"	e	enum:Wulf::StaticSprites::StaticSprite
+TREASURE_CHEST	Map/Constants.h	/^			TREASURE_CHEST,$/;"	e	enum:Wulf::StaticSprites::StaticSprite
+TREASURE_CROWN	Map/Constants.h	/^			TREASURE_CROWN,$/;"	e	enum:Wulf::StaticSprites::StaticSprite
+TakeDamage	Game/Entity.h	/^		void TakeDamage(const byte damage) { mHealth -= damage; }$/;"	f	class:Wulf::Entity
+Think	Game/Entity.h	/^		virtual void Think(double dtime) {}$/;"	f	class:Wulf::Entity
+ToSprite	Map/Constants.h	/^		static inline StaticSprite ToSprite(const word data) {$/;"	f	namespace:Wulf::StaticSprites
+Type	Game/Constants.h	/^        enum Type {$/;"	g	namespace:Wulf::Difficulty
+Use	Game/InputManager.h	/^            bool Use;$/;"	m	struct:Wulf::Input::Data
+VAO	OpenGL/RenderChunk.h	/^            GLuint VAO;$/;"	m	struct:Wulf::OpenGL::RenderChunk
+VBO	OpenGL/RenderChunk.h	/^            GLuint VBO;$/;"	m	struct:Wulf::OpenGL::RenderChunk
+VINES	Map/Constants.h	/^			VINES$/;"	e	enum:Wulf::StaticSprites::StaticSprite
+VectorVector	Map/Map.h	/^	typedef std::vector<Vector> VectorVector;$/;"	t	namespace:Wulf
+VertEle	Map/Constants.h	/^		static const word VertEle    = 0x64;$/;"	m	namespace:Wulf::Doors
+VertGold	Map/Constants.h	/^		static const word VertGold   = 0x5C;$/;"	m	namespace:Wulf::Doors
+VertNormal	Map/Constants.h	/^		static const word VertNormal = 0x5A;$/;"	m	namespace:Wulf::Doors
+VertSilver	Map/Constants.h	/^		static const word VertSilver = 0x5E;$/;"	m	namespace:Wulf::Doors
+Vertical	Map/Constants.h	/^		static const Direction Vertical   = true;$/;"	m	namespace:Wulf::Doors
+ViewUniform	OpenGL/RenderChunk.h	/^            GLuint ViewUniform;$/;"	m	struct:Wulf::OpenGL::RenderChunk
+WELL_EMPTY	Map/Constants.h	/^			WELL_EMPTY,$/;"	e	enum:Wulf::StaticSprites::StaticSprite
+WELL_FULL	Map/Constants.h	/^			WELL_FULL,$/;"	e	enum:Wulf::StaticSprites::StaticSprite
+Wall	Map/Wall.h	/^        class Wall {$/;"	c	namespace:Wulf::Map
+WallTexture	Map/Constants.h	/^		static const word WallTexture = BaseTexture + 2;$/;"	m	namespace:Wulf::Doors
+Walls	OpenGL/Renderer.h	/^            WallsRenderChunk Walls;$/;"	m	class:Wulf::OpenGL::Renderer
+WallsRenderChunk	OpenGL/Renderer.h	/^            struct WallsRenderChunk : public RenderChunk {$/;"	s	class:Wulf::OpenGL::Renderer
+Wulf	Game/CollisionManager.h	/^namespace Wulf {$/;"	n
+Wulf	Game/Constants.h	/^namespace Wulf {$/;"	n
+Wulf	Game/Enemies.h	/^namespace Wulf {$/;"	n
+Wulf	Game/Entity.h	/^namespace Wulf {$/;"	n
+Wulf	Game/EntityManager.h	/^namespace Wulf {$/;"	n
+Wulf	Game/Game.h	/^namespace Wulf {$/;"	n
+Wulf	Game/InputManager.h	/^namespace Wulf {$/;"	n
+Wulf	Game/Player.h	/^namespace Wulf {$/;"	n
+Wulf	Map/CompressionTools.h	/^namespace Wulf {$/;"	n
+Wulf	Map/Constants.h	/^namespace Wulf {$/;"	n
+Wulf	Map/Map.h	/^namespace Wulf {$/;"	n
+Wulf	Map/Node.h	/^namespace Wulf {$/;"	n
+Wulf	Map/Wall.h	/^namespace Wulf {$/;"	n
+Wulf	OpenGL/FontRenderer.h	/^namespace Wulf {$/;"	n
+Wulf	OpenGL/HasRenderChunk.h	/^namespace Wulf {$/;"	n
+Wulf	OpenGL/RenderChunk.h	/^namespace Wulf {$/;"	n
+Wulf	OpenGL/Renderer.h	/^namespace Wulf {$/;"	n
+Wulf	OpenGL/ResourceManager.h	/^namespace Wulf {$/;"	n
+__PHYSFS_PP_H__	Wrappers/PhysFS.h	/^#define __PHYSFS_PP_H__$/;"	d
+area	Map/Node.h	/^            word area;$/;"	m	class:Wulf::Map::Node
+bLostViewFocus	OpenGL/Renderer.h	/^            bool      bLostViewFocus;$/;"	m	class:Wulf::OpenGL::Renderer
+bRendering	OpenGL/Renderer.h	/^            bool                 bRendering; $/;"	m	class:Wulf::OpenGL::Renderer
+blockdata	Map/Node.h	/^            word blockdata;$/;"	m	class:Wulf::Map::Node
+category	Wrappers/PhysFS.h	/^    struct category : boost::iostreams::seekable, boost::iostreams::device_tag, $/;"	s	class:PhysFS::FileDevice
+cchar	OpenGL/FontRenderer.h	/^            byte cchar;$/;"	m	class:Wulf::OpenGL::FontRenderer
+ceilingColour	Map/Map.h	/^            Vector ceilingColour;$/;"	m	class:Wulf::Map::Map
+charNums	OpenGL/FontRenderer.h	/^            std::vector<char>   charNums;$/;"	m	class:Wulf::OpenGL::FontRenderer
+charPosses	OpenGL/FontRenderer.h	/^            std::vector<GLuint> charPosses;$/;"	m	class:Wulf::OpenGL::FontRenderer
+charWidths	OpenGL/FontRenderer.h	/^            std::vector<std::vector<GLfloat>> charWidths;$/;"	m	class:Wulf::OpenGL::FontRenderer
+char_type	Wrappers/PhysFS.h	/^    typedef char char_type;$/;"	t	class:PhysFS::FileDevice
+chars	OpenGL/FontRenderer.h	/^            std::vector<GLubyte> chars;$/;"	m	class:Wulf::OpenGL::FontRenderer
+charvbo	OpenGL/FontRenderer.h	/^            GLuint charvbo, posvbo;$/;"	m	class:Wulf::OpenGL::FontRenderer
+chunks	OpenGL/Renderer.h	/^            std::vector<RenderChunk *> chunks;$/;"	m	class:Wulf::OpenGL::Renderer
+cmgr	Game/Entity.h	/^		const CollisionManager& cmgr;$/;"	m	class:Wulf::Entity
+counts	Game/CollisionManager.h	/^		GLsizei *counts;$/;"	m	class:Wulf::CollisionManager
+dir	Map/Constants.h	/^			Direction dir;$/;"	m	struct:Wulf::Doors::DoorInfo
+direction	Map/Wall.h	/^            Direction direction;$/;"	m	class:Wulf::Map::Wall
+door	Map/Node.h	/^            bool door;$/;"	m	class:Wulf::Map::Node
+doors	Map/Map.h	/^            std::vector<Doors::DoorInfo> doors;$/;"	m	class:Wulf::Map::Map
+dtime	Game/Game.h	/^        double dtime;$/;"	m	class:Wulf::Game
+end	Map/Wall.h	/^            const Node *end;$/;"	m	class:Wulf::Map::Wall
+ents	Game/EntityManager.h	/^		std::vector<Entity*> ents;$/;"	m	class:Wulf::EntityManager
+fViewAngle	Game/Player.h	/^		float   fViewAngle;$/;"	m	class:Wulf::Player
+factories	Game/EntityManager.h	/^		std::map<std::string, EntFactory*> factories;$/;"	m	class:Wulf::EntityManager
+fhViewAngle	Game/Player.h	/^		float   fhViewAngle;$/;"	m	class:Wulf::Player
+file	Wrappers/PhysFS.h	/^    PHYSFS_File* file;$/;"	m	class:PhysFS::FileDevice
+floorColour	Map/Map.h	/^            Vector floorColour;$/;"	m	class:Wulf::Map::Map
+fnt	OpenGL/Renderer.h	/^            FontRenderer    fnt;$/;"	m	class:Wulf::OpenGL::Renderer
+fvViewAngle	Game/Player.h	/^		float   fvViewAngle;$/;"	m	class:Wulf::Player
+halfheight	Map/Map.h	/^            static const byte halfheight = 32;$/;"	m	class:Wulf::Map::Map
+halfwidth	Map/Map.h	/^            static const byte halfwidth  = 32;$/;"	m	class:Wulf::Map::Map
+height	Map/Map.h	/^            static const byte height = 64;$/;"	m	class:Wulf::Map::Map
+htested	Map/Node.h	/^            bool htested;$/;"	m	class:Wulf::Map::Node
+hvHeight	OpenGL/FontRenderer.h	/^            GLfloat hvHeight;$/;"	m	class:Wulf::OpenGL::FontRenderer
+hvWidth	OpenGL/FontRenderer.h	/^            GLfloat hvWidth;$/;"	m	class:Wulf::OpenGL::FontRenderer
+indicies	Game/CollisionManager.h	/^		GLint *indicies;$/;"	m	class:Wulf::CollisionManager
+input	Game/Game.h	/^        Wulf::Input::Manager input;$/;"	m	class:Wulf::Game
+instance	Game/CollisionManager.h	/^		static CollisionManager instance;$/;"	m	class:Wulf::CollisionManager
+instance	Game/EntityManager.h	/^		static EntityManager instance;$/;"	m	class:Wulf::EntityManager
+int64	Wrappers/PhysFS.h	/^  typedef PHYSFS_sint64 int64;$/;"	t	namespace:PhysFS
+key	Map/Constants.h	/^			KeyType key; \/\/ Do not check this value if locked == false.$/;"	m	struct:Wulf::Doors::DoorInfo
+lastx	Game/InputManager.h	/^            int lastx, lasty;$/;"	m	class:Wulf::Input::Manager
+lasty	Game/InputManager.h	/^            int lastx, lasty;$/;"	m	class:Wulf::Input::Manager
+locked	Map/Constants.h	/^			bool locked;$/;"	m	struct:Wulf::Doors::DoorInfo
+lostFocus	Game/InputManager.h	/^            bool lostFocus;$/;"	m	class:Wulf::Input::Manager
+ltime	OpenGL/Renderer.h	/^            double ltime;$/;"	m	class:Wulf::OpenGL::Renderer
+mActivity	Game/Enemies.h	/^            byte mActivity;$/;"	m	class:Wulf::Enemies::Enemy
+mBounds	Game/Entity.h	/^		Vector mBounds;$/;"	m	class:Wulf::Entity
+mDifficulty	Game/Player.h	/^        Difficulty::Type mDifficulty;$/;"	m	class:Wulf::Player
+mDir	Game/Entity.h	/^		Vector mDir;$/;"	m	class:Wulf::Entity
+mEntID	Game/Entity.h	/^		EntID mEntID;$/;"	m	class:Wulf::Entity
+mHealth	Game/Entity.h	/^		byte mHealth;$/;"	m	class:Wulf::Entity
+mIdentity	OpenGL/Renderer.h	/^            glm::mat4 mIdentity;$/;"	m	class:Wulf::OpenGL::Renderer
+mPos	Game/Entity.h	/^		Vector mPos;$/;"	m	class:Wulf::Entity
+mRenderChunk	OpenGL/HasRenderChunk.h	/^            RenderChunk mRenderChunk;$/;"	m	class:Wulf::OpenGL::HasRenderChunk
+mSprite	Game/Enemies.h	/^            Sprite mSprite;$/;"	m	class:Wulf::Enemies::Enemy
+mUp	Game/Player.h	/^		glm::vec3 mUp;        $/;"	m	class:Wulf::Player
+map	Game/CollisionManager.h	/^		MapType map;$/;"	m	class:Wulf::CollisionManager
+map	Game/Game.h	/^        Wulf::Map::Map *map;$/;"	m	class:Wulf::Game
+map	Map/Map.h	/^            std::vector<word> map;$/;"	m	class:Wulf::Map::Map
+material	Map/Node.h	/^            Material material;$/;"	m	class:Wulf::Map::Node
+material	Map/Wall.h	/^            Material material;$/;"	m	class:Wulf::Map::Wall
+mchars	OpenGL/FontRenderer.h	/^            char mchars;$/;"	m	class:Wulf::OpenGL::FontRenderer
+metadata	Map/Node.h	/^            word metadata;$/;"	m	class:Wulf::Map::Node
+mgr	OpenGL/FontRenderer.h	/^            ResourceManager& mgr;$/;"	m	class:Wulf::OpenGL::FontRenderer
+mgr	OpenGL/Renderer.h	/^            ResourceManager mgr;$/;"	m	class:Wulf::OpenGL::Renderer
+music	Map/Map.h	/^            std::string music;$/;"	m	class:Wulf::Map::Map
+name	Map/Map.h	/^            std::string name;$/;"	m	class:Wulf::Map::Map
+neighbours	Map/Node.h	/^            Node *neighbours[4];$/;"	m	class:Wulf::Map::Node
+nodes	Map/Map.h	/^            std::array<std::vector<Node>, 64> nodes;$/;"	m	class:Wulf::Map::Map
+numSquares	Game/CollisionManager.h	/^		mutable GLsizei numSquares;$/;"	m	class:Wulf::CollisionManager
+objs	Map/Map.h	/^            std::vector<word> objs;$/;"	m	class:Wulf::Map::Map
+openPercent	Map/Constants.h	/^			byte openPercent;$/;"	m	struct:Wulf::Doors::DoorInfo
+parString	Map/Map.h	/^            std::string parString;$/;"	m	class:Wulf::Map::Map
+parTime	Map/Map.h	/^            float       parTime;$/;"	m	class:Wulf::Map::Map
+pickup	Map/Node.h	/^            bool pickup;$/;"	m	class:Wulf::Map::Node
+ply	Game/Game.h	/^        Wulf::Player ply;$/;"	m	class:Wulf::Game
+points	Map/Wall.h	/^            std::vector<Vector> points;$/;"	m	class:Wulf::Map::Wall
+posPosses	OpenGL/FontRenderer.h	/^            std::vector<GLuint>  posPosses;$/;"	m	class:Wulf::OpenGL::FontRenderer
+poses	OpenGL/FontRenderer.h	/^            std::vector<GLfloat> poses;$/;"	m	class:Wulf::OpenGL::FontRenderer
+posvbo	OpenGL/FontRenderer.h	/^            GLuint charvbo, posvbo;$/;"	m	class:Wulf::OpenGL::FontRenderer
+programs	OpenGL/FontRenderer.h	/^            std::vector<GLuint> programs;$/;"	m	class:Wulf::OpenGL::FontRenderer
+programs	OpenGL/ResourceManager.h	/^            GLuintVector programs;$/;"	m	class:Wulf::OpenGL::ResourceManager
+projectionMatrix	OpenGL/Renderer.h	/^            glm::mat4 projectionMatrix;$/;"	m	class:Wulf::OpenGL::Renderer
+rendr	Game/Game.h	/^        OpenGL::Renderer rendr;$/;"	m	class:Wulf::Game
+running	Game/Game.h	/^        bool running;$/;"	m	class:Wulf::Game
+solid	Map/Node.h	/^            bool solid;$/;"	m	class:Wulf::Map::Node
+spawn	Map/Node.h	/^            bool spawn;$/;"	m	class:Wulf::Map::Node
+spawnAng	Map/Map.h	/^            GLfloat spawnAng;$/;"	m	class:Wulf::Map::Map
+spawnPos	Map/Map.h	/^            Vector  spawnPos;$/;"	m	class:Wulf::Map::Map
+spr	Map/Constants.h	/^			StaticSprite spr;$/;"	m	struct:Wulf::StaticSprites::Sprite
+sprite	Map/Node.h	/^            StaticSprites::StaticSprite sprite;$/;"	m	class:Wulf::Map::Node
+sprites	Map/Map.h	/^            std::vector<StaticSprites::Sprite> sprites;$/;"	m	class:Wulf::Map::Map
+start	Map/Wall.h	/^            const Node *start;$/;"	m	class:Wulf::Map::Wall
+stps	Map/Wall.h	/^            std::vector<Vector> stps;$/;"	m	class:Wulf::Map::Wall
+strbuff	OpenGL/Renderer.h	/^            char *strbuff;$/;"	m	class:Wulf::OpenGL::Renderer
+tex	Map/Constants.h	/^			Material tex;$/;"	m	struct:Wulf::Doors::DoorInfo
+textures	OpenGL/ResourceManager.h	/^            GLuintVector textures;$/;"	m	class:Wulf::OpenGL::ResourceManager
+vCounts	OpenGL/Renderer.h	/^                std::vector<GLsizei> *vCounts;$/;"	m	struct:Wulf::OpenGL::Renderer::WallsRenderChunk
+vCounts	OpenGL/Renderer.h	/^            std::vector<GLsizei> vCounts;$/;"	m	class:Wulf::OpenGL::Renderer
+vFirsts	OpenGL/Renderer.h	/^                std::vector<GLint>   *vFirsts;$/;"	m	struct:Wulf::OpenGL::Renderer::WallsRenderChunk
+vFirsts	OpenGL/Renderer.h	/^            std::vector<GLint>   vFirsts;$/;"	m	class:Wulf::OpenGL::Renderer
+vPlyDir	OpenGL/Renderer.h	/^            glm::vec3 vPlyDir;$/;"	m	class:Wulf::OpenGL::Renderer
+vPlyPos	OpenGL/Renderer.h	/^            glm::vec3 vPlyPos;$/;"	m	class:Wulf::OpenGL::Renderer
+vPlyUp	OpenGL/Renderer.h	/^            glm::vec3 vPlyUp;$/;"	m	class:Wulf::OpenGL::Renderer
+vao	OpenGL/FontRenderer.h	/^            GLuint vao;$/;"	m	class:Wulf::OpenGL::FontRenderer
+vaos	OpenGL/ResourceManager.h	/^            GLuintVector vaos;$/;"	m	class:Wulf::OpenGL::ResourceManager
+vbos	OpenGL/ResourceManager.h	/^            GLuintVector vbos;$/;"	m	class:Wulf::OpenGL::ResourceManager
+viewMatrix	OpenGL/Renderer.h	/^            glm::mat4 viewMatrix;$/;"	m	class:Wulf::OpenGL::Renderer
+vtested	Map/Node.h	/^            bool vtested;$/;"	m	class:Wulf::Map::Node
+wall	Map/Node.h	/^            bool wall;$/;"	m	class:Wulf::Map::Node
+walls	Map/Map.h	/^            std::vector<Wall> walls;$/;"	m	class:Wulf::Map::Map
+walls	Map/Node.h	/^            bool walls[4];$/;"	m	class:Wulf::Map::Node
+width	Map/Map.h	/^            static const byte width = 64;$/;"	m	class:Wulf::Map::Map
+width	OpenGL/FontRenderer.h	/^            GLfloat width;$/;"	m	class:Wulf::OpenGL::FontRenderer
+windowHeight	OpenGL/Renderer.h	/^            unsigned short int windowHeight;$/;"	m	class:Wulf::OpenGL::Renderer
+windowWidth	OpenGL/Renderer.h	/^            unsigned short int windowWidth;$/;"	m	class:Wulf::OpenGL::Renderer
+x	Map/Constants.h	/^			coord x, y;$/;"	m	struct:Wulf::Doors::DoorInfo
+x	Map/Constants.h	/^			coord x;$/;"	m	struct:Wulf::StaticSprites::Sprite
+x	Map/Node.h	/^            coord x;$/;"	m	class:Wulf::Map::Node
+y	Map/Constants.h	/^			coord x, y;$/;"	m	struct:Wulf::Doors::DoorInfo
+y	Map/Constants.h	/^			coord y;$/;"	m	struct:Wulf::StaticSprites::Sprite
+y	Map/Node.h	/^            coord y;$/;"	m	class:Wulf::Map::Node
+~Enemy	Game/Enemies.h	/^            virtual ~Enemy() {}$/;"	f	class:Wulf::Enemies::Enemy
+~EntFactory	Game/EntityManager.h	/^            virtual ~EntFactory() {}$/;"	f	struct:Wulf::EntityManager::EntFactory
+~Entity	Game/Entity.h	/^		virtual ~Entity() {}$/;"	f	class:Wulf::Entity
+~Player	Game/Player.h	/^		~Player() {};$/;"	f	class:Wulf::Player
+~SpecificEntFactory	Game/EntityManager.h	/^            ~SpecificEntFactory() {}$/;"	f	struct:Wulf::EntityManager::SpecificEntFactory

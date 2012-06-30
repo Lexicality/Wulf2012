@@ -1,0 +1,30 @@
+- The physics is really glitchy, probably needs going over again.
+- The viewport shouldn't actually 5:3 since that's the ratio for the
+  inner viewport - the HUD and border brought it up to 4:3 for the
+  actual game.
+- The other mob types need some love
+- There's no AI
+- There's no traceline function in the physics
+- There's no collision callbacks in the physics - for pickups.
+- Pickups are currently in the same VBO as permanent statics - it'll
+  involve less updating if they were seperate.
+- Dead bodies
+- Doors. This will probably involve another class. Also I'm not sure
+  there's any code to spawn locked doors.
+- AI Areas: There's an 'area' field on Map::Node, but nothing pays any
+  attention to it.
+- There's no code set up to deal with level transitions. Last I checked
+  all the subsystems can deal with map loading/unloading, but there's
+  nothing that keeps track of such things or could ask.
+- A proper lookup system (hashmap?) for the map would be good, the current
+  array<vector> setup is a bit wonk. 
+- Pushwalls currently don't exist and there is absolultely nothing that
+  could currently cope with them. I'm thinking point entities with a
+  geometry shader?
+- Sound? I was initially thinking OpenAL but that seems to be a bit shit
+  on closer inspection. I haven't looked around for any alternatives but
+  I'm sure they exist.
+- Might be a plan to look into being able to load the sprite sheet PNGs
+  the JS Wolf version uses. They may be completely different layouts but
+  I recon a clever frag shader could adapt to them without very many
+  changes elsewhere

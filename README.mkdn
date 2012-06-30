@@ -1,0 +1,47 @@
+Wulf2012
+========
+This is a rewrite of the classic game [Wolfenstein 3D][wikiped] in
+C++11 and OpenGL 3.2. It is currently far from complete or even
+playable, but I'm working on that. In theory, it will run on any system
+that has a C++11 compiler and an OpenGL 3.2 driver, but no promises.
+I would like to thank Michael Liebscher without whose work on [Wolf3DRedux][wolf3dredux]
+none of this would have been possible. (Seriously, have you looked at
+the original game's source?!)
+
+
+Dependancies
+------------
+* [PhysFS][physfs]
+* [GLFW 2.X][glfw]
+* [GLEW][glew] (Not required on OSX)
+
+Building
+--------
+You'll need a copy of Premake4 in order to generate project files for
+your platform/situation. If you're on OSX and want to use XCode4, you'll
+need to grab a copy of premake4.4beta. Be sure to run the "Validate
+project settings" option and let it switch to Clang; llvm-gcc doesn't
+support C++11.  
+You'll also need a copy of retail Wolf3D's WL6 files that you can run
+WolfExtractor on in order to get wolf.pak. Wolfextractor comes bundled
+with [Wolf3DReudx][wolf3dredux] and the WL6 files can be easily obtained
+from the [Steam Download Service][wolfsteam]\*.  
+Place the wolf.pak file in the _game_ folder (if it doesn't exist, run
+premake first!) along with any shared libraries (glew.dll etc) that
+aren't in your system's library path. Assuming nothing goes wrong, the
+makefiles in Build/ should dump WulfGame(.exe) into that folder, which
+you can then run.  
+\* I am aware that a version the game is now available for free at
+[wolfenstein.com][wolf.com], but I don't think it's legal to rip the
+assets out of it and in any case they're in a (currently) incompatible
+format.
+
+
+
+[wikiped]: http://en.wikipedia.org/wiki/Wolfenstein_3D
+[physfs]: http://icculus.org/physfs/
+[glfw]: http://www.glfw.org/
+[glew]: http://glew.sourceforge.net/
+[wolf3dredux]: http://wolf3dredux.sourceforge.net/
+[wolfsteam]: http://store.steampowered.com/app/2270/
+[wolf.com]: http://www.wolfenstein.com/
