@@ -9,7 +9,7 @@ none of this would have been possible. (Seriously, have you looked at
 the original game's source?!)
 
 
-Dependancies
+Dependencies
 ------------
 * [PhysFS][physfs]
 * [GLFW 2.X][glfw]
