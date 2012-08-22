@@ -28,9 +28,6 @@
 
 #if defined (_MSC_VER) && _MSC_VER < 1600
 #error This project needs at least VS2010 to compile!
-#elif _MSC_VER == 1600
-// Kinda mucky, but hey. What can you do.
-#define NO_RANGE_BASED_FOR
 #endif // _MSC_VER level
 
 namespace Wulf {

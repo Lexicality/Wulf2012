@@ -44,14 +44,9 @@ CollisionManager CollisionManager::instance;
 
 CollisionManager::~CollisionManager()
 {
-#ifdef NO_RANGE_BASED_FOR
 	for_each(map.begin(), map.end(), [](const MapType::value_type& value) {
 		delete value.second;
 	});
-#else
-	for (auto& value : map)
-		delete value.second;
-#endif
 	delete[] indicies;
 	delete[] counts;
 }
@@ -63,19 +58,11 @@ void CollisionManager::SetMap(const Map::Map& map)
 		throw std::runtime_error("Collision map cannot hold nodemap!");
 	}
 	this->map.clear();
-#ifdef NO_RANGE_BASED_FOR
-	auto xitr = nodes.begin();
-	auto xend = nodes.end();
-	for (; xitr != xend; ++xitr) {
-		for_each(xitr->begin(), xitr->end(), [this](const MapNode& node) {
+	for (auto xitr = nodes.begin(), xend = nodes.end(); xitr != xend; ++xitr) {
+		for_each(xitr->begin(), xitr->end(), [this](const Map::Node& node) {
 			this->map.insert(prep(node));
 		});
 	}
-#else
-	for (auto &nodemap : nodes)
-		for (auto& node : nodemap)
-			this->map.insert(prep(node));
-#endif
 }
 
 CollisionObj getObj(const Entity& ent)
@@ -99,68 +86,33 @@ CollisionObj getObj(const Entity& ent)
 	return res;
 }
 
+/*
+ * TODO:
+ * Instead of selecting the 9 ajacent blocks and merging their faces
+ *  consider merging all blocks at the start and then selecting the close ones.
+ * This probably needs some kind of spatial management.
+ */
+
 Vector CollisionManager::CollisionClamp(const Entity& entity, const Vector& velocity) const
 {
-#ifdef NO_RANGE_BASED_FOR
-#define NEXT_ITERATION return
-#else
-#define NEXT_ITERATION continue
-#endif
+    // Uh.
+    static const std::function<float(TileData*&,Vector&)> distance = [](TileData*& tile, Vector& pos) -> float
+    {
+        return (Vector(tile->x, tile->y, 0) - pos).length();
+    };
 	CollisionObj ent = getObj(entity);
 
+     Vector pos = entity.GetPos();
 	const KeyType currentNode = key(entity.GetPos());
 	std::vector<MapType::mapped_type> pnodes = grabTiles(currentNode);
-
-	// firstly, IGNORE anything we are already penetrating with. This prevents infinite loops.
-#ifdef NO_RANGE_BASED_FOR
-	for_each(pnodes.begin(), pnodes.end(), [&ent](MapType::mapped_type& tile) {
-#else
-	for (auto& tile : pnodes) {
-#endif
-		if (tile == nullptr)
-			NEXT_ITERATION;
-		// Lazy, ignore anything unsolid.
-		if (!tile->Solid) {
-			tile = nullptr;
-			NEXT_ITERATION;
-		}
-		const CollisionObj& ctile = tile->Bounds;
-		// Basic checks
-		// Note, this is in GUI space not cartesean
-		if (ent.Left >= ctile.Right)
-			NEXT_ITERATION;
-		if (ent.Right <= ctile.Left)
-			NEXT_ITERATION;
-		// positive Y is DOWN.
-		if (ent.Bottom <= ctile.Top)
-			NEXT_ITERATION;
-		if (ent.Top >= ctile.Bottom)
-			NEXT_ITERATION;
-
-#ifdef DEBUG
-		std::cout << "STARTING COLLISION CALCULATION WHILE PENETRATING SOMETHING!" << std::endl;
-#endif
-		tile = nullptr;
-	}
-#ifdef NO_RANGE_BASED_FOR
-	);
-#endif
-	
+    
 	// Merge ajacent faces
-#ifdef NO_RANGE_BASED_FOR
 	for_each(pnodes.begin(), pnodes.end(), [&pnodes](CollisionManager::MapType::mapped_type& tile1) {
-#else
-	for (auto& tile1 : pnodes) {
-#endif
 		if (tile1 == nullptr)
-			NEXT_ITERATION;
-#ifdef NO_RANGE_BASED_FOR
+			return;
 		for_each(pnodes.begin(), pnodes.end(), [&tile1](CollisionManager::MapType::mapped_type& tile2) {
-#else
-		for (auto& tile2 : pnodes) {
-#endif
 			if (tile2 == nullptr || tile1 == tile2)
-				NEXT_ITERATION;
+				return;
 			auto& b1 = tile1->Bounds;
 			auto& b2 = tile2->Bounds;
 			if (b1.Top == b2.Top && b1.Bottom == b2.Bottom) {
@@ -169,39 +121,39 @@ Vector CollisionManager::CollisionClamp(const Entity& entity, const Vector& velo
 				else if (b1.Left == b2.Right)
 					b1.Left = b2.Left;
 				else
-					NEXT_ITERATION;
+					return;
 			} else if (b1.Left == b2.Left && b1.Right == b2.Right) {
 				if (b1.Top == b2.Bottom)
 					b1.Top = b2.Top;
 				else if (b1.Bottom == b2.Top)
 					b1.Bottom = b2.Bottom;
 				else
-					NEXT_ITERATION;
+					return;
 			} else {
-				NEXT_ITERATION;
+				return;
 			}
 			tile2 = nullptr;
-#ifdef NO_RANGE_BASED_FOR
 		});
 	});
-#else
-		}
-	}
-#endif
+    
+    // Sort the tiles so the player collides with them in order
+    std::sort(pnodes.begin(), pnodes.end(), [&pos](MapType::mapped_type& a, MapType::mapped_type& b) -> bool
+    {
+       // Push nullptrs to the back of the list
+       if (a == nullptr) // Null is heavier than everything
+           return false;
+       if (b == nullptr) // Everything is lighter than null
+           return true;
+       return distance(a, pos) < distance(b, pos);
+    });
 
-	// dump all the null pointers
+    // dump all the null pointers
 	std::vector<MapType::mapped_type> nodes;
 	nodes.reserve(pnodes.size());
-#ifdef NO_RANGE_BASED_FOR
 	for_each(pnodes.begin(), pnodes.end(), [&nodes](MapType::mapped_type& tile) {
 		if (tile != nullptr)
 			nodes.push_back(tile);
 	});
-#else
-	for (auto& tile : pnodes)
-		if (tile != nullptr)
-			nodes.push_back(tile);
-#endif
 
 	// Debuggering
 	//UpdateScreen(entity, nodes);
@@ -216,12 +168,13 @@ Vector CollisionManager::CollisionClamp(const Entity& entity, const Vector& velo
 		auto itr = nodes.begin(), end = nodes.end();
 		for (; itr != end; ++itr) {
 			ctile = *itr;
+            /*
 			if (ctile == nullptr)
 				continue;
-			/*
+
 			if (!ctile->Solid)
 				continue;
-				*/
+            */
 			const CollisionObj& tile = ctile->Bounds;
 			// Basic checks
 			// Note, this is in GUI space not cartesean
@@ -254,42 +207,10 @@ Vector CollisionManager::CollisionClamp(const Entity& entity, const Vector& velo
 				ychange = (tile.Bottom - ent.Top) - y;
 
 			// Only punt the smallest distance possible
-			if (abs(ychange) < abs(xchange))
+			if (fabs(ychange) < fabs(xchange))
 				y += ychange;
 			else
 				x += xchange;
-
-			/*
-				impulse.Right = tile.Right - (ent.Right + x);
-				impulse.Bottom = tile.Bottom - (ent.Bottom + y);
-				impulse.Top = tile.Top - (ent.Top + y);
-			*/
-
-			/*
-			bool xno = false;
-			// Work out what the quickest way to uncollide is
-			if (ent.Left > tile.Right)
-				x = (ent.Left + x) - tile.Right;
-			else if (ent.Right < tile.Left)
-				x = (ent.Right + x) - tile.Left;
-			else
-				xno = true;
-
-			bool yno = false;
-			if (ent.Bottom < tile.Top)
-				y = (ent.Bottom + y) - tile.Top;
-			else if (ent.Top > tile.Bottom)
-				y = (ent.Top + y) - tile.Bottom;
-			else
-				yno = true;
-
-			if (xno && yno) {
-				// TODO: ACTUALLY DO SOMETHING
-				std::cout << "WARNING!!! Completely penetrating an object!" << std::endl;
-				// allow us to slide out
-				collided = false;
-				continue;
-			}*/
 
 			// Reboot the loop with the new velocity
 			break;
@@ -460,14 +381,8 @@ std::vector<CollisionManager::TileData*> CollisionManager::grabTiles(const Colli
 		for (coord y = y_-1; y <= y_+1; ++y) {
 			const auto& itr = map.find(key(x, y));
 			TileData *res = (itr != none) ? itr->second : nullptr;
-			ret.push_back(res);
-			//ret.push_back((itr != none) ? itr->second : nullptr);
-			/*
-			if (itr != none)
-				ret.push_back(itr->second);
-			else
-				ret.push_back(nullptr);
-			*/
+            if (res != nullptr && res->Solid)
+                ret.push_back(res);
 		}
 	}
 	return ret;

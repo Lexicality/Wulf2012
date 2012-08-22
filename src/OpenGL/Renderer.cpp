@@ -252,14 +252,9 @@ double OpenGL::Renderer::Render()
 	glm::mat4 mView = getViewMatrix();
     
 	errchck("pre render");
-#ifdef NO_RANGE_BASED_FOR
 	std::for_each(chunks.begin(), chunks.end(), [&mView](RenderChunk * rndr) {
 		rndr->Render(mView);
 	});
-#else
-	for (auto& chunk : chunks)
-		chunk->Render(mView);
-#endif
 	errchck("post render");
 
 
