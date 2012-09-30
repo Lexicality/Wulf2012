@@ -1,5 +1,5 @@
 local trans = path.translate;
-local join  = path.join;
+local join  = function(a,b) return trans(path.join(a,b)) end;
 
 local dest = "game";
 local src  = "src";
@@ -31,7 +31,7 @@ end
 if (not os.isdir("game")) then
     os.mkdir("game");
 end
-
+    
 
 solution "Wulf2012"
     configurations { "Debug", "Release" }
@@ -65,7 +65,7 @@ solution "Wulf2012"
         }
         postbuildcommands {
             -- cp src/OpenGL/Shaders/* game/shaders
-            docmd(copy, join(srcdir, trans("OpenGL/Shaders/*")), join(destdir, "shaders"));
+            docmd(copy, join(srcdir, "OpenGL/Shaders/*"), join(destdir, "shaders"));
         }
 
         flags { "FatalWarnings" }
