@@ -68,6 +68,8 @@ void start_physfs(char *arg0)
     std::atexit(close_physfs);
     std::string path = PhysFS::getBaseDir();
     PhysFS::mount(path, "", false);
+	if (!PhysFS::exists("wolf.pak"))
+		throw PhysFS::Exception("wolf.pak is not in the base direcory! (" + path + ")");
     PhysFS::mount(path + "/wolf.pak", "");
     
     // Debulartes
