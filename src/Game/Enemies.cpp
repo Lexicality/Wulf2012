@@ -277,7 +277,7 @@ void EnemyRenderChunk::mRenderFunction(const OpenGL::RenderChunk&) const
 template<class C>
 void dozero(C *what, size_t amt)
 {
-    for (int i = 0; i < amt; ++i)
+    for (size_t i = 0; i < amt; ++i)
         what[i] = 0;
 }
 

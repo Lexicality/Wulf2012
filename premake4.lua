@@ -13,14 +13,19 @@ local newdir;
 local copy;
 if (os.get() == "windows") then
     copy = "COPY /Y";
-    newdir = "MKDIR";
+    --newdir = "MKDIR";
+    newdir = function(path) return "IF NOT EXIST \"" .. path .. "\" MKDIR \"" .. path .. '"' end
 else
     copy = "cp -f";
     newdir = "mkdir -p";
 end
 
-local function docmd(...)
-    return table.concat({...}, ' ');
+local function docmd(cmd, ...)
+    if (type(cmd) == "function") then
+        return cmd(...);
+    else
+        return cmd .. " \"" .. table.concat({...}, '" "') .. '"';
+    end
 end
 
 if (_ACTION == "vs2008" or _ACTION == "vs2005" or _ACTION == "vs2003" or _ACTION == "vs2002") then
@@ -81,7 +86,7 @@ solution "Wulf2012"
             flags { "Optimise" }
 
         configuration "windows"
-            flags { "ExtraWarnings" }
+            defines { "_CRT_SECURE_NO_WARNINGS" }
             links { "opengl32", "glew32" }
 
         configuration "linux"

@@ -4,9 +4,11 @@
 // This code is freely available under the MIT licence.
 //
 #pragma once
-
-// buh?
 #include <string>
+#include <cstdint>
+
+// GOD DAMN MICROSOFT
+#pragma warning( disable : 4250 )
 
 // Woo opengl
 #include <glm/glm.hpp>

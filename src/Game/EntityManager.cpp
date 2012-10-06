@@ -57,7 +57,7 @@ Entity* EntityManager::GetEntity(EntID entnum) const
 {
     try {
         return ents.at(entnum);
-    } catch (std::out_of_range& e) {
+    } catch (std::out_of_range&) {
         std::ostringstream s;
         s << "'" << entnum << "' is not a valid ent handle!";
 		throw InvalidEntID(s.str());

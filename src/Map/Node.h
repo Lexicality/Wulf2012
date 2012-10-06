@@ -9,6 +9,7 @@
 #include "Map/Constants.h"
 #include "Map/Wall.h"
 #include <utility>
+#include <memory>
 
 namespace Wulf {
     namespace Map {

@@ -98,7 +98,7 @@ Vector CollisionManager::CollisionClamp(const Entity& entity, const Vector& velo
     // Uh.
     static const std::function<float(TileData*&,Vector&)> distance = [](TileData*& tile, Vector& pos) -> float
     {
-        return (Vector(tile->x, tile->y, 0) - pos).length();
+        return static_cast<float>((Vector(tile->x, tile->y, 0) - pos).length());
     };
 	CollisionObj ent = getObj(entity);
 
