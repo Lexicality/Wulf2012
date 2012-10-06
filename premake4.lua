@@ -61,6 +61,7 @@ solution "Wulf2012"
 
         includedirs { src }
 
+        debugdir(dest)
         targetdir(dest)
         targetname("WulfGame")
 
