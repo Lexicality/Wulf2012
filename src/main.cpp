@@ -68,8 +68,17 @@ void start_physfs(char *arg0)
     std::atexit(close_physfs);
     std::string path = PhysFS::getBaseDir();
     PhysFS::mount(path, "", false);
-	if (!PhysFS::exists("wolf.pak"))
-		throw PhysFS::Exception("wolf.pak is not in the base direcory! (" + path + ")");
+	if (!PhysFS::exists("wolf.pak")) {
+		// Sigh, I don't know why it is, but VS2012 seems to set the base dir one lower than
+		//  it should be when debugging. Try to deal with this.
+		if (PhysFS::isDirectory("game") && PhysFS::exists("game/wolf.pak")) {
+			PhysFS::removeFromSearchPath(path);
+			path += "/game";
+			PhysFS::mount(path, "", false);
+		} else {
+			throw PhysFS::Exception("wolf.pak is not in the base direcory! (" + path + ")");
+		}
+	}
     PhysFS::mount(path + "/wolf.pak", "");
     
     // Debulartes

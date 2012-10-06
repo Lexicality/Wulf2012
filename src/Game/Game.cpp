@@ -9,7 +9,7 @@
 using namespace Wulf;
 
 Game::Game(const Difficulty::Type difficulty)
-: running(false), dtime(0)
+: map(nullptr), running(false), dtime(0)
 {
     Wulf::Enemies::RegisterEntities();
     rendr.AddRenderChunk(Wulf::Enemies::GetRenderChunk);
