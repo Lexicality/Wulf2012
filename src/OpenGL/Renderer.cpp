@@ -66,9 +66,17 @@ OpenGL::Renderer::Renderer()
 	
 		// Open a window and create its OpenGL context
 		// TODO: Config!
-		// 5:3 aspect ratio like original game
-		windowWidth  = 1280;
-		windowHeight = 768;
+
+        windowWidth  = 1024;
+        windowHeight = 768;
+        //viewportHeight = 614; // 5:3 aspect ratio like original game
+        //hudHeight = windowHeight - viewportHeight;
+        
+        // The hud is 1/6 of the window height
+        const double ratio = 1.0 / 6.0;
+        hudHeight = (static_cast<double>(windowHeight) * ratio);
+        // Our unauthentic borderless viewport gets everything left.
+        viewportHeight = windowHeight - hudHeight;
 		if( !glfwOpenWindow( windowWidth, windowHeight, 0,0,0,0, 32,0, GLFW_WINDOW ) )
 		{
 			throw std::runtime_error("Failed to open GLFW window");
@@ -77,7 +85,7 @@ OpenGL::Renderer::Renderer()
 		// TODO: Maybe FoV config?
 		projectionMatrix = glm::perspective(75.0f, // FoV
 			static_cast<GLfloat> (windowWidth) /   // Aspect ratio
-			static_cast<GLfloat> (windowHeight),
+			static_cast<GLfloat> (viewportHeight),
 			0.1f, 100.0f);                         // nearZ, farZ
 	
 #ifndef __APPLE__
@@ -214,6 +222,9 @@ OpenGL::Renderer::Renderer()
 
 		// Fonts
 		fnt.Initialize(20);
+        
+        // Hud
+        hud.Setup(mgr, 25);
 		
 		// Timing
 		ltime = glfwGetTime();
@@ -251,11 +262,21 @@ double OpenGL::Renderer::Render()
 
 	glm::mat4 mView = getViewMatrix();
     
+    glViewport(0, hudHeight, windowWidth, viewportHeight);
+    
 	errchck("pre render");
 	std::for_each(chunks.begin(), chunks.end(), [&mView](RenderChunk * rndr) {
 		rndr->Render(mView);
 	});
 	errchck("post render");
+    
+    glViewport(0, 0, windowWidth, hudHeight);
+    
+	errchck("pre hud");
+    hud.Draw();
+	errchck("post hud");
+    
+    glViewport(0, 0, windowWidth, windowHeight);
 
 
 	// Position/Angle debug
@@ -481,6 +502,7 @@ void OpenGL::Renderer::LoadShaders()
 
 void OpenGL::Renderer::UpdatePlayerInfo(const Player& ply)
 {
+    hud.UpdatePlayerInfo(ply);
 	vPlyPos = ply.GetPos();
 	vPlyDir = ply.GetHeading();
 #ifdef FREE_VIEW

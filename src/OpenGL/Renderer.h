@@ -19,6 +19,7 @@
 #include "OpenGL/RenderChunk.h"
 #include "OpenGL/HasRenderChunk.h"
 #include "OpenGL/FontRenderer.h"
+#include "OpenGL/HUDRenderer.h"
 #include "Game/Player.h"
 #include "Game/Enemies.h"
 
@@ -54,8 +55,10 @@ namespace Wulf {
             void LoadShaders();
 
             // Window related things
-            unsigned short int windowWidth;
-            unsigned short int windowHeight;
+            GLsizei windowWidth;
+            GLsizei windowHeight;
+            GLsizei viewportHeight;
+            GLsizei hudHeight;
 
             // View related things
             glm::mat4 getViewMatrix() const;
@@ -87,6 +90,7 @@ namespace Wulf {
             glm::mat4 mIdentity;
             ResourceManager mgr;
             FontRenderer    fnt;
+            HUDRenderer     hud;
             char *strbuff;
 
 
