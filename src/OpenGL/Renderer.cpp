@@ -66,14 +66,14 @@ OpenGL::Renderer::Renderer()
 	
 		// Open a window and create its OpenGL context
 		// TODO: Config!
-
-        windowWidth  = 1024;
+        // 5:3 aspect ratio like original game
+        windowWidth  = 1280;
         windowHeight = 768;
-        //viewportHeight = 614; // 5:3 aspect ratio like original game
+        //viewportHeight = 614; 
         //hudHeight = windowHeight - viewportHeight;
         
-        // The hud is 1/6 of the window height
-        const double ratio = 1.0 / 6.0;
+        // The hud is 1/8 of the window height
+        const double ratio = 0.2;
         hudHeight = (static_cast<double>(windowHeight) * ratio);
         // Our unauthentic borderless viewport gets everything left.
         viewportHeight = windowHeight - hudHeight;
