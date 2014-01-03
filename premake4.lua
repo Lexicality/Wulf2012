@@ -42,9 +42,9 @@ solution "Wulf2012"
     configurations { "Debug", "Release" }
 
     -- FORCE windows to be Win32: GLFW2.X doesn't support Win64
-    if (os.get == "windows") then
-        platforms { "x32" }
-    end
+    -- if (os.get == "windows") then
+    --     platforms { "x32" }
+    -- end
 
     location "Build"
 
