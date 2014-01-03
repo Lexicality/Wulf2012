@@ -58,17 +58,18 @@ OpenGL::Renderer::Renderer()
 	// Therefore we delay any exceptions for a moment to do so.
 	try {
 	
-		glfwOpenWindowHint(GLFW_FSAA_SAMPLES, 4);
+		//glfwOpenWindowHint(GLFW_FSAA_SAMPLES, 4);
 		glfwOpenWindowHint(GLFW_WINDOW_NO_RESIZE,GL_TRUE);
 		glfwOpenWindowHint(GLFW_OPENGL_VERSION_MAJOR, 3);
-		glfwOpenWindowHint(GLFW_OPENGL_VERSION_MINOR, 2);
-		glfwOpenWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
+		glfwOpenWindowHint(GLFW_OPENGL_VERSION_MINOR, 0);
+		//glfwOpenWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
 	
 		// Open a window and create its OpenGL context
 		// TODO: Config!
-        windowWidth  = 1280;
-        windowHeight = 768;
 		// 5:3 aspect ratio like original game
+		// Weird values so they fit on my laptop's screen
+		windowWidth  = 1220;// 1280;
+		windowHeight = 732; // 768;
 		//viewportHeight = 614; 
 		//hudHeight = windowHeight - viewportHeight;
 		
@@ -100,9 +101,14 @@ OpenGL::Renderer::Renderer()
 			serr += (const char*) glewGetErrorString(glewStatus);
 			throw std::runtime_error(serr);
 		}
+		if (!GLEW_ARB_geometry_shader4) {
+			throw std::runtime_error("No geometry shaders available!");
+		}
+		/*
 		if (!GLEW_VERSION_3_2) {
 			throw std::runtime_error("OpenGL 3.2 is not supported here!");
 		}
+		*/
 #endif
 		
 		glfwDisable(GLFW_MOUSE_CURSOR);
