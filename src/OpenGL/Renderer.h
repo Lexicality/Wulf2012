@@ -23,9 +23,6 @@
 #include "Game/Player.h"
 #include "Game/Enemies.h"
 
-// Boosts
-#include <boost/ref.hpp>
-
 namespace Wulf {
     namespace OpenGL {
         class Renderer {

@@ -8,8 +8,6 @@
 #include <map>
 #include <utility>
 
-#include <boost/ref.hpp>
-
 #include "WulfConstants.h"
 #include "Map/Map.h"
 #include "Map/Node.h"
