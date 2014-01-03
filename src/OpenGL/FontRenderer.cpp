@@ -80,12 +80,12 @@ void OpenGL::FontRenderer::Initialize(const GLuint textureOffset)
 		charNums.push_back(numChars);
 
 		std::vector<char> widths(numChars);
-        
+		
 #ifdef __APPLE__
-        // AAAAA
-        // std::cout << file.tellg() << std::endl;
-        // What the fuck?
-        numChars--;
+		// AAAAA
+		// std::cout << file.tellg() << std::endl;
+		// What the fuck?
+		numChars--;
 #endif
 		file.read(&widths[0], numChars);
 		// That's everything from the dat file.
