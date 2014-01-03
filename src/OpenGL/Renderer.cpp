@@ -66,17 +66,17 @@ OpenGL::Renderer::Renderer()
 	
 		// Open a window and create its OpenGL context
 		// TODO: Config!
-        // 5:3 aspect ratio like original game
         windowWidth  = 1280;
         windowHeight = 768;
-        //viewportHeight = 614; 
-        //hudHeight = windowHeight - viewportHeight;
-        
-        // The hud is 1/8 of the window height
-        const double ratio = 0.2;
-        hudHeight = (static_cast<double>(windowHeight) * ratio);
-        // Our unauthentic borderless viewport gets everything left.
-        viewportHeight = windowHeight - hudHeight;
+		// 5:3 aspect ratio like original game
+		//viewportHeight = 614; 
+		//hudHeight = windowHeight - viewportHeight;
+		
+		// The hud is 1/8 of the window height
+		const double ratio = 0.2;
+		hudHeight = (static_cast<double>(windowHeight) * ratio);
+		// Our unauthentic borderless viewport gets everything left.
+		viewportHeight = windowHeight - hudHeight;
 		if( !glfwOpenWindow( windowWidth, windowHeight, 0,0,0,0, 32,0, GLFW_WINDOW ) )
 		{
 			throw std::runtime_error("Failed to open GLFW window");
@@ -128,14 +128,14 @@ OpenGL::Renderer::Renderer()
 		glEnable(GL_BLEND);
 		glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 
-        //#define TRIANGLE_DEBUGGING
+		//#define TRIANGLE_DEBUGGING
 #ifdef TRIANGLE_DEBUGGING
 #pragma message("Triangle debugging mode is active!")
 		// Debug shit
 		glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
 #endif
 
-        //#define NO_TRIANGLE_CULLING
+		//#define NO_TRIANGLE_CULLING
 #ifdef NO_TRIANGLE_CULLING
 #pragma message("Backface culling is NOT ACTIVE!")
 		glDisable(GL_CULL_FACE);
@@ -145,12 +145,12 @@ OpenGL::Renderer::Renderer()
 #endif
 		// Store our render chunks 
 		AddRenderChunk(&Walls);
-        AddRenderChunk(&Floor);
-        AddRenderChunk(&Statics);
+		AddRenderChunk(&Floor);
+		AddRenderChunk(&Statics);
 		AddRenderChunk(&Doors);
 
 		// Do the render chunks
-        Walls.RenderFunction = std::bind(&WallsRenderChunk::mRenderFunction, &Walls, arg::_1);
+		Walls.RenderFunction = std::bind(&WallsRenderChunk::mRenderFunction, &Walls, arg::_1);
 		Floor.RenderFunction   = std::bind(GenericRenderFunction, arg::_1);
 		Doors.RenderFunction   = std::bind(GenericRenderFunction, arg::_1);
 		Statics.RenderFunction = std::bind(GenericRenderFunction, arg::_1);
@@ -158,9 +158,9 @@ OpenGL::Renderer::Renderer()
 		Floor.DrawMode = GL_TRIANGLE_FAN;
 		Doors.DrawMode = GL_POINTS;
 		Statics.DrawMode = GL_POINTS;
-        
-        Walls.vFirsts = &vFirsts;
-        Walls.vCounts = &vCounts;
+		
+		Walls.vFirsts = &vFirsts;
+		Walls.vCounts = &vCounts;
 
 		// Load the VBOs
 		std::vector<GLuint> VBOs = mgr.CreateVBOs(5);
@@ -169,7 +169,7 @@ OpenGL::Renderer::Renderer()
 		Statics.VBO = VBOs[2];
 		Doors.VBO   = VBOs[3];
 		// Such gluttony, demanding two vbos!
-        Doors.Other["VBO2"] = VBOs[4];
+		Doors.Other["VBO2"] = VBOs[4];
 	
 		// Then the VAOs that use the VBOs (even if they don't use them yet)
 		std::vector<GLuint> VAOs = mgr.CreateVAOs(4);
@@ -222,9 +222,9 @@ OpenGL::Renderer::Renderer()
 
 		// Fonts
 		fnt.Initialize(20);
-        
-        // Hud
-        hud.Setup(mgr, 25);
+		
+		// Hud
+		hud.Setup(mgr, 25);
 		
 		// Timing
 		ltime = glfwGetTime();
@@ -261,22 +261,22 @@ double OpenGL::Renderer::Render()
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
 	glm::mat4 mView = getViewMatrix();
-    
-    glViewport(0, hudHeight, windowWidth, viewportHeight);
-    
+	
+	glViewport(0, hudHeight, windowWidth, viewportHeight);
+	
 	errchck("pre render");
 	std::for_each(chunks.begin(), chunks.end(), [&mView](RenderChunk * rndr) {
 		rndr->Render(mView);
 	});
 	errchck("post render");
-    
-    glViewport(0, 0, windowWidth, hudHeight);
-    
+	
+	glViewport(0, 0, windowWidth, hudHeight);
+	
 	errchck("pre hud");
-    hud.Draw();
+	hud.Draw();
 	errchck("post hud");
-    
-    glViewport(0, 0, windowWidth, windowHeight);
+	
+	glViewport(0, 0, windowWidth, windowHeight);
 
 
 	// Position/Angle debug
@@ -296,7 +296,7 @@ double OpenGL::Renderer::Render()
 	errchck("post font");
 	
 	glfwSwapBuffers();
-    errchck("Post buffer swap (aka broken by OpenGL Profiler!)");
+	errchck("Post buffer swap (aka broken by OpenGL Profiler!)");
 
 	// Time since last frame (Actually useful)
 	ctime = glfwGetTime();
@@ -471,8 +471,8 @@ void OpenGL::Renderer::LoadShaders()
 	FloorProg = mgr.LoadShaders("Floor", "SolidColour");
 
 	// Fling uniform uniforms at them
-    Floor.ViewUniform     = glGetUniformLocation(FloorProg, "View");
-    Floor.Other["Colour"] = glGetUniformLocation(FloorProg, "Colour");
+	Floor.ViewUniform     = glGetUniformLocation(FloorProg, "View");
+	Floor.Other["Colour"] = glGetUniformLocation(FloorProg, "Colour");
 	// woo view
 	Walls.ViewUniform   = glGetUniformLocation(WallsProg,  "View");
 	Doors.ViewUniform   = glGetUniformLocation(DoorsProg,  "View");
@@ -493,8 +493,8 @@ void OpenGL::Renderer::LoadShaders()
 	}
 
 	// Floor
-    glUseProgram(FloorProg);
-    glUniformMatrix4fv(glGetUniformLocation(FloorProg, "Projection"), 1, GL_FALSE, ptr);
+	glUseProgram(FloorProg);
+	glUniformMatrix4fv(glGetUniformLocation(FloorProg, "Projection"), 1, GL_FALSE, ptr);
 	
 	// Done
 	glUseProgram(0);
@@ -502,7 +502,7 @@ void OpenGL::Renderer::LoadShaders()
 
 void OpenGL::Renderer::UpdatePlayerInfo(const Player& ply)
 {
-    hud.UpdatePlayerInfo(ply);
+	hud.UpdatePlayerInfo(ply);
 	vPlyPos = ply.GetPos();
 	vPlyDir = ply.GetHeading();
 #ifdef FREE_VIEW
@@ -529,7 +529,7 @@ void OpenGL::Renderer::AddRenderChunk(HasRenderChunk& chunkable)
 
 void OpenGL::Renderer::AddRenderChunk(std::function<RenderChunk*(ResourceManager&, glm::mat4 const&)> chunkfunc)
 {
-    AddRenderChunk(chunkfunc(mgr, projectionMatrix));
+	AddRenderChunk(chunkfunc(mgr, projectionMatrix));
 }
 
 

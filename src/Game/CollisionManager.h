@@ -29,7 +29,7 @@ namespace Wulf {
 
 		void UpdateDoor(const coord x, const coord y, const bool state);
 
-        OpenGL::RenderChunk * GetRenderChunk(OpenGL::ResourceManager& mgr, glm::mat4 const&);
+		OpenGL::RenderChunk * GetRenderChunk(OpenGL::ResourceManager& mgr, glm::mat4 const&);
 
 		~CollisionManager();
 
