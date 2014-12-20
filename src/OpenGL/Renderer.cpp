@@ -67,9 +67,8 @@ OpenGL::Renderer::Renderer()
 		// Open a window and create its OpenGL context
 		// TODO: Config!
 		// 5:3 aspect ratio like original game
-		// Weird values so they fit on my laptop's screen
-		windowWidth  = 1220;// 1280;
-		windowHeight = 732; // 768;
+		windowWidth  = 1280;
+		windowHeight = 768;
 		//viewportHeight = 614; 
 		//hudHeight = windowHeight - viewportHeight;
 		
