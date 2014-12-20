@@ -24,30 +24,30 @@ void main() {
 
     // Bottom left corner
     gl_Position = pos;
-    gl_Position.x += 0.5;
+    gl_Position.x -= 0.5;
     gl_Position = Projection * gl_Position;
     stp = vec3(0, 1, snum);
     EmitVertex();
 
     // Top left corner
     gl_Position = pos;
-    gl_Position.x += 0.5;
-    gl_Position.y += 1;
+    gl_Position.x -= 0.5;
+    gl_Position.y -= 1;
     gl_Position = Projection * gl_Position;
     stp = vec3(0, 0, snum);
     EmitVertex();
 
     // Bottom right corner
     gl_Position = pos;
-    gl_Position.x -= 0.5;
+    gl_Position.x += 0.5;
     gl_Position = Projection * gl_Position;
     stp = vec3(1, 1, snum);
     EmitVertex();
 
     // Top right corner
     gl_Position = pos;
-    gl_Position.x -= 0.5;
-    gl_Position.y += 1;
+    gl_Position.x += 0.5;
+    gl_Position.y -= 1;
     gl_Position = Projection * gl_Position;
     stp = vec3(1, 0, snum);
     EmitVertex();
