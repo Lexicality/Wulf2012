@@ -226,7 +226,7 @@ OpenGL::Renderer::Renderer()
 
 
 #ifdef FREE_VIEW
-		vPlyUp = glm::vec3(0, 0, 1);
+		vPlyUp = glm::vec3(0, 0, -1);
 #endif
 
 		// Fonts
