@@ -21,7 +21,7 @@ namespace arg = std::placeholders; // whee
 
 // Statix
 #ifndef FREE_VIEW
-static const glm::vec3 vPlyUp(0, 0, 1);
+static const glm::vec3 vPlyUp(0, 0, -1);
 #endif
 
 #ifdef _WIN32
