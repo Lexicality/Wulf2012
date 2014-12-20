@@ -28,7 +28,7 @@ void HUDRenderer::Setup(Wulf::OpenGL::ResourceManager& mgr, GLsizei textxureoffs
     GLsizei bgtex = textxureoffset;
     // other texes are + etc
     glActiveTexture(GL_TEXTURE0 + bgtex);
-    glBindTexture(GL_TEXTURE, mgr.LoadSingleTexture("pics/STATUSBARPIC.tga"));
+	glBindTexture(GL_TEXTURE_2D, mgr.LoadSingleTexture("pics/STATUSBARPIC.tga"));
     
     // BG Texture unit
     glUniform1i(glGetUniformLocation(shader, "bgsampler"), bgtex);
