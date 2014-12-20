@@ -74,7 +74,7 @@ OpenGL::Renderer::Renderer()
 		
 		// The hud is 1/8 of the window height
 		const double ratio = 0.2;
-		hudHeight = (static_cast<double>(windowHeight) * ratio);
+		hudHeight = static_cast<GLsizei>(0.5 + static_cast<double>(windowHeight) * ratio);
 		// Our unauthentic borderless viewport gets everything left.
 		viewportHeight = windowHeight - hudHeight;
 		if( !glfwOpenWindow( windowWidth, windowHeight, 0,0,0,0, 32,0, GLFW_WINDOW ) )
