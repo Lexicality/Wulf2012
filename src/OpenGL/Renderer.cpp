@@ -148,6 +148,8 @@ OpenGL::Renderer::Renderer()
 		// Cull triangles whose normals are not facing towards the camera
 		glEnable(GL_CULL_FACE);
 #endif
+		errchck("depth setup");
+
 		// Store our render chunks 
 		AddRenderChunk(&Walls);
 		AddRenderChunk(&Floor);
@@ -204,6 +206,8 @@ OpenGL::Renderer::Renderer()
 	
 		glBindVertexArray(0);
 
+		errchck("VAO setup");
+
 		LoadShaders();
 
 		// All textures and shit
@@ -217,7 +221,7 @@ OpenGL::Renderer::Renderer()
 		glActiveTexture(GL_TEXTURE1);
 		mgr.LoadTextureArray("sprites", StaticSprites::Start, StaticSprites::End);
 
-
+		errchck("texture loadage");
 
 
 
@@ -227,9 +231,11 @@ OpenGL::Renderer::Renderer()
 
 		// Fonts
 		fnt.Initialize(20);
+		errchck("Font setup");
 		
 		// Hud
 		hud.Setup(mgr, 25);
+		errchck("HUD setup");
 		
 		// Timing
 		ltime = glfwGetTime();
@@ -503,6 +509,8 @@ void OpenGL::Renderer::LoadShaders()
 	
 	// Done
 	glUseProgram(0);
+
+	errchck("Shader loadage");
 }
 
 void OpenGL::Renderer::UpdatePlayerInfo(const Player& ply)
