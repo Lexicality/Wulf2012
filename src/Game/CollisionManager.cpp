@@ -14,7 +14,6 @@
 #endif
 
 using namespace Wulf;
-using std::for_each;
 
 struct CollisionObj {
 	float Left;
@@ -44,9 +43,8 @@ CollisionManager CollisionManager::instance;
 
 CollisionManager::~CollisionManager()
 {
-	for_each(map.begin(), map.end(), [](const MapType::value_type& value) {
+	for (auto& value : map)
 		delete value.second;
-	});
 	delete[] indicies;
 	delete[] counts;
 }
@@ -58,10 +56,10 @@ void CollisionManager::SetMap(const Map::Map& map)
 		throw std::runtime_error("Collision map cannot hold nodemap!");
 	}
 	this->map.clear();
-	for (auto xitr = nodes.begin(), xend = nodes.end(); xitr != xend; ++xitr) {
-		for_each(xitr->begin(), xitr->end(), [this](const Map::Node& node) {
+	for (const auto& xnodes : nodes) {
+		for (const Map::Node& node : xnodes) {
 			this->map.insert(prep(node));
-		});
+		}
 	}
 }
 
@@ -107,12 +105,12 @@ Vector CollisionManager::CollisionClamp(const Entity& entity, const Vector& velo
 	std::vector<MapType::mapped_type> pnodes = grabTiles(currentNode);
     
 	// Merge ajacent faces
-	for_each(pnodes.begin(), pnodes.end(), [&pnodes](CollisionManager::MapType::mapped_type& tile1) {
+	for (auto& tile1 : pnodes ) {
 		if (tile1 == nullptr)
-			return;
-		for_each(pnodes.begin(), pnodes.end(), [&tile1](CollisionManager::MapType::mapped_type& tile2) {
+			continue;
+		for (auto& tile2 : pnodes) {
 			if (tile2 == nullptr || tile1 == tile2)
-				return;
+				continue;
 			auto& b1 = tile1->Bounds;
 			auto& b2 = tile2->Bounds;
 			if (b1.Top == b2.Top && b1.Bottom == b2.Bottom) {
@@ -122,7 +120,7 @@ Vector CollisionManager::CollisionClamp(const Entity& entity, const Vector& velo
 				else if (b1.Left == b2.Right)
 					b1.Left = b2.Left;
 				else
-					return;
+					continue;
 			} else if (b1.Left == b2.Left && b1.Right == b2.Right) {
 				// Vertical merge
 				if (b1.Top == b2.Bottom)
@@ -130,13 +128,13 @@ Vector CollisionManager::CollisionClamp(const Entity& entity, const Vector& velo
 				else if (b1.Bottom == b2.Top)
 					b1.Bottom = b2.Bottom;
 				else
-					return;
+					continue;
 			} else {
-				return;
+				continue;
 			}
 			tile2 = nullptr;
-		});
-	});
+		}
+	}
     
     // Sort the tiles so the player collides with them in order
     std::sort(pnodes.begin(), pnodes.end(), [&pos](MapType::mapped_type& a, MapType::mapped_type& b) -> bool
@@ -152,24 +150,21 @@ Vector CollisionManager::CollisionClamp(const Entity& entity, const Vector& velo
     // dump all the null pointers
 	std::vector<MapType::mapped_type> nodes;
 	nodes.reserve(pnodes.size());
-	for_each(pnodes.begin(), pnodes.end(), [&nodes](MapType::mapped_type& tile) {
+	for (auto& tile : pnodes) {
 		if (tile != nullptr)
 			nodes.push_back(tile);
-	});
+	}
 
 	// Debuggering
 	//UpdateScreen(entity, nodes);
 
 	bool collided = false;
-	const TileData *ctile;
 
 	float x = velocity.x;
 	float y = velocity.y;
 	do {
 		collided = false;
-		auto itr = nodes.begin(), end = nodes.end();
-		for (; itr != end; ++itr) {
-			ctile = *itr;
+		for (const TileData *ctile : nodes) {
             /*
 			if (ctile == nullptr)
 				continue;
@@ -259,10 +254,10 @@ void CollisionManager::UpdateScreen(const Entity& ply, const std::vector<TileDat
 	const Vector centre = ply.GetPos();
 	// Woo!~
 	add(buffdata, adjust(getObj(ply), centre));
-	for_each(tiles.begin(), tiles.end(), [&buffdata, &centre](const TileData *const tile) {
+	for (const TileData *const tile : tiles) {
 		//if (tile != nullptr && tile->Solid)
 			add(buffdata, adjust(tile->Bounds, centre));
-	});
+	}
 	// Adjust the draw calls etc.
 	numSquares = buffdata.size() / pointsPerSquare;
 	// WOO random opengl

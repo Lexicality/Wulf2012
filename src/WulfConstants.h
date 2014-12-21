@@ -28,8 +28,8 @@
 #define NO_TRIANGLE_CULLING
 #endif
 
-#if defined (_MSC_VER) && _MSC_VER < 1600
-#error This project needs at least VS2010 to compile!
+#if defined (_MSC_VER) && _MSC_VER < 1700
+#error This project needs at least VS2012 to compile!
 #endif // _MSC_VER level
 
 namespace Wulf {

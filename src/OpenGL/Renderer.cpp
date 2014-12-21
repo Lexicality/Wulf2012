@@ -276,9 +276,9 @@ double OpenGL::Renderer::Render()
 	glViewport(0, hudHeight, windowWidth, viewportHeight);
 	
 	errchck("pre render");
-	std::for_each(chunks.begin(), chunks.end(), [&mView](RenderChunk * rndr) {
+	for (auto rndr : chunks) {
 		rndr->Render(mView);
-	});
+	}
 	errchck("post render");
 	
 	glViewport(0, 0, windowWidth, hudHeight);
