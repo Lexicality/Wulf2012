@@ -8,7 +8,7 @@
 
 using namespace Wulf;
 
-Game::Game(const Difficulty::Type difficulty)
+Game::Game(const Difficulty difficulty)
 : map(nullptr), running(false), dtime(0)
 {
     Wulf::Enemies::RegisterEntities();

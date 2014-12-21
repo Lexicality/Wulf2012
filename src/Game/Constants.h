@@ -6,13 +6,11 @@
 #pragma once
 
 namespace Wulf {
-    namespace Difficulty {
-        enum Type {
-            NONE = 0,
-            BABY = 1,
-            EASY = 2,
-            MEDI = 3,
-            HARD = 4
-        };
-    }
+	enum class Difficulty {
+		NONE = 0,
+		BABY = 1,
+		EASY = 2,
+		MEDI = 3,
+		HARD = 4
+	};
 }

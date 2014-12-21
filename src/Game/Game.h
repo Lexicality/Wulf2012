@@ -12,7 +12,7 @@
 namespace Wulf {
     class Game {
     public:
-        Game(const Difficulty::Type difficulty);
+        Game(const Difficulty difficulty);
         ~Game();
         
         void LoadMap(const word MapNum);

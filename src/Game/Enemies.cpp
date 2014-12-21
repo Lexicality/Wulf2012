@@ -67,7 +67,7 @@ namespace Wulf {
     class EnemySpawner {
     public:
         EnemySpawner(word SpawnNumber, const std::string classname, const AIActivity activity);
-        bool CheckSpawn(const Map::Node& node, const Difficulty::Type cdiff, Enemies::Enemy*& spawned) const;
+        bool CheckSpawn(const Map::Node& node, const Difficulty cdiff, Enemies::Enemy*& spawned) const;
     private:
         Enemies::Enemy* makeone(const Map::Node& node, const word dir) const;
         AIActivity activity;
@@ -106,7 +106,7 @@ std::vector<Enemies::Enemy*> Enemies::SpawnRelevent(const Map::Map& map, const P
     g_ply = &ply;
     std::vector<Enemy*> ret;
         
-    const Difficulty::Type& difficulty = ply.GetDifficulty();
+    const Difficulty& difficulty = ply.GetDifficulty();
     const auto& nodes = map.nodes;
     Enemies::Enemy *ptr;
     
@@ -187,7 +187,7 @@ void Enemies::Instances::Guard::Attack()
     EasyMin = SpawnNumber - 3;
 }
 
-bool EnemySpawner::CheckSpawn(const Map::Node& node, const Difficulty::Type cdiff, Enemies::Enemy*& spawned) const
+bool EnemySpawner::CheckSpawn(const Map::Node& node, const Difficulty cdiff, Enemies::Enemy*& spawned) const
 {
     word mob = node.metadata;
     if (mob < EasyMin || mob > HardMax)
