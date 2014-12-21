@@ -116,6 +116,7 @@ Vector CollisionManager::CollisionClamp(const Entity& entity, const Vector& velo
 			auto& b1 = tile1->Bounds;
 			auto& b2 = tile2->Bounds;
 			if (b1.Top == b2.Top && b1.Bottom == b2.Bottom) {
+				// Horizontal merge
 				if (b1.Right == b2.Left)
 					b1.Right = b2.Right;
 				else if (b1.Left == b2.Right)
@@ -123,6 +124,7 @@ Vector CollisionManager::CollisionClamp(const Entity& entity, const Vector& velo
 				else
 					return;
 			} else if (b1.Left == b2.Left && b1.Right == b2.Right) {
+				// Vertical merge
 				if (b1.Top == b2.Bottom)
 					b1.Top = b2.Top;
 				else if (b1.Bottom == b2.Top)
