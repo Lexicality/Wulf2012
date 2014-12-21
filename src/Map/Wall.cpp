@@ -40,12 +40,12 @@ void Map::Wall::SetStart(const Node& start)
 	float x = start.x;
 	float y = start.y;
 	switch (direction) {
-		case DIRECTION_SOUTH:
-		case DIRECTION_NORTH:
+		case Direction::South:
+		case Direction::North:
 			y += 1;
 			break;
-		case DIRECTION_WEST:
-		case DIRECTION_EAST:
+		case Direction::West:
+		case Direction::East:
 			x -= 1;
 			break;
 	}
@@ -53,13 +53,13 @@ void Map::Wall::SetStart(const Node& start)
 	x += 0.5;
 	y -= 0.5;
 	switch (direction) {
-		case DIRECTION_NORTH:
-		case DIRECTION_EAST:
+		case Direction::North:
+		case Direction::East:
 			points[1] = Vector(x, y, 0);
 			points[2] = Vector(x, y, 1);
 			break;	
-		case DIRECTION_SOUTH:
-		case DIRECTION_WEST:
+		case Direction::South:
+		case Direction::West:
 			points[0] = Vector(x, y, 0);
 			points[3] = Vector(x, y, 1);
 	}
@@ -82,13 +82,13 @@ void Map::Wall::SetEnd(const Node& end)
 	x -= 0.5;
 	y += 0.5;
 	switch (direction) {
-		case DIRECTION_NORTH:
-		case DIRECTION_EAST:
+		case Direction::North:
+		case Direction::East:
 			points[0] = Vector(x, y, 0);
 			points[3] = Vector(x, y, 1);
 			break;	
-		case DIRECTION_SOUTH:
-		case DIRECTION_WEST:
+		case Direction::South:
+		case Direction::West:
 			points[1] = Vector(x, y, 0);
 			points[2] = Vector(x, y, 1);
 	}
@@ -102,7 +102,7 @@ void Map::Wall::SetEnd(const Node& end)
 void Map::Wall::SetMaterial(const Material material)
 {
 	this->material = material;//(material - 1) * 2;
-	if (direction == DIRECTION_NORTH || direction == DIRECTION_SOUTH) {
+	if (direction == Direction::North || direction == Direction::South) {
 		if (material != 40)
 			this->material++;
 	} else if (material == 40)
@@ -139,12 +139,12 @@ void Map::Wall::generateSTPs()
 	Material mat = material;
 	unsigned short int len;
 	switch (direction) {
-		case DIRECTION_SOUTH:
-		case DIRECTION_NORTH:
+		case Direction::South:
+		case Direction::North:
 			len =  start->x - end->x + 1;
 			break;
-		case DIRECTION_WEST:
-		case DIRECTION_EAST:
+		case Direction::West:
+		case Direction::East:
 			len = end->y - start->y + 1;
 	}
 	stps[0] = Vector(0,   1, mat);
@@ -157,20 +157,20 @@ void Map::Wall::generateSTPs()
 	std::string directionName(const Direction dir)
     {
 		switch (dir) {
-		case DIRECTION_SOUTH:
+		case Direction::South:
 			return "south";
-		case DIRECTION_WEST:
+		case Direction::West:
 			return "west";
-		case DIRECTION_EAST:
+		case Direction::East:
 			return "east";
-		case DIRECTION_NORTH:
+		case Direction::North:
 			return "north";
 		}
 		return "invalid";
 	}
 	std::string vertOrHori(const Direction dir)
     {
-		if (dir == DIRECTION_SOUTH || dir == DIRECTION_NORTH)
+		if (dir == Direction::South || dir == Direction::North)
 			return "horisontal";
 		return "vertical";
 	}

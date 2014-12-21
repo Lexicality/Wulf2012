@@ -34,10 +34,10 @@
 
 namespace Wulf {
 	enum Direction {
-		DIRECTION_NORTH,
-		DIRECTION_EAST,
-		DIRECTION_SOUTH,
-		DIRECTION_WEST
+		North,
+		East,
+		South,
+		West
 	};
 	typedef unsigned short int Material;
 	typedef glm::vec3 Vector;

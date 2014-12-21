@@ -83,11 +83,11 @@ void Node::ParseMetaData()
 
 std::unique_ptr<Wall> Node::GenWall(const Direction dir)
 {
-    assert(dir == DIRECTION_EAST || dir == DIRECTION_SOUTH);
+    assert(dir == Direction::East || dir == Direction::South);
     Wall *wall = nullptr;
-    if (dir == DIRECTION_EAST) {
+    if (dir == Direction::East) {
         hWallStart(wall);
-    } else if (dir == DIRECTION_SOUTH) {
+    } else if (dir == Direction::South) {
         vWallStart(wall);
     }
     return std::unique_ptr<Wall>(wall);
@@ -95,18 +95,18 @@ std::unique_ptr<Wall> Node::GenWall(const Direction dir)
 
 void Node::vWallStart(Wulf::Map::Wall*& wall)
 {
-    if (vtested || !walls[DIRECTION_EAST])
+    if (vtested || !walls[Direction::East])
         return;
     
     const bool air = !this->wall;
     
-    wall = new Wall(air ? DIRECTION_WEST : DIRECTION_EAST);
+    wall = new Wall(air ? Direction::West : Direction::East);
     
     Material mat = material;
     if (air)
-        mat = neighbours[DIRECTION_EAST]->material;
+        mat = neighbours[Direction::East]->material;
     
-    if (door || (!air && neighbours[DIRECTION_EAST]->door))
+    if (door || (!air && neighbours[Direction::East]->door))
         mat = Wulf::Doors::WallTexture;
     
     wall->SetMaterial(mat);
@@ -123,35 +123,35 @@ void Node::vWallStart(Wulf::Map::Wall*& wall)
 
 void Node::vWallWalk(const Material mat, const bool air, const Node*& last)
 {
-    if (!walls[DIRECTION_EAST])
+    if (!walls[Direction::East])
         return;
     
-    const Node *n = air ? neighbours[DIRECTION_EAST] : this;
+    const Node *n = air ? neighbours[Direction::East] : this;
     if (!n->wall || n->material != mat)
         return;
     
     vtested = true;
     last = this;
     
-    Node *next = neighbours[DIRECTION_SOUTH];
+    Node *next = neighbours[Direction::South];
     if (next != nullptr)
         next->vWallWalk(mat, air, last);
 }
 
 void Node::hWallStart(Wulf::Map::Wall*& wall)
 {
-    if (htested || !walls[DIRECTION_SOUTH])
+    if (htested || !walls[Direction::South])
     return;
     
     const bool air = !this->wall;
     
-    wall = new Wall(air ? DIRECTION_NORTH : DIRECTION_SOUTH);
+    wall = new Wall(air ? Direction::North : Direction::South);
     
     Material mat = material;
     if (air)
-        mat = neighbours[DIRECTION_SOUTH]->material;
+        mat = neighbours[Direction::South]->material;
     
-    if (door || (!air && neighbours[DIRECTION_SOUTH]->door))
+    if (door || (!air && neighbours[Direction::South]->door))
         mat = Wulf::Doors::WallTexture;
     
     wall->SetMaterial(mat);
@@ -168,17 +168,17 @@ void Node::hWallStart(Wulf::Map::Wall*& wall)
 
 void Node::hWallWalk(const Material mat, const bool air, const Node*& last)
 {
-    if (!walls[DIRECTION_SOUTH])
+    if (!walls[Direction::South])
         return;
     
-    const Node *n = air ? neighbours[DIRECTION_SOUTH] : this;
+    const Node *n = air ? neighbours[Direction::South] : this;
     if (!n->wall || n->material != mat)
         return;
     
     htested = true;
     last = this;
     
-    Node *next = neighbours[DIRECTION_EAST];
+    Node *next = neighbours[Direction::East];
     if (next != nullptr)
         next->hWallWalk(mat, air, last);
 }
@@ -188,15 +188,15 @@ Direction Node::GetSpawnDirection() const
 {
 	switch (metadata) {
 		case 0x13:
-			return DIRECTION_NORTH;
+			return Direction::North;
 		case 0x14:
-			return DIRECTION_EAST;
+			return Direction::East;
 		case 0x15:
-			return DIRECTION_SOUTH;
+			return Direction::South;
 		case 0x16:
-			return DIRECTION_WEST;
+			return Direction::West;
 		default:
-			return DIRECTION_NORTH;
+			return Direction::North;
 	}
 }
 
@@ -265,16 +265,16 @@ static
 Direction reverseDirection(const Direction dir)
 {
 	switch (dir) {
-	case DIRECTION_SOUTH:
-		return DIRECTION_NORTH;
-	case DIRECTION_WEST:
-		return DIRECTION_EAST;
-	case DIRECTION_EAST:
-		return DIRECTION_WEST;
-	case DIRECTION_NORTH:
-		return DIRECTION_SOUTH;
+	case Direction::South:
+		return Direction::North;
+	case Direction::West:
+		return Direction::East;
+	case Direction::East:
+		return Direction::West;
+	case Direction::North:
+		return Direction::South;
 	}
-	return DIRECTION_SOUTH;
+	return Direction::South;
 }
 
 // hurr

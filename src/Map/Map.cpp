@@ -117,23 +117,23 @@ void Map::Map::ParseNodes()
 			Node& node = cnodes.back();
 			// Space building
 			if (x > 0)
-				node.AddNeighbour(DIRECTION_WEST, nodes[x - 1][y]);
+				node.AddNeighbour(Direction::West, nodes[x - 1][y]);
 			if (y > 0)
-				node.AddNeighbour(DIRECTION_NORTH, nodes[x][y - 1]);
+				node.AddNeighbour(Direction::North, nodes[x][y - 1]);
 			// Spawnpoint
 			if (node.spawn) {
 				spawnPos = Vector(node.x, node.y, 0.65f);
 				switch(node.GetSpawnDirection()) {
-					case DIRECTION_NORTH:
+					case Direction::North:
 						spawnAng = 3.1415f * 1.5f;
 						break;
-					case DIRECTION_EAST:
+					case Direction::East:
 						spawnAng = 0.0f;
 						break;
-					case DIRECTION_SOUTH:
+					case Direction::South:
 						spawnAng = 3.1415f * 0.5f;
 						break;
-					case DIRECTION_WEST:
+					case Direction::West:
 						spawnAng = 3.1415f;
 						break;
 				}
@@ -165,13 +165,13 @@ void Map::Map::ParseWalls()
 			Node& node = *yitr;
 			// Check for vertical walls
             {
-                std::unique_ptr<Wall> ptr = node.GenWall(DIRECTION_SOUTH);
+                std::unique_ptr<Wall> ptr = node.GenWall(Direction::South);
                 if (ptr != nullptr)
                     walls.push_back(std::move(*ptr));
             }
 			// Now do the horisontals
             {
-                std::unique_ptr<Wall> ptr = node.GenWall(DIRECTION_EAST);
+                std::unique_ptr<Wall> ptr = node.GenWall(Direction::East);
                 if (ptr != nullptr)
                     walls.push_back(std::move(*ptr));
             }
@@ -260,8 +260,8 @@ void Map::Map::DebugOutput()
                 std::cout << node.material;
             else
                 std::cout << ' ';
-            std::cout << (node.walls[DIRECTION_EAST] ? '|' : ' ');
-            honk << (node.walls[DIRECTION_SOUTH] ? "---" : "   ");
+            std::cout << (node.walls[Direction::East] ? '|' : ' ');
+            honk << (node.walls[Direction::South] ? "---" : "   ");
             honk << ' ';
         }
         std::cout << std::endl;
