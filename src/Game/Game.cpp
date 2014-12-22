@@ -5,6 +5,7 @@
 //
 #include "Game/Game.h"
 #include "Game/CollisionManager.h"
+#include "Map/Doors.h"
 
 using namespace Wulf;
 
@@ -30,6 +31,8 @@ void Game::LoadMap(const word mapnum)
     Wulf::Enemies::SpawnRelevent(*map, ply);
     Wulf::CollisionManager::GetInstance().SetMap(*map);
     running = true;
+
+	map->doors.at(11).Open();
 }
 
 bool Game::IsRunning() const
@@ -49,5 +52,9 @@ void Game::Run()
     ply.ProcessUserInput(in, dtime);
     rendr.UpdatePlayerInfo(ply);
 	emgr.Think(dtime);
+	map->DoorThink(dtime);
+	for (Doors::DoorInfo& door : map->doors) {
+		rendr.UpdateDoor(door.doorID, door.openPercent());
+	}
     dtime = rendr.Render();
 }

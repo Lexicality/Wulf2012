@@ -30,6 +30,7 @@ namespace Wulf {
             GLuint GetPackedQuads  (VectorVector& packed) const;
             GLuint GetPackedSprites(std::vector<short int>& packed) const;
             GLuint GetPackedDoors  (std::vector<short int>& packed) const;
+			void DoorThink(double dtime);
             
             // Vars
             std::array<std::vector<Node>, 64> nodes;

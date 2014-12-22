@@ -7,6 +7,7 @@
 
 #include "WulfConstants.h"
 #include "Map/Constants.h"
+#include "Map/Doors.h"
 #include "Map/Wall.h"
 #include <utility>
 #include <memory>
@@ -48,6 +49,8 @@ namespace Wulf {
             StaticSprites::StaticSprite sprite;
 
             bool walls[4];
+
+			Doors::DoorInfo* doorInfo;
             
         private:
             Node *neighbours[4];

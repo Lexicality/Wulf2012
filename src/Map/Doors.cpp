@@ -5,7 +5,7 @@ using namespace Wulf::Doors;
 
 
 DoorInfo::DoorInfo(coord x, coord y, word data)
-: x(x), y(y), tex(BaseTexture), dir(Horizontal), openPercent(0), locked(false)
+: x(x), y(y), tex(BaseTexture), dir(Horizontal), status(OpeningStatus::Closed), openPercentReal(0), locked(false)
 {
 	switch(data) {
 	case VertNormal:
@@ -35,4 +35,39 @@ DoorInfo::DoorInfo(coord x, coord y, word data)
 	else if (data == VertSilver || data == HoriNormal)
 		key = SilverKey;
 	// else key = random garbage woo fake tristate
+}
+
+void DoorInfo::Open() {
+	locked = false;
+	status = OpeningStatus::Opening;
+	closeCountdown = CloseAfter;
+}
+
+void DoorInfo::Think(double dtime) {
+	if (status == OpeningStatus::Closed)
+		return;
+	if (status == OpeningStatus::Open) {
+		closeCountdown -= dtime;
+		if (closeCountdown > 0)
+			return;
+		status = OpeningStatus::Closing;
+	}
+	double openAmt = dtime * OpenSpeed;
+	if (status == OpeningStatus::Opening) {
+		openPercentReal += openAmt;
+		if (openPercentReal >= 1) {
+			status = OpeningStatus::Open;
+			openPercentReal = 1;
+		}
+	} else {
+		openPercentReal -= openAmt;
+		if (openPercentReal <= 0) {
+			status = OpeningStatus::Closed;
+			openPercentReal = 0;
+		}
+	}
+}
+
+byte DoorInfo::openPercent() {
+	return static_cast<byte>(openPercentReal * 100 + 0.5);
 }

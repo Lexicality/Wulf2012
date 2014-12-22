@@ -30,20 +30,38 @@ namespace Wulf {
 		typedef bool Direction;
 		static const Direction Vertical   = true;
 		static const Direction Horizontal = false;
+		// Opening/shutting
+		enum class OpeningStatus {
+			Opening,
+			Open,
+			Closing,
+			Closed
+		};
+		static const double OpenSpeed = 1.0 / 3; // 3 second opening time
+		static const double CloseAfter = 10; // Automatically close door after 10s
 
-		struct DoorInfo {
+
+		class DoorInfo {
+		public:
 			word doorID;
 
 			coord x, y;
 			Material tex;
 			Direction dir;
 
-			byte openPercent;
+			byte openPercent();
 
 			bool locked;
 			KeyType key; // Do not check this value if locked == false.
 
 			DoorInfo(coord x, coord y, word data);
+			void Open();
+			void Think(double dtime);
+
+		private:
+			OpeningStatus status;
+			double closeCountdown;
+			double openPercentReal;
 		};
 
 		static inline bool IsDoor(const word data) {

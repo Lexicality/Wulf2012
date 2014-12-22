@@ -149,9 +149,11 @@ void Map::Map::ParseNodes()
 			}
 			// Daws
 			if (node.door) {
-				doors.push_back(Doors::DoorInfo(node.x, node.y, node.blockdata));
+				doors.emplace_back(node.x, node.y, node.blockdata);
+				Doors::DoorInfo& doorInfo = doors.back();
+				node.doorInfo = &doorInfo;
+				doorInfo.doorID = doors.size() - 1;
 			}
-            
 		}
 	}
 }
@@ -317,6 +319,12 @@ GLuint Map::Map::GetPackedDoors(std::vector<short int>& packed) const
 			packed.push_back(0);
 	}
 	return res;
+}
+
+void Map::Map::DoorThink(double dtime) {
+	for (auto& door : doors) {
+		door.Think(dtime);
+	}
 }
 
 word readShort(PhysFS::FileStream& str)
