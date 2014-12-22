@@ -4,6 +4,7 @@
 // This code is freely available under the MIT licence.
 //
 #include "Map/Node.h"
+#include "Map/Doors.h"
 #include <cassert>
 
 #define self (*this)

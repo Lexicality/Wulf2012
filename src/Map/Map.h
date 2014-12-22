@@ -16,6 +16,7 @@
 #include "Map/Constants.h"
 #include "Map/Node.h"
 #include "Map/Wall.h"
+#include "Map/Doors.h"
 
 
 namespace Wulf {
