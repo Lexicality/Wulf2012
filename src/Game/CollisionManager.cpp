@@ -337,7 +337,7 @@ CollisionManager::KeyType CollisionManager::key(const coord x, const coord y) co
 inline
 CollisionManager::KeyType CollisionManager::key(const float x, const float y) const
 {
-	return std::make_pair(static_cast<coord>(std::floor(x)), static_cast<coord>(std::floor(y)));
+	return std::make_pair(static_cast<coord>(std::floor(x+.5)), static_cast<coord>(std::floor(y+.5)));
 }
 
 inline
