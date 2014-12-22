@@ -15,6 +15,8 @@
 
 using namespace Wulf;
 
+void errchck(const char* str);
+
 struct CollisionObj {
 	float Left;
 	float Top;
@@ -246,9 +248,10 @@ void add(std::vector<float>& buff, const CollisionObj& obj)
 const size_t pointsPerSquare = 2 * 4;
 const size_t maxNumSquares = 10;
 
-/*
 void CollisionManager::UpdateScreen(const Entity& ply, const std::vector<TileData*>& tiles) const
  {
+	if (!mRenderChunk.VAO)
+		return;
 	std::vector<float> buffdata;
 	buffdata.reserve(pointsPerSquare * maxNumSquares);
 	const Vector centre = ply.GetPos();
@@ -267,7 +270,6 @@ void CollisionManager::UpdateScreen(const Entity& ply, const std::vector<TileDat
 	glBufferSubData(GL_ARRAY_BUFFER, 0, sizeof(float) * buffdata.size(), &buffdata[0]);
 	glBindBuffer(GL_ARRAY_BUFFER, prevBuff);
 }
-*/
 
 OpenGL::RenderChunk * CollisionManager::GetRenderChunk(OpenGL::ResourceManager& mgr, glm::mat4 const&)
 {
@@ -282,7 +284,8 @@ OpenGL::RenderChunk * CollisionManager::GetRenderChunk(OpenGL::ResourceManager& 
 	glUseProgram(mRenderChunk.Program);
 	{
 		GLuint colourloc = glGetUniformLocation(mRenderChunk.Program, "Colour");
-		glUniform3i(colourloc, 234, 92, 37);
+		auto a = [](int i) -> GLfloat { return static_cast<GLfloat>(i) / 255; };
+		glUniform3f(colourloc, a(234), a(92), a(37));
 	}
 	glUseProgram(0);
 
@@ -306,12 +309,10 @@ OpenGL::RenderChunk * CollisionManager::GetRenderChunk(OpenGL::ResourceManager& 
 		indicies[i] = i * 4;
 		  counts[i] = 4;
 	}
-	/*
-	mRenderChunk.RenderFunction = [this](const RenderChunk& self) {
+	mRenderChunk.RenderFunction = [this](const OpenGL::RenderChunk& self) {
 		if (numSquares > 0)
 			glMultiDrawArrays(GL_LINE_LOOP, indicies, counts, numSquares);
 	};
-	*/
 
 	return &mRenderChunk;
 }
