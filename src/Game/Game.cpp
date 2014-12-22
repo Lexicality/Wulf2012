@@ -9,7 +9,7 @@
 using namespace Wulf;
 
 Game::Game(const Difficulty difficulty)
-: map(nullptr), running(false), dtime(0)
+: map(nullptr), running(false), dtime(0), emgr(EntityManager::GetInstance())
 {
     Wulf::Enemies::RegisterEntities();
     rendr.AddRenderChunk(Wulf::Enemies::GetRenderChunk);
@@ -48,5 +48,6 @@ void Game::Run()
     }
     ply.ProcessUserInput(in, dtime);
     rendr.UpdatePlayerInfo(ply);
+	emgr.Think(dtime);
     dtime = rendr.Render();
 }

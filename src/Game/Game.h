@@ -8,6 +8,7 @@
 #include "Map/Map.h"
 #include "Game/Player.h"
 #include "Game/InputManager.h"
+#include "Game/EntityManager.h"
 
 namespace Wulf {
     class Game {
@@ -26,6 +27,7 @@ namespace Wulf {
         Wulf::Input::Manager input;
         Wulf::Player ply;
         Wulf::Map::Map *map;
+		Wulf::EntityManager& emgr;
         bool running;
         double dtime;
     };
