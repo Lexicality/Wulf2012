@@ -125,16 +125,16 @@ void Map::Map::ParseNodes()
 				spawnPos = Vector(node.x, node.y, 0.65f);
 				switch(node.GetSpawnDirection()) {
 					case Direction::North:
-						spawnAng = 3.1415f * 1.5f;
+						spawnAng = 3.1415f;
 						break;
 					case Direction::East:
-						spawnAng = 0.0f;
+						spawnAng = 3.1415f * 1.5f;
 						break;
 					case Direction::South:
-						spawnAng = 3.1415f * 0.5f;
+						spawnAng = 0.0f;
 						break;
 					case Direction::West:
-						spawnAng = 3.1415f;
+						spawnAng = 3.1415f * 0.5f;
 						break;
 				}
 			}
