@@ -158,11 +158,8 @@ void Map::Map::ParseNodes()
 
 void Map::Map::ParseWalls()
 {
-    auto xitr = nodes.begin(), xend = nodes.end();
-	for (; xitr != xend; ++xitr) {
-        auto yitr = xitr->begin(), yend = xitr->end();
-		for (; yitr != yend; ++yitr) {
-			Node& node = *yitr;
+	for (auto& xnodes : nodes) {
+		for (Node& node : xnodes) {
 			// Check for vertical walls
             {
                 std::unique_ptr<Wall> ptr = node.GenWall(Direction::South);
@@ -280,14 +277,11 @@ GLuint Map::Map::GetPackedQuads(VectorVector& packed) const
 	// Each wall has 4 vertexes and 4 stps, making 8 entries
 	const GLuint numEntries = numWalls * 8;
 	packed.reserve(numEntries);
-    auto itr = walls.begin(), end = walls.end();
-	for (; itr < end; ++itr) {
-		const VectorVector& wPoints = itr->points;
-		const VectorVector& wStps   = itr->stps;
+	for (auto& wall : walls) {
 		// Loop through each of the four points and shove them at the back of each one
 		for (int i = 0; i < 4; ++i) {
-			packed.push_back(wPoints[i]);
-			packed.push_back(wStps  [i]);
+			packed.push_back(wall.points[i]);
+			packed.push_back(wall.stps  [i]);
 		}
 	}
 	return numWalls;
@@ -299,9 +293,7 @@ GLuint Map::Map::GetPackedSprites(std::vector<short int>& packed) const
 	packed.empty();
 	packed.reserve(res * 3);
     
-	auto itr = sprites.begin(), end = sprites.end();
-	for (; itr < end; ++itr) {
-		auto& spr = *itr;
+	for (auto& spr : sprites) {
 		packed.push_back(spr.x);
 		packed.push_back(spr.y);
 		packed.push_back(spr.spr);
@@ -315,9 +307,7 @@ GLuint Map::Map::GetPackedDoors(std::vector<short int>& packed) const
 	GLuint res = doors.size();
 	packed.empty();
 	packed.reserve(res * 4);
-    auto itr = doors.begin(), end = doors.end();
-	for (; itr != end; ++itr) {
-		auto& door = *itr;
+	for (auto& door : doors) {
 		packed.push_back(door.x);
 		packed.push_back(door.y);
 		packed.push_back(static_cast<signed short int>(door.tex));
