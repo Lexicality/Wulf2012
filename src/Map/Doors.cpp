@@ -68,6 +68,14 @@ void DoorInfo::Think(double dtime) {
 	}
 }
 
-byte DoorInfo::openPercent() {
+byte DoorInfo::openPercent() const {
 	return static_cast<byte>(openPercentReal * 100 + 0.5);
+}
+
+bool DoorInfo::isSolid() const {
+	if (status == OpeningStatus::Open)
+		return false;
+	if (status == OpeningStatus::Closed)
+		return true;
+	return openPercentReal < 0.8;
 }

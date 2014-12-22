@@ -49,7 +49,8 @@ namespace Wulf {
 			Material tex;
 			Direction dir;
 
-			byte openPercent();
+			byte openPercent() const;
+			bool isSolid() const;
 
 			bool locked;
 			KeyType key; // Do not check this value if locked == false.

@@ -10,7 +10,8 @@
 using namespace Wulf;
 
 Game::Game(const Difficulty difficulty)
-: map(nullptr), running(false), dtime(0), emgr(EntityManager::GetInstance())
+: map(nullptr), running(false), dtime(0)
+, emgr(EntityManager::GetInstance()), cmgr(CollisionManager::GetInstance())
 {
     Wulf::Enemies::RegisterEntities();
     rendr.AddRenderChunk(Wulf::Enemies::GetRenderChunk);
@@ -29,7 +30,7 @@ void Game::LoadMap(const word mapnum)
     rendr.SetMap(*map);
     ply.ProcessMapInput(*map);
     Wulf::Enemies::SpawnRelevent(*map, ply);
-    Wulf::CollisionManager::GetInstance().SetMap(*map);
+    cmgr.SetMap(*map);
     running = true;
 
 	map->doors.at(11).Open();
@@ -55,6 +56,7 @@ void Game::Run()
 	map->DoorThink(dtime);
 	for (Doors::DoorInfo& door : map->doors) {
 		rendr.UpdateDoor(door.doorID, door.openPercent());
+		cmgr.UpdateDoor(door.x, door.y, door.isSolid());
 	}
     dtime = rendr.Render();
 }

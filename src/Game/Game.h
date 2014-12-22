@@ -28,6 +28,7 @@ namespace Wulf {
         Wulf::Player ply;
         Wulf::Map::Map *map;
 		Wulf::EntityManager& emgr;
+		Wulf::CollisionManager& cmgr;
         bool running;
         double dtime;
     };

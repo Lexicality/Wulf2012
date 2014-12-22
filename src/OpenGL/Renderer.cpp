@@ -316,7 +316,7 @@ double OpenGL::Renderer::Render()
 
 	// Temporary spasticated door slamming to show off doors.
 	// (Should not be here but I needed ctime)
-	UpdateDoor(11, static_cast<byte>(std::floor((std::sin(ctime) + 1) * 50)));
+	// UpdateDoor(11, static_cast<byte>(std::floor((std::sin(ctime) + 1) * 50)));
 
 	return dtime;
 }
