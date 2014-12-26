@@ -7,7 +7,7 @@
 
 using namespace Wulf;
 
-Entity::Entity() 
+Entity::Entity()
 	: mPos(0, 0, 0)
 	, mDir(1, 0, 0)
 	, mBounds(0.75, 0.75, 1)
@@ -22,7 +22,7 @@ void Entity::Move(const Vector& vel) {
 }
 
 /*
-Entity::Entity(Entity&& other) 
+Entity::Entity(Entity&& other)
 	: mPos(other.mPos)
 	, mDir(other.mDir)
 	, mBounds(other.mBounds)

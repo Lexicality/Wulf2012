@@ -26,7 +26,6 @@ namespace PhysFS
     return PHYSFS_isInit() != 0;
   }
 
-
   StringVector supportedArchiveTypes()
   {
     const PHYSFS_ArchiveInfo** lst = PHYSFS_supportedArchiveTypes();
@@ -37,7 +36,6 @@ namespace PhysFS
     // lst is static data, don't free
   }
 
-
   StringVector getCdRomDirs()
   {
     StringVector list;
@@ -47,7 +45,6 @@ namespace PhysFS
     PHYSFS_freeList(lst);
     return list;
   }
-
 
   void addToSearchPath(const std::string& location, bool append)
   {
@@ -74,7 +71,6 @@ namespace PhysFS
       throw Exception(PHYSFS_getLastError());
     return mount;
   }
-
 
   StringVector getSearchPath()
   {
@@ -103,8 +99,6 @@ namespace PhysFS
     return baseDir;
   }
 
-
-
   std::string getWriteDir()
   {
     return PHYSFS_getWriteDir();
@@ -116,9 +110,7 @@ namespace PhysFS
       throw Exception(PHYSFS_getLastError());
   }
 
-
-
-  void setSaneConfig(const std::string& organisation, const std::string& appName, 
+  void setSaneConfig(const std::string& organisation, const std::string& appName,
     const std::string& archiveExt, bool includeCdDrives, bool archivesFirst)
   {
     if (!PHYSFS_setSaneConfig(organisation.c_str(), appName.c_str(), archiveExt.c_str(),
@@ -127,8 +119,6 @@ namespace PhysFS
       throw Exception(PHYSFS_getLastError());
     }
   }
-
-
 
   bool exists(const std::string& path)
   {
@@ -145,7 +135,6 @@ namespace PhysFS
     return PHYSFS_isSymbolicLink(path.c_str()) != 0;
   }
 
-
   int64 getLastModTime(const std::string& file)
   {
     int64 timestamp = PHYSFS_getLastModTime(file.c_str());
@@ -154,20 +143,17 @@ namespace PhysFS
     return timestamp;
   }
 
-
   void mkdir(const std::string& dir)
   {
     if (!PHYSFS_mkdir(dir.c_str()))
       throw Exception(PHYSFS_getLastError());
   }
 
-
   void remove(const std::string& path)
   {
     if (!PHYSFS_delete(path.c_str()))
       throw Exception(PHYSFS_getLastError());
   }
-
 
   std::string getRealDir(const std::string& file)
   {
@@ -176,7 +162,6 @@ namespace PhysFS
       throw Exception("PhysFS::getRealDir: File not found");
     return dir;
   }
-
 
   StringVector enumerateFiles(const std::string& dir)
   {

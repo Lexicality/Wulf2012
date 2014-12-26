@@ -3,7 +3,6 @@
 using namespace Wulf;
 using namespace Wulf::Doors;
 
-
 DoorInfo::DoorInfo(coord x, coord y, word data)
 : x(x), y(y), tex(BaseTexture), dir(Horizontal), status(OpeningStatus::Closed), openPercentReal(0), locked(false)
 {

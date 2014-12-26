@@ -74,12 +74,11 @@ namespace Wulf {
             RenderChunk Floor, Statics, Doors, Enemies;
             WallsRenderChunk Walls;
 
-
             // Timing
             double ltime;
-            
+
             // Rendery stuff
-            bool                 bRendering; 
+            bool                 bRendering;
             std::vector<GLint>   vFirsts;
             std::vector<GLsizei> vCounts;
 
@@ -89,9 +88,6 @@ namespace Wulf {
             FontRenderer    fnt;
             HUDRenderer     hud;
             char *strbuff;
-
-
-
         };
     }
 }

@@ -25,7 +25,7 @@ namespace Wulf {
         public:
             virtual ~Enemy() {}
             virtual void Think(double dtime) = 0;
-            
+
             void SetSprite(const Sprite newspr) { mSprite = newspr; }
             Sprite GetSprite() const { return mSprite; }
             byte GetActivity() const { return mActivity; }

@@ -7,7 +7,6 @@
 #include "WulfConstants.h"
 
 namespace Wulf {
-
 	namespace StaticSprites {
 		enum StaticSprite {
 			NONE   = -1,
@@ -69,7 +68,7 @@ namespace Wulf {
 		static const int End    = Start + Max - 1; // Last file is 049.tga
 		static const word First = 23;              // First sprite block number is 0x17
 		static const word Last  = First + Max - 1; // Last is 0x46
-        
+
 		static inline StaticSprite ToSprite(const word data) {
 			return static_cast<StaticSprite>(data - First);
 		}
@@ -79,7 +78,7 @@ namespace Wulf {
 		static const word GuardStart	= 54;
 		static const word GuardEnd		= 102;
 		// This is a lie. The dogs lack idle animations, so we fake them.
-		static const word DogStart		= 95; 
+		static const word DogStart		= 95;
 		static const word DogEnd		= 141;
 		static const word OfficerStart	= 142;
 		static const word OfficerEnd	= 190;
@@ -95,5 +94,4 @@ namespace Wulf {
 	static const word AmbushTile = 0x6A;
 	static const word FirstWall  = 1;
 	static const word LastWall   = AmbushTile - 1;
-
 }

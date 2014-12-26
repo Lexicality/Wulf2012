@@ -20,14 +20,13 @@
 using namespace Wulf;
 
 Map::Wall::Wall(const Direction direction)
-	: material(0), direction(direction) 
+	: material(0), direction(direction)
 	, start(nullptr), end(nullptr)
 	, points(4), stps(4)
 {
 #ifdef DEBUG_WALLS_SPAM
 	std::cout << "Defining a " << directionName(direction) << " facing " << vertOrHori(direction) << " wall ";
 #endif
-
 }
 
 void Map::Wall::SetStart(const Node& start)
@@ -57,7 +56,7 @@ void Map::Wall::SetStart(const Node& start)
 		case Direction::East:
 			points[1] = Vector(x, y, 0);
 			points[2] = Vector(x, y, 1);
-			break;	
+			break;
 		case Direction::South:
 		case Direction::West:
 			points[0] = Vector(x, y, 0);
@@ -86,7 +85,7 @@ void Map::Wall::SetEnd(const Node& end)
 		case Direction::East:
 			points[0] = Vector(x, y, 0);
 			points[3] = Vector(x, y, 1);
-			break;	
+			break;
 		case Direction::South:
 		case Direction::West:
 			points[1] = Vector(x, y, 0);
@@ -96,7 +95,6 @@ void Map::Wall::SetEnd(const Node& end)
 	std::cout << "\tEnd: " << -x << "," << y << std::endl;
 #endif
 	generateSTPs();
-
 }
 
 void Map::Wall::SetMaterial(const Material material)
@@ -111,11 +109,10 @@ void Map::Wall::SetMaterial(const Material material)
 #ifdef DEBUG_WALLS_SPAM
 	std::cout << "of material " << material << std::endl;
 #endif
-
 }
 
 Map::Wall::Wall(Map::Wall&& other)
-: material(other.material), direction(other.direction) 
+: material(other.material), direction(other.direction)
 , start(other.start), end(other.end)
 , points(std::move(other.points)), stps(std::move(other.stps))
 {

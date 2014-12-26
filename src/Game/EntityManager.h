@@ -22,9 +22,9 @@ namespace Wulf {
         };
 	public:
 		static EntityManager& GetInstance() { return instance; }
-	
+
 		void Think(double dtime);
-		
+
 		// Registration
 		template <class E>
 		void RegisterEntity(const std::string& classname) {
@@ -37,7 +37,7 @@ namespace Wulf {
 
 		void PurgeEntities();
 		~EntityManager();
-	
+
 	private:
 		// Ent management
 		std::map<std::string, EntFactory*> factories;
@@ -48,5 +48,4 @@ namespace Wulf {
 		EntityManager(const EntityManager& other);
 		EntityManager& operator=(const EntityManager& other);
 	};
-
 }

@@ -15,13 +15,13 @@ namespace Wulf {
     public:
         Game(const Difficulty difficulty);
         ~Game();
-        
+
         void LoadMap(const word MapNum);
-        
+
         bool IsRunning() const;
-        
+
         void Run();
-        
+
     private:
         OpenGL::Renderer rendr;
         Wulf::Input::Manager input;

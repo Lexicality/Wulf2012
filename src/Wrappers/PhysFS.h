@@ -17,7 +17,6 @@ extern "C"
 #include <iostream>
 #include <boost/iostreams/stream.hpp>
 
-
 namespace PhysFS
 {
   typedef std::vector<std::string> StringVector;
@@ -26,10 +25,8 @@ namespace PhysFS
   //typedef std::runtime_error Exception;
   class Exception : public std::runtime_error { public: Exception(const std::string& what) : std::runtime_error(what) {} };
 
-
   /** Dir separator for this platform */
   const std::string DIR_SEP = PHYSFS_getDirSeparator();
-
 
   /**
    * Initialise the PhysFS system.
@@ -44,15 +41,13 @@ namespace PhysFS
   /** Returns whether PhysFS is initialised. */
   bool isInit();
 
-
   /** Retrieve a list of supported archive formats (file endings only, no description!) */
   StringVector supportedArchiveTypes();
 
   /** Retrieve a list of CD/DVD drive file paths */
   StringVector getCdRomDirs();
 
-
-  /** 
+  /**
    * Add a new directory or archive to the PhysFS search path.
    * @param location  Location to add
    * @param append    Append to the end of the search list? Otherwise prepend.
@@ -85,18 +80,15 @@ namespace PhysFS
   /** Get the applcation's base dir. */
   const std::string& getBaseDir();
 
-
   /** Get the current PhysFS write directory. */
   std::string getWriteDir();
 
   /** Set the PhysFS write directory. */
   void setWriteDir(const std::string& dir);
 
-
   /** Set a standard sane config (see PhysFS documentation) */
   void setSaneConfig(const std::string& organisation, const std::string& appName,
     const std::string& archiveExt = "", bool includeCdDrives = false, bool archivesFirst = false);
-
 
   /** Returns whether the given path exists in PhysFS. */
   bool exists(const std::string& path);
@@ -110,7 +102,6 @@ namespace PhysFS
   typedef PHYSFS_sint64 int64;
   /** Get time of last modification. */
   int64 getLastModTime(const std::string& file);
-
 
   /** Create the given directory in the write location. */
   void mkdir(const std::string& dir);
@@ -130,8 +121,6 @@ namespace PhysFS
   /** Convenience: Get a listing of subdirectories inside the given directory. */
   StringVector getDirListing(const std::string& dir);
 
-
-
   /** File open modes */
   enum OpenMode
   {
@@ -149,7 +138,7 @@ namespace PhysFS
   {
   public:
     typedef char char_type;
-    struct category : boost::iostreams::seekable, boost::iostreams::device_tag, 
+    struct category : boost::iostreams::seekable, boost::iostreams::device_tag,
       boost::iostreams::closable_tag, boost::iostreams::flushable_tag {};
 
     FileDevice(const std::string& path, OpenMode om);
@@ -172,7 +161,6 @@ namespace PhysFS
    * @param om    The mode to open the file in (read/write/append)
    */
   typedef boost::iostreams::stream<FileDevice> FileStream;
-
 }
 
 #endif

@@ -51,7 +51,6 @@ namespace Wulf {
 		Entity& operator=(const Entity& other);
 
 		EntID mEntID;
-
 	};
 }
 

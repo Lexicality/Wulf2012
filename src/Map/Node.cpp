@@ -28,7 +28,6 @@ Node::Node(const coord x, const coord y, const word blockdata, const word metada
 		self.walls[i] = false;
 		self.neighbours[i] = nullptr;
 	}
-    
 
     ParseMainData();
     ParseMetaData();
@@ -98,22 +97,22 @@ void Node::vWallStart(Wulf::Map::Wall*& wall)
 {
     if (vtested || !walls[Direction::East])
         return;
-    
+
     const bool air = !this->wall;
-    
+
     wall = new Wall(air ? Direction::West : Direction::East);
-    
+
     Material mat = material;
     if (air)
         mat = neighbours[Direction::East]->material;
-    
+
     if (door || (!air && neighbours[Direction::East]->door))
         mat = Wulf::Doors::WallTexture;
-    
+
     wall->SetMaterial(mat);
-    
+
     wall->SetStart(*this);
-    
+
     const Node *last = this;
     // Doors are always 1 unit
     if (mat != Wulf::Doors::WallTexture) {
@@ -126,14 +125,14 @@ void Node::vWallWalk(const Material mat, const bool air, const Node*& last)
 {
     if (!walls[Direction::East])
         return;
-    
+
     const Node *n = air ? neighbours[Direction::East] : this;
     if (!n->wall || n->material != mat)
         return;
-    
+
     vtested = true;
     last = this;
-    
+
     Node *next = neighbours[Direction::South];
     if (next != nullptr)
         next->vWallWalk(mat, air, last);
@@ -143,22 +142,22 @@ void Node::hWallStart(Wulf::Map::Wall*& wall)
 {
     if (htested || !walls[Direction::South])
     return;
-    
+
     const bool air = !this->wall;
-    
+
     wall = new Wall(air ? Direction::North : Direction::South);
-    
+
     Material mat = material;
     if (air)
         mat = neighbours[Direction::South]->material;
-    
+
     if (door || (!air && neighbours[Direction::South]->door))
         mat = Wulf::Doors::WallTexture;
-    
+
     wall->SetMaterial(mat);
-    
+
     wall->SetStart(*this);
-    
+
     const Node *last = this;
     // Doors are always 1 unit
     if (mat != Wulf::Doors::WallTexture) {
@@ -171,19 +170,18 @@ void Node::hWallWalk(const Material mat, const bool air, const Node*& last)
 {
     if (!walls[Direction::South])
         return;
-    
+
     const Node *n = air ? neighbours[Direction::South] : this;
     if (!n->wall || n->material != mat)
         return;
-    
+
     htested = true;
     last = this;
-    
+
     Node *next = neighbours[Direction::East];
     if (next != nullptr)
         next->hWallWalk(mat, air, last);
 }
-
 
 Direction Node::GetSpawnDirection() const
 {
@@ -212,7 +210,7 @@ void Node::AddNeighbour(const Direction direction, Node& neighbour, const bool c
 	if (!callback)
 		neighbour.AddNeighbour(reverseDirection(direction), self, true);
 }
-		
+
 Node::Node(Node&& other)
 : x(other.x), y(other.y)
 , blockdata(other.blockdata), metadata(other.metadata), area(other.area)
@@ -336,6 +334,5 @@ bool isPickup(const StaticSprites::StaticSprite spr)
             return true;
         default:
             return false;
-
     }
 }

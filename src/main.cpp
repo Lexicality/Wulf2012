@@ -49,7 +49,7 @@ int main(int argc, char **argv)
 		System::ErrorBox("Content error:", "You are missing some required content.");
 		return -1;
 	}
-	
+
 	try {
         Wulf::Game game(Wulf::Difficulty::MEDI);
         game.LoadMap(0);
@@ -80,7 +80,7 @@ void start_physfs(char *arg0)
 		}
 	}
     PhysFS::mount(path + "/wolf.pak", "");
-    
+
     // Debulartes
 #ifdef PHYSFS_DEBUG
 	auto dir = PhysFS::getDirListing("/");

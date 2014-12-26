@@ -32,11 +32,11 @@ void System::ErrorBox(const std::string& title, const std::string& text) {
         CFStringCreateWithCString(NULL, text.c_str(), kCFStringEncodingASCII)
     };
     CFDictionaryRef dict = CFDictionaryCreate(0, keys, vals,
-                                              sizeof(keys)/sizeof(*keys), 
-                                              &kCFTypeDictionaryKeyCallBacks, 
+                                              sizeof(keys)/sizeof(*keys),
+                                              &kCFTypeDictionaryKeyCallBacks,
                                               &kCFTypeDictionaryValueCallBacks);
-    pDlg = CFUserNotificationCreate(kCFAllocatorDefault, 0, 
-                                    kCFUserNotificationPlainAlertLevel, 
+    pDlg = CFUserNotificationCreate(kCFAllocatorDefault, 0,
+                                    kCFUserNotificationPlainAlertLevel,
                                     &nRes, dict);
 #else
 	std::cerr << "ERROR: " << title << ": " << text << std::endl;

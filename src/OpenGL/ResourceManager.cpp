@@ -37,8 +37,6 @@ void   genericShaderLoad (GLuint shaderID, const std::string& name, const std::s
 
 void errchck(const char* str);
 
-
-
 OpenGL::ResourceManager::ResourceManager() {
 	// . . .
 }
@@ -113,7 +111,7 @@ GLuint OpenGL::ResourceManager::LoadShaders(const std::string& vertex, const std
 
 	GLuint FragmentShader = glCreateShader(GL_FRAGMENT_SHADER);
 	genericShaderLoad(FragmentShader, fragment, ".frag");
-		
+
 	GLuint Program = glCreateProgram();
 	glAttachShader(Program, VertexShader);
 	if (geometry != "")
@@ -169,7 +167,7 @@ GLuintVector OpenGL::ResourceManager::LoadShaders(GLsizei n, const std::string& 
 
 	GLuint FragmentShader = glCreateShader(GL_FRAGMENT_SHADER);
 	genericShaderLoad(FragmentShader, fragment, ".frag");
-		
+
 	GLint result = GL_FALSE;
 
 	for (GLsizei i = 0; i < n; ++i) {
@@ -179,7 +177,7 @@ GLuintVector OpenGL::ResourceManager::LoadShaders(GLsizei n, const std::string& 
 			glAttachShader(Program, GeometryShader);
 		glAttachShader(Program, FragmentShader);
 		glLinkProgram(Program);
-	
+
 		glGetProgramiv(Program, GL_LINK_STATUS, &result);
 		if (result == GL_FALSE) {
 			GLsizei len;
@@ -190,7 +188,7 @@ GLuintVector OpenGL::ResourceManager::LoadShaders(GLsizei n, const std::string& 
 			std::cerr << msg << std::endl;
 			throw CorruptShaderException(msg);
 		}
-	
+
 		res     .push_back(Program);
 		programs.push_back(Program);
 	}
@@ -206,7 +204,7 @@ GLuintVector OpenGL::ResourceManager::LoadShaders(GLsizei n, const std::string& 
 void genericShaderLoad (GLuint shaderID, const std::string& name, const std::string ext)
 {
 	std::string path = "shaders/" + (name + ext);
-	if (!PhysFS::exists(path)) 
+	if (!PhysFS::exists(path))
 		throw OpenGL::NoSuchShaderException("Could not find " + path + "!");
 
 	// http://stackoverflow.com/questions/2602013/read-whole-ascii-file-into-c-stdstring
@@ -307,12 +305,12 @@ GLuint OpenGL::ResourceManager::LoadSingleTexture(const std::string& path, GLuin
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
-	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST); 
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
 	// Single byte per r,g,b and a.
 	GLint prevAlignment;
 	glGetIntegerv(GL_UNPACK_ALIGNMENT, &prevAlignment);
 	glPixelStorei(GL_UNPACK_ALIGNMENT, 1);
-	
+
 	// Slam it inta  a textcha
 	glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA8, data.width, data.height, 0, GL_RGBA, GL_UNSIGNED_BYTE, data.data);
 
@@ -324,7 +322,7 @@ GLuint OpenGL::ResourceManager::LoadSingleTexture(const std::string& path, GLuin
 
 	// Cleanup
 	textures.push_back(res);
-	
+
 	return res;
 }
 
@@ -345,7 +343,6 @@ int img_eof(void *vstream)
 {
 	return reinterpret_cast<PhysFS::FileStream*>(vstream)->eof() ? 1 : 0;
 }
-
 
 GLuint OpenGL::ResourceManager::genericTextureLoad(std::vector<std::string>& files)
 {
@@ -384,7 +381,7 @@ GLuint OpenGL::ResourceManager::genericTextureLoad(std::vector<std::string>& fil
 	glTexParameteri(GL_TEXTURE_2D_ARRAY, GL_TEXTURE_WRAP_S, GL_REPEAT);
 	glTexParameteri(GL_TEXTURE_2D_ARRAY, GL_TEXTURE_WRAP_T, GL_REPEAT);
 	glTexParameteri(GL_TEXTURE_2D_ARRAY, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
-	glTexParameteri(GL_TEXTURE_2D_ARRAY, GL_TEXTURE_MIN_FILTER, GL_NEAREST); 
+	glTexParameteri(GL_TEXTURE_2D_ARRAY, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
 
 	// Single byte per r,g,b and a.
 	GLint prevAlignment;
@@ -398,7 +395,7 @@ GLuint OpenGL::ResourceManager::genericTextureLoad(std::vector<std::string>& fil
 
 	i = 0;
 	for (auto itr = images.begin(), end = images.end(); itr < end; ++itr) {
-		glTexSubImage3D(GL_TEXTURE_2D_ARRAY, 0, 0, 0, i, 
+		glTexSubImage3D(GL_TEXTURE_2D_ARRAY, 0, 0, 0, i,
 			itr->width, itr->height, 1, GL_RGBA, GL_UNSIGNED_BYTE, itr->data);
 		stbi_image_free(itr->data);
 		++i;

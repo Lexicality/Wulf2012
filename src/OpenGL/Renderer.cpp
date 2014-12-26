@@ -57,21 +57,20 @@ OpenGL::Renderer::Renderer()
 	// From this point on, we need to kill GLFW if anything else fails.
 	// Therefore we delay any exceptions for a moment to do so.
 	try {
-	
 		//glfwOpenWindowHint(GLFW_FSAA_SAMPLES, 4);
 		glfwOpenWindowHint(GLFW_WINDOW_NO_RESIZE,GL_TRUE);
 		glfwOpenWindowHint(GLFW_OPENGL_VERSION_MAJOR, 3);
 		glfwOpenWindowHint(GLFW_OPENGL_VERSION_MINOR, 0);
 		//glfwOpenWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
-	
+
 		// Open a window and create its OpenGL context
 		// TODO: Config!
 		// 5:3 aspect ratio like original game
 		windowWidth  = 1280;
 		windowHeight = 768;
-		//viewportHeight = 614; 
+		//viewportHeight = 614;
 		//hudHeight = windowHeight - viewportHeight;
-		
+
 		// The hud is 1/8 of the window height
 		const double ratio = 0.2;
 		hudHeight = static_cast<GLsizei>(0.5 + static_cast<double>(windowHeight) * ratio);
@@ -81,18 +80,18 @@ OpenGL::Renderer::Renderer()
 		{
 			throw std::runtime_error("Failed to open GLFW window");
 		}
-		
+
 		// TODO: Maybe FoV config?
 		projectionMatrix = glm::perspective(75.0f, // FoV
 			static_cast<GLfloat> (windowWidth) /   // Aspect ratio
 			static_cast<GLfloat> (viewportHeight),
 			0.1f, 100.0f);                         // nearZ, farZ
-	
+
 #ifndef __APPLE__
 		// Do some GLEW now we've got a context up.
 		glewExperimental = GL_TRUE;
 		GLenum glewStatus = glewInit();
-		
+
 		if (glewStatus != GLEW_OK) {
 			std::string serr = "Failed to initialize GLEW: ";
 			// I don't like using the forceful C cast but none of the c++ casts
@@ -109,26 +108,25 @@ OpenGL::Renderer::Renderer()
 		}
 		*/
 #endif
-		
+
 		glfwDisable(GLFW_MOUSE_CURSOR);
 
 		glfwSetWindowTitle( "Wulf2012" );
 
 		// Vshink
 		//glfwSwapInterval(1);
-		
-	
+
 		// Ensure we can capture the escape key being pressed below
 		//glfwEnable( GLFW_STICKY_KEYS );
-	
+
 		// Dark blue background
 		glClearColor(0.0f, 0.0f, 0.3f, 0.0f);
-	
+
 		// Enable depth test
 		glEnable(GL_DEPTH_TEST);
 		// Accept fragment if it closer to the camera than the former one
-		glDepthFunc(GL_LESS); 
-	
+		glDepthFunc(GL_LESS);
+
 		// Alpha
 		glEnable(GL_BLEND);
 		glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
@@ -150,7 +148,7 @@ OpenGL::Renderer::Renderer()
 #endif
 		errchck("depth setup");
 
-		// Store our render chunks 
+		// Store our render chunks
 		AddRenderChunk(&Walls);
 		AddRenderChunk(&Floor);
 		AddRenderChunk(&Statics);
@@ -161,11 +159,11 @@ OpenGL::Renderer::Renderer()
 		Floor.RenderFunction   = std::bind(GenericRenderFunction, arg::_1);
 		Doors.RenderFunction   = std::bind(GenericRenderFunction, arg::_1);
 		Statics.RenderFunction = std::bind(GenericRenderFunction, arg::_1);
-		
+
 		Floor.DrawMode = GL_TRIANGLE_FAN;
 		Doors.DrawMode = GL_POINTS;
 		Statics.DrawMode = GL_POINTS;
-		
+
 		Walls.vFirsts = &vFirsts;
 		Walls.vCounts = &vCounts;
 
@@ -177,20 +175,19 @@ OpenGL::Renderer::Renderer()
 		Doors.VBO   = VBOs[3];
 		// Such gluttony, demanding two vbos!
 		Doors.Other["VBO2"] = VBOs[4];
-	
+
 		// Then the VAOs that use the VBOs (even if they don't use them yet)
 		std::vector<GLuint> VAOs = mgr.CreateVAOs(4);
 		Walls.VAO   = VAOs[0];
 		Floor.VAO   = VAOs[1];
 		Statics.VAO = VAOs[2];
 		Doors.VAO   = VAOs[3];
-		
-		
+
 		// Set them up
 		glBindVertexArray(Walls.VAO);
 		glEnableVertexAttribArray(0);
 		glEnableVertexAttribArray(1);
-	
+
 		glBindVertexArray(Floor.VAO);
 		glEnableVertexAttribArray(0);
 
@@ -203,7 +200,7 @@ OpenGL::Renderer::Renderer()
 		glEnableVertexAttribArray(1);
 		glEnableVertexAttribArray(2);
 		glEnableVertexAttribArray(3);
-	
+
 		glBindVertexArray(0);
 
 		errchck("VAO setup");
@@ -216,14 +213,12 @@ OpenGL::Renderer::Renderer()
 		// Walls
 		glActiveTexture(GL_TEXTURE0);
 		mgr.LoadTextureArray("walls");
-		
+
 		// Static sprites
 		glActiveTexture(GL_TEXTURE1);
 		mgr.LoadTextureArray("sprites", StaticSprites::Start, StaticSprites::End);
 
 		errchck("texture loadage");
-
-
 
 #ifdef FREE_VIEW
 		vPlyUp = glm::vec3(0, 0, -1);
@@ -232,20 +227,20 @@ OpenGL::Renderer::Renderer()
 		// Fonts
 		fnt.Initialize(20);
 		errchck("Font setup");
-		
+
 		// Hud
 		hud.Setup(mgr, 25);
 		errchck("HUD setup");
-		
+
 		// Timing
 		ltime = glfwGetTime();
 
 		// misc
 		strbuff = new char[26];
 		memset(strbuff, 0, 26);
-		
+
 		errchck("Post context startup");
-	
+
 		// Woo, finally done!
 	} catch (...) {
 		// Always clean up :D
@@ -253,7 +248,6 @@ OpenGL::Renderer::Renderer()
 		delete[] strbuff;
 		throw;
 	}
-
 }
 
 OpenGL::Renderer::~Renderer()
@@ -262,40 +256,33 @@ OpenGL::Renderer::~Renderer()
 	delete strbuff;
 }
 
-
-
-
-
-
 double OpenGL::Renderer::Render()
 {
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
 	glm::mat4 mView = getViewMatrix();
-	
+
 	glViewport(0, hudHeight, windowWidth, viewportHeight);
-	
+
 	errchck("pre render");
 	for (auto rndr : chunks) {
 		rndr->Render(mView);
 	}
 	errchck("post render");
-	
+
 	glViewport(0, 0, windowWidth, hudHeight);
-	
+
 	errchck("pre hud");
 	hud.Draw();
 	errchck("post hud");
-	
-	glViewport(0, 0, windowWidth, windowHeight);
 
+	glViewport(0, 0, windowWidth, windowHeight);
 
 	// Position/Angle debug
 	//sprintf(strbuff, "Pos: x: % 05.2f y: % 05.2f", vPlyPos.x, vPlyPos.y);
 	//fnt.DrawStringXY(10, 40, strbuff);
 	//sprintf(strbuff, "Dir: x: % 05.2f y: % 05.2f", vPlyDir.x, vPlyDir.y);
 	//fnt.DrawStringXY(10, 60, strbuff);
-
 
 	double ctime, dtime;
 	// Time it took for this frame to render. (Informative for perf but useless)
@@ -305,7 +292,7 @@ double OpenGL::Renderer::Render()
 	errchck("pre font");
 	fnt.DrawStringXY(10, 20, strbuff);
 	errchck("post font");
-	
+
 	glfwSwapBuffers();
 	errchck("Post buffer swap (aka broken by OpenGL Profiler!)");
 
@@ -321,13 +308,6 @@ double OpenGL::Renderer::Render()
 	return dtime;
 }
 
-
-
-
-
-
-
-
 void OpenGL::Renderer::SetMap(const Map::Map& map)
 {
 	/*
@@ -339,7 +319,7 @@ void OpenGL::Renderer::SetMap(const Map::Map& map)
 
 	// Simple, 4 vertexes per wall
 	vCounts.assign(iNumWalls, 4);
-	
+
 	// slightly trickier
 	vFirsts.clear();
 	vFirsts.reserve(iNumWalls);
@@ -361,7 +341,6 @@ void OpenGL::Renderer::SetMap(const Map::Map& map)
 		sizeof(GLfloat) * 3 * 2, // Packed in two blocks of three floats
 		reinterpret_cast<void*> (sizeof(GLfloat) * 3)); // The texcoord is the second bit of data
 
-	
 	/*
 	 * STATIC POINT SPRITES
 	 */
@@ -380,7 +359,6 @@ void OpenGL::Renderer::SetMap(const Map::Map& map)
 	glVertexAttribPointer (0, 2, GL_SHORT, GL_FALSE, size * 3, reinterpret_cast<void*>(0));
 	glVertexAttribIPointer(1, 1, GL_SHORT, size * 3, reinterpret_cast<void*>(size * 2));
 
-	
 	/*
 	 * DOORS
 	 */
@@ -506,7 +484,7 @@ void OpenGL::Renderer::LoadShaders()
 	// Floor
 	glUseProgram(FloorProg);
 	glUniformMatrix4fv(glGetUniformLocation(FloorProg, "Projection"), 1, GL_FALSE, ptr);
-	
+
 	// Done
 	glUseProgram(0);
 
@@ -544,7 +522,6 @@ void OpenGL::Renderer::AddRenderChunk(std::function<RenderChunk*(ResourceManager
 {
 	AddRenderChunk(chunkfunc(mgr, projectionMatrix));
 }
-
 
 void errchck(const char* str)
 {

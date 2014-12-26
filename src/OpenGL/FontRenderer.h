@@ -9,8 +9,7 @@
 namespace Wulf {
     namespace OpenGL {
         class FontRenderer {
-            
-        public: 
+        public:
             enum Font {
                 FONT_NORMAL = 0,
                 FONT_BOLD
@@ -29,10 +28,10 @@ namespace Wulf {
             std::vector<char>   charNums;
             std::vector<GLuint> charPosses;
             std::vector<GLuint>  posPosses;
-            
+
             // Aaaaaaaaaaaaaaaaaaaaa
             std::vector<std::vector<GLfloat>> charWidths;
-            
+
             // Avoid recreating shit
             std::vector<GLubyte> chars;
             std::vector<GLfloat> poses;

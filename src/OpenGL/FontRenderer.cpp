@@ -15,7 +15,7 @@ void errchck(const char* str);
 OpenGL::FontRenderer::FontRenderer(OpenGL::ResourceManager& mgr)
 	: mgr(mgr)
 {
-	// . . . 
+	// . . .
 }
 
 OpenGL::FontRenderer::~FontRenderer()
@@ -31,7 +31,6 @@ void OpenGL::FontRenderer::Initialize(const GLuint textureOffset)
 	const GLuint vHeight = data[3];
 	hvWidth  = static_cast<GLfloat>(vWidth ) / 2.0f;
 	hvHeight = static_cast<GLfloat>(vHeight) / 2.0f;
-
 
 	GLsizei numfonts = 2;
 	programs = mgr.LoadShaders(numfonts, "Font", "Font", "Font");
@@ -80,7 +79,7 @@ void OpenGL::FontRenderer::Initialize(const GLuint textureOffset)
 		charNums.push_back(numChars);
 
 		std::vector<char> widths(numChars);
-		
+
 #ifdef __APPLE__
 		// AAAAA
 		// std::cout << file.tellg() << std::endl;
@@ -98,7 +97,6 @@ void OpenGL::FontRenderer::Initialize(const GLuint textureOffset)
 		GLuint cprog = programs[i];
 		glUseProgram(cprog);
 		glActiveTexture(GL_TEXTURE0 + textureOffset + i);
-
 
 		GLuint iWidth, iHeight;
 		GLuint tex = mgr.LoadSingleTexture(fname.str(), &iWidth, &iHeight);
@@ -166,15 +164,15 @@ void OpenGL::FontRenderer::Initialize(const GLuint textureOffset)
 /*
  * Example usage:
  * fonts.DrawString(-1, -1, "honk", fonts::FONT_BOLD);
- */ 
+ */
 void OpenGL::FontRenderer::DrawString(const GLfloat x, const GLfloat y, const char *words, const Font font)
 {
 	int len = strlen(words);
 	if (len == 0)
 		return;
-	
+
 	std::vector<GLfloat>& widths = charWidths[font];
-	
+
 	chars.clear();
 	poses.clear();
 	chars.reserve(len);
@@ -223,7 +221,7 @@ void OpenGL::FontRenderer::DrawString(const GLfloat x, const GLfloat y, const ch
 }
 
 void OpenGL::FontRenderer::DrawStringXY(const GLuint  x, const GLuint  y, const char *words, const Font font)
-{ 
+{
 	return DrawString(
 		(static_cast<GLfloat>(x) - hvWidth ) / hvWidth,
 		(hvHeight - static_cast<GLfloat>(y)) / hvHeight,

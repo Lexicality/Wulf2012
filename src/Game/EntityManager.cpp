@@ -19,7 +19,6 @@ EntityManager::~EntityManager()
 	for (; itr != end; ++itr) {
 		delete itr->second;
 	}
-
 }
 
 void EntityManager::PurgeEntities()
@@ -28,7 +27,6 @@ void EntityManager::PurgeEntities()
 	for (; itr != end; ++itr) {
 		delete *itr;
 	}
-
 }
 
 void EntityManager::Think(double dtime)
@@ -47,7 +45,7 @@ Entity* EntityManager::CreateEntity(const std::string& classname, Vector pos, Ve
 	Entity *ent = itr->second->Create();
 	ents.push_back(ent);
 	// !!!!Never under any circumstances remove anything from ents unless you remove everything!!!!
-	ent->mEntID = ents.size(); 
+	ent->mEntID = ents.size();
 	ent->SetPos(pos);
 	ent->SetHeading(heading);
 	return ent;

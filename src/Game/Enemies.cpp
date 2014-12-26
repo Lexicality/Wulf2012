@@ -28,7 +28,7 @@ namespace Wulf {
                 };
                 AIEntity();
                 virtual ~AIEntity() {}
-                
+
                 virtual void RestThink(double dtime);
                 virtual void PatrolThink(double dtime);
                 virtual void ChaseThink(double dtime);
@@ -36,7 +36,7 @@ namespace Wulf {
                 void Think(double dtime);
 
                 virtual void Attack() = 0;
-                
+
                 void SetActivity(const Activity newact) { mode = newact; }
             protected:
                 Activity  mode;
@@ -49,9 +49,9 @@ namespace Wulf {
             };
         }
     }
-    
+
     void DoOpenGLStuff(std::vector<Enemies::Enemy*>& Enemies);
-    
+
     static const word StationaryGuard   = 183;
     static const word PatrolGuard       = 187;
     static const word StationaryOfficer = 191;
@@ -62,7 +62,7 @@ namespace Wulf {
     static const word PatrolDog         = 213;
     static const word StationaryMutant  = 255;
     static const word PatrolMutant      = 259;
-    
+
     typedef Enemies::Instances::AIEntity::Activity AIActivity;
     class EnemySpawner {
     public:
@@ -91,7 +91,6 @@ const Player   *g_ply;
 
 std::vector<EnemySpawner> spawners;
 
-
 void Enemies::RegisterEntities()
 {
     g_mgr = &EntityManager::GetInstance();
@@ -100,16 +99,16 @@ void Enemies::RegisterEntities()
     spawners.emplace_back(PatrolGuard, "guard", AIActivity::PATROLING);
 }
 
-std::vector<Enemies::Enemy*> Enemies::SpawnRelevent(const Map::Map& map, const Player& ply) 
+std::vector<Enemies::Enemy*> Enemies::SpawnRelevent(const Map::Map& map, const Player& ply)
 {
     g_map = &map;
     g_ply = &ply;
     std::vector<Enemy*> ret;
-        
+
     const Difficulty& difficulty = ply.GetDifficulty();
     const auto& nodes = map.nodes;
     Enemies::Enemy *ptr;
-    
+
     // ARGH
 	for (auto i1 = nodes.cbegin(), e1 = nodes.cend(); i1 != e1; ++i1) {
         for (auto i2 = i1->cbegin(), e2 = i1->cend(); i2 != e2; ++i2) {
@@ -130,27 +129,23 @@ std::vector<Enemies::Enemy*> Enemies::SpawnRelevent(const Map::Map& map, const P
     DoOpenGLStuff(ret);
     return ret;
 }
-            
+
 Enemies::Instances::AIEntity::AIEntity()
 {
     mActivity = 0;
 }
-            
+
 void Enemies::Instances::AIEntity::RestThink(double dtime)
 {
-    
 }
 void Enemies::Instances::AIEntity::PatrolThink(double dtime)
 {
-    
 }
 void Enemies::Instances::AIEntity::ChaseThink(double dtime)
 {
-    
 }
 void Enemies::Instances::AIEntity::AttackThink(double dtime)
 {
-    
 }
 void Enemies::Instances::AIEntity::Think(double dtime)
 {
@@ -230,13 +225,13 @@ struct EnemyRenderChunk : public OpenGL::RenderChunk
 {
     void mRenderFunction(const RenderChunk&) const;
     void Setup(OpenGL::ResourceManager& mgr, glm::mat4 const&);
-    
+
     EnemyRenderChunk();
     ~EnemyRenderChunk();
-    
+
     GLuint PlyPos;
     GLuint TexPos;
-    
+
     GLint  *Starts;
     GLsizei *Counts;
     GLint  *Texes;
@@ -263,7 +258,7 @@ void EnemyRenderChunk::mRenderFunction(const OpenGL::RenderChunk&) const
 	const auto& vPlyPos = g_ply->GetPos();
 	glUniform4f(PlyPos, vPlyPos.x, vPlyPos.y, vPlyPos.z, 1);
     errchck("Post glUniform4f");
-    
+
     for (int i = 0; i < NUM_ENEMIES; ++i) {
         if (Counts[i] == 0)
             continue;
@@ -283,13 +278,12 @@ void dozero(C *what, size_t amt)
 
 void EnemyRenderChunk::Setup(OpenGL::ResourceManager &mgr, glm::mat4 const& projMat)
 {
-
     dozero(Starts, NUM_ENEMIES);
     dozero(Counts, NUM_ENEMIES);
     dozero(Texes,  NUM_ENEMIES);
-    
+
     RenderFunction = std::bind(&EnemyRenderChunk::mRenderFunction, this, std::placeholders::_1);
-    
+
     VAO = mgr.CreateVAO();
     {
         std::vector<GLuint> VBOs = mgr.CreateVBOs(2);
@@ -301,21 +295,21 @@ void EnemyRenderChunk::Setup(OpenGL::ResourceManager &mgr, glm::mat4 const& proj
     glEnableVertexAttribArray(1);
     glEnableVertexAttribArray(2);
     glBindVertexArray(0);
-    
+
     // Shader
 	Program = mgr.LoadShaders("GenericAI", "BBSprite", "MultiTextured");
     glUseProgram(Program);
     glUniformMatrix4fv(glGetUniformLocation(Program, "Projection"), 1, GL_FALSE, glm::value_ptr(projMat));
     glUseProgram(0);
-    
+
 	ViewUniform = glGetUniformLocation(Program, "View");
 	PlyPos      = glGetUniformLocation(Program, "PlayerPosition");
 	TexPos      = glGetUniformLocation(Program, "Texture");
-    
+
     /*
      * Textures
      */
-    
+
     // Guards
     Texes[0] = 2;
     glActiveTexture(GL_TEXTURE0 + Texes[0]);
@@ -325,7 +319,7 @@ void EnemyRenderChunk::Setup(OpenGL::ResourceManager &mgr, glm::mat4 const& proj
 
 EnemyRenderChunk mChunk;
 OpenGL::RenderChunk* Enemies::GetRenderChunk(OpenGL::ResourceManager& mgr, glm::mat4 const& projMat)
-{   
+{
     mChunk.Setup(mgr, projMat);
     return &mChunk;
 }
@@ -340,10 +334,10 @@ void Wulf::DoOpenGLStuff(std::vector<Enemies::Enemy*>& enemies)
 {
     std::vector<GLfloat> enemydata;
     std::vector<GLubyte> activities;
-    
+
     enemydata.reserve(enemies.size() * 3);
     activities.reserve(enemies.size());
-    
+
     for (auto i = enemies.cbegin(), e = enemies.cend(); i != e; ++i) {
         const auto& enemy = **i;
         const auto& pos = enemy.GetPos();
@@ -352,7 +346,7 @@ void Wulf::DoOpenGLStuff(std::vector<Enemies::Enemy*>& enemies)
         enemydata.push_back(workOutHeading(enemy.GetHeading()));
         activities.push_back(enemy.GetActivity());
     }
-    
+
 	glBindVertexArray(mChunk.VAO);
     size_t size = sizeof(GLfloat);
     // Float data
@@ -368,9 +362,8 @@ void Wulf::DoOpenGLStuff(std::vector<Enemies::Enemy*>& enemies)
     // Activity number
     glVertexAttribIPointer(2, 1, GL_UNSIGNED_BYTE, 0, 0);
 	mChunk.Counts[0] = enemies.size();
-    
+
     glBindBuffer(GL_ARRAY_BUFFER, 0);
     glBindVertexArray(0);
 }
-
 

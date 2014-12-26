@@ -14,7 +14,6 @@ namespace Wulf {
     namespace Map {
         class Node;
         class Wall {
-
         public:
             Wall(const Direction direction);
             void SetStart(const Node& start);
@@ -34,7 +33,6 @@ namespace Wulf {
 
         private:
             void generateSTPs();
-
         };
     }
 }

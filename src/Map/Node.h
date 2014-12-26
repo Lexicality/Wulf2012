@@ -16,20 +16,19 @@ namespace Wulf {
     namespace Map {
         class Wall;
         class Node {
-        
         public:
             Node(const coord x, const coord y, const word blockdata, const word metadata);
             void AddNeighbour(const Direction direction, Node& neighbour, const bool callback = false);
             Direction GetSpawnDirection() const;
-            
+
             std::unique_ptr<Wall> GenWall(const Direction dir);
-            
+
             // Movement
             Node(Node&& other);
             Node& operator=(Node&& other);
-            
+
             // Wall Generation
-        
+
             coord x;
             coord y;
             word blockdata;
@@ -38,7 +37,7 @@ namespace Wulf {
 
             bool wall;
             bool solid;
-            
+
             bool pickup;
 
             bool spawn;
@@ -51,13 +50,13 @@ namespace Wulf {
             bool walls[4];
 
 			Doors::DoorInfo* doorInfo;
-            
+
         private:
             Node *neighbours[4];
-            
+
             bool htested;
             bool vtested;
-            
+
             void ParseMainData();
             void ParseMetaData();
 
@@ -66,8 +65,7 @@ namespace Wulf {
 
             void vWallWalk(const Material mat, const bool air, const Node*& last);
             void hWallWalk(const Material mat, const bool air, const Node*& last);
-        
         };
     }
 }
-	
+

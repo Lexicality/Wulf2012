@@ -40,7 +40,6 @@ namespace Wulf {
 		static const double OpenSpeed = 1.0 / 3; // 3 second opening time
 		static const double CloseAfter = 10; // Automatically close door after 10s
 
-
 		class DoorInfo {
 		public:
 			word doorID;
@@ -69,6 +68,5 @@ namespace Wulf {
 			return (data >= 0x5a && data <= 0x5F)
 				 || data == 0x64 || data == 0x65;
 		}
-
 	}
 }

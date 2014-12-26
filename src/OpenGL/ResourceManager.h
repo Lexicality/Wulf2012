@@ -17,7 +17,6 @@ namespace Wulf {
         CREATE_EXCEPTION(NoSuchShaderException,  std::runtime_error);
         CREATE_EXCEPTION(NoSuchTextureException, std::runtime_error);
         class ResourceManager {
-            
         public:
             ResourceManager();
             ResourceManager(ResourceManager&& other);
@@ -47,7 +46,6 @@ namespace Wulf {
             GLuintVector vaos;
             GLuintVector programs;
             GLuintVector textures;
-
         };
     }
 }

@@ -18,7 +18,6 @@
 #include "Map/Wall.h"
 #include "Map/Doors.h"
 
-
 namespace Wulf {
 	typedef std::vector<Vector> VectorVector;
     namespace Map {
@@ -31,7 +30,7 @@ namespace Wulf {
             GLuint GetPackedSprites(std::vector<short int>& packed) const;
             GLuint GetPackedDoors  (std::vector<short int>& packed) const;
 			void DoorThink(double dtime);
-            
+
             // Vars
             std::array<std::vector<Node>, 64> nodes;
             std::vector<Wall> walls;
@@ -54,18 +53,16 @@ namespace Wulf {
 
             std::string name;
             std::string music;
-            
+
         private:
             std::vector<word> map;
             std::vector<word> objs;
-            
+
             void LoadFile(const word mapNum);
             void ParseNodes();
             void ParseWalls();
-            
+
             void DebugOutput();
-
-
         };
     }
 }

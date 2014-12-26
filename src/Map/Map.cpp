@@ -19,7 +19,6 @@
 
 using namespace Wulf;
 
-
 typedef unsigned int dword;
 static word readShort(PhysFS::FileStream& str);
 //static dword readLong(// PhysFS::FileStream& str);
@@ -29,7 +28,7 @@ Map::Map::Map(const word mapNum)
     LoadFile(mapNum);
 
     ParseNodes();
-    
+
 	DebugOutput();
 
     ParseWalls();
@@ -40,56 +39,55 @@ void Map::Map::LoadFile(const word mapNum)
 	std::string fname = (boost::format("maps/w%02d.map") % mapNum).str();
 	if (!PhysFS::exists(fname))
 		throw std::runtime_error("No such map " + fname + "!");
-    
+
 	PhysFS::FileStream file(fname, PhysFS::OM_READ);
 	// TODO: maybe I should spin my own error messages.
 	file.exceptions(PhysFS::FileStream::eofbit | PhysFS::FileStream::failbit | PhysFS::FileStream::badbit);
-    
+
 	char data[6] = {0};
 	file.read(data, 4);
     if (std::strcmp(data, "!ID!") != 0)
 		throw std::runtime_error(fname + " is not a valid map file!");
-    
+
 	word RLEWTag = readShort(file);
     word width   = readShort(file);
     word height  = readShort(file);
     if (width != 64 && height != 64)
         throw std::runtime_error("Map has invalid dimensions!");
-    
+
 	file.read(data, 4);
 	ceilingColour = Vector(data[0], data[1], data[2]);
 	ceilingColour /= 0xFF;
-	
+
 	file.read(data, 4);
 	floorColour   = Vector(data[0], data[1], data[2]);
 	floorColour /= 0xFF;
-    
+
 	word lengths[3];
 	file.read(reinterpret_cast<char*>(lengths), 2 * 3);
-    
+
 	dword offsets[3];
 	file.read(reinterpret_cast<char*>(offsets), 4 * 3);
-    
+
 	word nameLength = readShort(file);
 	word musicLength = readShort(file);
-    
+
 	// if sizeof(float) != 4, shit will arise.
 	file.read(reinterpret_cast<char*>(&parTime), 4);
-    
+
 	file.read(data, 5);
 	parString = std::string(data);
-    
-    
+
 	std::vector<char> cdata(nameLength + 1, 0);
 	file.read(&cdata[0], nameLength);
 	name = std::string(&cdata[0]);
-    
+
 	cdata.resize(musicLength + 1, 0);
 	file.read(&cdata[0], musicLength);
 	music = std::string(&cdata[0]);
-    
+
 	// END OF HEADER
-    
+
     // Read file
 	for (byte i = 0; i < 2; ++i) {
 		file.seekg(offsets[i], std::ios_base::beg);
@@ -269,8 +267,6 @@ void Map::Map::DebugOutput()
 #endif
 }
 
-
-
 GLuint Map::Map::GetPackedQuads(VectorVector& packed) const
 {
 	// Make sure we're clean
@@ -294,7 +290,7 @@ GLuint Map::Map::GetPackedSprites(std::vector<short int>& packed) const
 	GLuint res = sprites.size();
 	packed.empty();
 	packed.reserve(res * 3);
-    
+
 	for (auto& spr : sprites) {
 		packed.push_back(spr.x);
 		packed.push_back(spr.y);

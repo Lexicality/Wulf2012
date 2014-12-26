@@ -15,7 +15,6 @@ bool mpress  (int btn);
 
 Input::Manager::Manager() : lostFocus(true)
 {
-    
 }
 
 const Input::Data Input::Manager::GetInput()

@@ -15,11 +15,11 @@ namespace Wulf {
         public:
             HUDRenderer();
             ~HUDRenderer();
-            
+
             void Setup(ResourceManager& mgr, GLsizei textureoffset = 15);
-            
+
             void UpdatePlayerInfo(const Player& ply);
-            
+
             void Draw();
         private:
             GLuint VAO;

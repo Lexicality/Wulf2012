@@ -105,7 +105,7 @@ Vector CollisionManager::CollisionClamp(const Entity& entity, const Vector& velo
      Vector pos = entity.GetPos();
 	const coords currentNode(entity.GetPos());
 	std::vector<MapType::mapped_type> pnodes = grabTiles(currentNode);
-    
+
 	// Merge ajacent faces
 	for (auto& tile1 : pnodes ) {
 		if (tile1 == nullptr)
@@ -137,7 +137,7 @@ Vector CollisionManager::CollisionClamp(const Entity& entity, const Vector& velo
 			tile2 = nullptr;
 		}
 	}
-    
+
     // Sort the tiles so the player collides with them in order
     std::sort(pnodes.begin(), pnodes.end(), [&pos](MapType::mapped_type& a, MapType::mapped_type& b) -> bool
     {
@@ -215,7 +215,7 @@ Vector CollisionManager::CollisionClamp(const Entity& entity, const Vector& velo
 			break;
 		}
 	} while (collided);
-	
+
 	return Vector(x, y, 0);
 }
 
@@ -322,7 +322,7 @@ void CollisionManager::UpdateDoor(const coord x, const coord y, const bool state
 	map[coords(x, y)]->Solid = state;
 }
 
-inline 
+inline
 coords CollisionManager::key(const Map::Node& node) const
 {
 	return coords(node.x, node.y);
@@ -338,7 +338,7 @@ CollisionManager::MapType::value_type CollisionManager::prep(const Map::Node& no
 		x_,
 		y_,
 		{
-			{ 
+			{
 				x_ - 0.5f,
 				y_ - 0.5f,
 				x_ + 0.5f,

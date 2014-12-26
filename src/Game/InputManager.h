@@ -28,10 +28,8 @@ namespace Wulf {
         #else
             float DeltaView;
         #endif
-
         };
         class Manager {
-
         public:
             Manager();
             const Data GetInput();

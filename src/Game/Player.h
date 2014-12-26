@@ -13,7 +13,6 @@
 
 namespace Wulf {
 	class Player : public Entity {
-
 	public:
 		Player();
 		~Player() {};
@@ -23,7 +22,7 @@ namespace Wulf {
 #ifdef FREE_VIEW
 		glm::vec3 GetUp() const { return mUp; }
 #endif
-        
+
         Difficulty GetDifficulty() const { return mDifficulty; }
         void SetDifficulty(Difficulty nDiff) { mDifficulty = nDiff; }
 
@@ -32,7 +31,7 @@ namespace Wulf {
 #ifdef FREE_VIEW
 		float   fhViewAngle;
 		float   fvViewAngle;
-		glm::vec3 mUp;        
+		glm::vec3 mUp;
 #else
 		float   fViewAngle;
 #endif
