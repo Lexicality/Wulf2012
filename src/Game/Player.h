@@ -23,11 +23,11 @@ namespace Wulf {
 		glm::vec3 GetUp() const { return mUp; }
 #endif
 
-        Difficulty GetDifficulty() const { return mDifficulty; }
-        void SetDifficulty(Difficulty nDiff) { mDifficulty = nDiff; }
+		Difficulty GetDifficulty() const { return mDifficulty; }
+		void SetDifficulty(Difficulty nDiff) { mDifficulty = nDiff; }
 
 	private:
-        Difficulty mDifficulty;
+		Difficulty mDifficulty;
 #ifdef FREE_VIEW
 		float   fhViewAngle;
 		float   fvViewAngle;

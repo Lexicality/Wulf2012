@@ -36,7 +36,7 @@ void OpenGL::FontRenderer::Initialize(const GLuint textureOffset)
 	programs = mgr.LoadShaders(numfonts, "Font", "Font", "Font");
 	charWidths.resize (numfonts);
 	charPosses.reserve(numfonts);
-	 posPosses.reserve(numfonts);
+	posPosses.reserve(numfonts);
 
 	// Woo files
 	boost::format fname("pics/font%d.%s");
@@ -140,7 +140,7 @@ void OpenGL::FontRenderer::Initialize(const GLuint textureOffset)
 		);
 		// Render-time uniforms
 		charPosses.push_back(glGetUniformLocation(cprog, "char"));
-		 posPosses.push_back(glGetUniformLocation(cprog,  "pos"));
+		posPosses.push_back(glGetUniformLocation(cprog,  "pos"));
 	}
 
 	vao = mgr.CreateVAO();

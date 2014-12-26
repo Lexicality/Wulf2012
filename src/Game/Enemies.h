@@ -13,29 +13,29 @@
 #include "OpenGL/ResourceManager.h"
 
 namespace Wulf {
-    namespace Enemies {
-        enum Sprite {
-            Guard,
-            Officer,
-            SS,
-            Dog,
-            Mutant
-        };
-        class Enemy : public Entity {
-        public:
-            virtual ~Enemy() {}
-            virtual void Think(double dtime) = 0;
+	namespace Enemies {
+		enum Sprite {
+			Guard,
+			Officer,
+			SS,
+			Dog,
+			Mutant
+		};
+		class Enemy : public Entity {
+		public:
+			virtual ~Enemy() {}
+			virtual void Think(double dtime) = 0;
 
-            void SetSprite(const Sprite newspr) { mSprite = newspr; }
-            Sprite GetSprite() const { return mSprite; }
-            byte GetActivity() const { return mActivity; }
-        protected:
-            Sprite mSprite;
-            byte mActivity;
-            virtual void Attack() = 0;
-        };
-        void RegisterEntities();
-        OpenGL::RenderChunk* GetRenderChunk(OpenGL::ResourceManager& mgr, glm::mat4 const& projMat);
-        std::vector<Enemy*> SpawnRelevent(const Map::Map& map, const Player& ply);
-    }
+			void SetSprite(const Sprite newspr) { mSprite = newspr; }
+			Sprite GetSprite() const { return mSprite; }
+			byte GetActivity() const { return mActivity; }
+		protected:
+			Sprite mSprite;
+			byte mActivity;
+			virtual void Attack() = 0;
+		};
+		void RegisterEntities();
+		OpenGL::RenderChunk* GetRenderChunk(OpenGL::ResourceManager& mgr, glm::mat4 const& projMat);
+		std::vector<Enemy*> SpawnRelevent(const Map::Map& map, const Player& ply);
+	}
 }

@@ -51,10 +51,10 @@ int main(int argc, char **argv)
 	}
 
 	try {
-        Wulf::Game game(Wulf::Difficulty::MEDI);
-        game.LoadMap(0);
-        while (game.IsRunning())
-            game.Run();
+		Wulf::Game game(Wulf::Difficulty::MEDI);
+		game.LoadMap(0);
+		while (game.IsRunning())
+			game.Run();
 	} catch(std::exception& e) {
 		System::ErrorBox("Uncaught exception: ", e.what());
 		throw;
@@ -64,10 +64,10 @@ int main(int argc, char **argv)
 
 void start_physfs(char *arg0)
 {
-    PhysFS::init(arg0);
-    std::atexit(close_physfs);
-    std::string path = PhysFS::getBaseDir();
-    PhysFS::mount(path, "", false);
+	PhysFS::init(arg0);
+	std::atexit(close_physfs);
+	std::string path = PhysFS::getBaseDir();
+	PhysFS::mount(path, "", false);
 	if (!PhysFS::exists("wolf.pak")) {
 		// Sigh, I don't know why it is, but VS2012 seems to set the base dir one lower than
 		//  it should be when debugging. Try to deal with this.
@@ -79,9 +79,9 @@ void start_physfs(char *arg0)
 			throw PhysFS::Exception("wolf.pak is not in the base direcory! (" + path + ")");
 		}
 	}
-    PhysFS::mount(path + "/wolf.pak", "");
+	PhysFS::mount(path + "/wolf.pak", "");
 
-    // Debulartes
+	// Debulartes
 #ifdef PHYSFS_DEBUG
 	auto dir = PhysFS::getDirListing("/");
 	for (auto i = dir.begin(), end = dir.end(); i < end; ++i)
@@ -98,13 +98,13 @@ void close_physfs()
 
 bool check_content()
 {
-    return PhysFS::isDirectory("lsfx")
-        && PhysFS::isDirectory("maps")
-        && PhysFS::isDirectory("music")
-        && PhysFS::isDirectory("pics")
-        && PhysFS::isDirectory("script")
-        && PhysFS::isDirectory("sfx")
-        && PhysFS::isDirectory("shaders")
-        && PhysFS::isDirectory("sprites")
-        && PhysFS::isDirectory("walls");
+	return PhysFS::isDirectory("lsfx")
+		&& PhysFS::isDirectory("maps")
+		&& PhysFS::isDirectory("music")
+		&& PhysFS::isDirectory("pics")
+		&& PhysFS::isDirectory("script")
+		&& PhysFS::isDirectory("sfx")
+		&& PhysFS::isDirectory("shaders")
+		&& PhysFS::isDirectory("sprites")
+		&& PhysFS::isDirectory("walls");
 }

@@ -95,14 +95,14 @@ CollisionObj getObj(const Entity& ent)
 
 Vector CollisionManager::CollisionClamp(const Entity& entity, const Vector& velocity) const
 {
-    // Uh.
-    static const std::function<float(TileData*&,Vector&)> distance = [](TileData*& tile, Vector& pos) -> float
-    {
-        return static_cast<float>((Vector(tile->x, tile->y, 0) - pos).length());
-    };
+	// Uh.
+	static const std::function<float(TileData*&,Vector&)> distance = [](TileData*& tile, Vector& pos) -> float
+	{
+		return static_cast<float>((Vector(tile->x, tile->y, 0) - pos).length());
+	};
 	CollisionObj ent = getObj(entity);
 
-     Vector pos = entity.GetPos();
+	Vector pos = entity.GetPos();
 	const coords currentNode(entity.GetPos());
 	std::vector<MapType::mapped_type> pnodes = grabTiles(currentNode);
 
@@ -138,18 +138,18 @@ Vector CollisionManager::CollisionClamp(const Entity& entity, const Vector& velo
 		}
 	}
 
-    // Sort the tiles so the player collides with them in order
-    std::sort(pnodes.begin(), pnodes.end(), [&pos](MapType::mapped_type& a, MapType::mapped_type& b) -> bool
-    {
-       // Push nullptrs to the back of the list
-       if (a == nullptr) // Null is heavier than everything
-           return false;
-       if (b == nullptr) // Everything is lighter than null
-           return true;
-       return distance(a, pos) < distance(b, pos);
-    });
+	// Sort the tiles so the player collides with them in order
+	std::sort(pnodes.begin(), pnodes.end(), [&pos](MapType::mapped_type& a, MapType::mapped_type& b) -> bool
+	{
+		// Push nullptrs to the back of the list
+		if (a == nullptr) // Null is heavier than everything
+			return false;
+		if (b == nullptr) // Everything is lighter than null
+			return true;
+		return distance(a, pos) < distance(b, pos);
+	});
 
-    // dump all the null pointers
+	// dump all the null pointers
 	std::vector<MapType::mapped_type> nodes;
 	nodes.reserve(pnodes.size());
 	for (auto& tile : pnodes) {
@@ -167,13 +167,13 @@ Vector CollisionManager::CollisionClamp(const Entity& entity, const Vector& velo
 	do {
 		collided = false;
 		for (const TileData *ctile : nodes) {
-            /*
+			/*
 			if (ctile == nullptr)
 				continue;
 
 			if (!ctile->Solid)
 				continue;
-            */
+			*/
 			const CollisionObj& tile = ctile->Bounds;
 			// Basic checks
 			// Note, this is in GUI space not cartesean
@@ -220,7 +220,7 @@ Vector CollisionManager::CollisionClamp(const Entity& entity, const Vector& velo
 }
 
 CollisionObj adjust(const CollisionObj& original, Vector centre)
-        {
+{
 	float x = centre.x;
 	float y = centre.y;
 	CollisionObj ret = {
@@ -233,7 +233,7 @@ CollisionObj adjust(const CollisionObj& original, Vector centre)
 }
 
 void add(std::vector<float>& buff, const CollisionObj& obj)
-        {
+{
 	buff.push_back(obj.Left);
 	buff.push_back(obj.Bottom);
 	buff.push_back(obj.Left);
@@ -249,7 +249,7 @@ const size_t pointsPerSquare = 2 * 4;
 const size_t maxNumSquares = 10;
 
 void CollisionManager::UpdateScreen(const Entity& ply, const std::vector<TileData*>& tiles) const
- {
+{
 	if (!mRenderChunk.VAO)
 		return;
 	std::vector<float> buffdata;
@@ -259,7 +259,7 @@ void CollisionManager::UpdateScreen(const Entity& ply, const std::vector<TileDat
 	add(buffdata, adjust(getObj(ply), centre));
 	for (const TileData *const tile : tiles) {
 		//if (tile != nullptr && tile->Solid)
-			add(buffdata, adjust(tile->Bounds, centre));
+		add(buffdata, adjust(tile->Bounds, centre));
 	}
 	// Adjust the draw calls etc.
 	numSquares = buffdata.size() / pointsPerSquare;
@@ -307,7 +307,7 @@ OpenGL::RenderChunk * CollisionManager::GetRenderChunk(OpenGL::ResourceManager& 
 
 	for (int i = 0; i < maxNumSquares; ++i) {
 		indicies[i] = i * 4;
-		  counts[i] = 4;
+		counts[i] = 4;
 	}
 	mRenderChunk.RenderFunction = [this](const OpenGL::RenderChunk& self) {
 		if (numSquares > 0)
@@ -361,8 +361,8 @@ std::vector<CollisionManager::TileData*> CollisionManager::grabTiles(const coord
 		for (coord y = y_-1; y <= y_+1; ++y) {
 			const auto& itr = map.find(coords(x, y));
 			TileData *res = (itr != none) ? itr->second : nullptr;
-            if (res != nullptr && res->Solid)
-                ret.push_back(res);
+			if (res != nullptr && res->Solid)
+				ret.push_back(res);
 		}
 	}
 	return ret;

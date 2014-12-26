@@ -39,28 +39,28 @@ void Map::Wall::SetStart(const Node& start)
 	float x = start.x;
 	float y = start.y;
 	switch (direction) {
-		case Direction::South:
-		case Direction::North:
-			y += 1;
-			break;
-		case Direction::West:
-		case Direction::East:
-			x -= 1;
-			break;
+	case Direction::South:
+	case Direction::North:
+		y += 1;
+		break;
+	case Direction::West:
+	case Direction::East:
+		x -= 1;
+		break;
 	}
 	// The walls are on the edges of the tiles not the middle.
 	x += 0.5;
 	y -= 0.5;
 	switch (direction) {
-		case Direction::North:
-		case Direction::East:
-			points[1] = Vector(x, y, 0);
-			points[2] = Vector(x, y, 1);
-			break;
-		case Direction::South:
-		case Direction::West:
-			points[0] = Vector(x, y, 0);
-			points[3] = Vector(x, y, 1);
+	case Direction::North:
+	case Direction::East:
+		points[1] = Vector(x, y, 0);
+		points[2] = Vector(x, y, 1);
+		break;
+	case Direction::South:
+	case Direction::West:
+		points[0] = Vector(x, y, 0);
+		points[3] = Vector(x, y, 1);
 	}
 #ifdef DEBUG_WALLS_SPAM
 	std::cout << "\tStart: " << -x << "," << y << std::endl;
@@ -81,15 +81,15 @@ void Map::Wall::SetEnd(const Node& end)
 	x -= 0.5;
 	y += 0.5;
 	switch (direction) {
-		case Direction::North:
-		case Direction::East:
-			points[0] = Vector(x, y, 0);
-			points[3] = Vector(x, y, 1);
-			break;
-		case Direction::South:
-		case Direction::West:
-			points[1] = Vector(x, y, 0);
-			points[2] = Vector(x, y, 1);
+	case Direction::North:
+	case Direction::East:
+		points[0] = Vector(x, y, 0);
+		points[3] = Vector(x, y, 1);
+		break;
+	case Direction::South:
+	case Direction::West:
+		points[1] = Vector(x, y, 0);
+		points[2] = Vector(x, y, 1);
 	}
 #ifdef DEBUG_WALLS_SPAM
 	std::cout << "\tEnd: " << -x << "," << y << std::endl;
@@ -112,9 +112,9 @@ void Map::Wall::SetMaterial(const Material material)
 }
 
 Map::Wall::Wall(Map::Wall&& other)
-: material(other.material), direction(other.direction)
-, start(other.start), end(other.end)
-, points(std::move(other.points)), stps(std::move(other.stps))
+	: material(other.material), direction(other.direction)
+	, start(other.start), end(other.end)
+	, points(std::move(other.points)), stps(std::move(other.stps))
 {
 }
 
@@ -124,8 +124,8 @@ Map::Wall& Map::Wall::operator=(Map::Wall&& other)
 	direction = other.direction;
 	start     = other.start;
 	end       = other.end;
-    std::swap(points, other.points);
-    std::swap(stps,   other.stps);
+	std::swap(points, other.points);
+	std::swap(stps,   other.stps);
 	return *this;
 }
 
@@ -136,13 +136,13 @@ void Map::Wall::generateSTPs()
 	Material mat = material;
 	unsigned short int len;
 	switch (direction) {
-		case Direction::South:
-		case Direction::North:
-			len =  start->x - end->x + 1;
-			break;
-		case Direction::West:
-		case Direction::East:
-			len = end->y - start->y + 1;
+	case Direction::South:
+	case Direction::North:
+		len =  start->x - end->x + 1;
+		break;
+	case Direction::West:
+	case Direction::East:
+		len = end->y - start->y + 1;
 	}
 	stps[0] = Vector(0,   1, mat);
 	stps[1] = Vector(len, 1, mat);
@@ -151,24 +151,24 @@ void Map::Wall::generateSTPs()
 }
 
 #ifdef DEBUG_WALLS_SPAM
-	std::string directionName(const Direction dir)
-    {
-		switch (dir) {
-		case Direction::South:
-			return "south";
-		case Direction::West:
-			return "west";
-		case Direction::East:
-			return "east";
-		case Direction::North:
-			return "north";
-		}
-		return "invalid";
+std::string directionName(const Direction dir)
+{
+	switch (dir) {
+	case Direction::South:
+		return "south";
+	case Direction::West:
+		return "west";
+	case Direction::East:
+		return "east";
+	case Direction::North:
+		return "north";
 	}
-	std::string vertOrHori(const Direction dir)
-    {
-		if (dir == Direction::South || dir == Direction::North)
-			return "horisontal";
-		return "vertical";
-	}
+	return "invalid";
+}
+std::string vertOrHori(const Direction dir)
+{
+	if (dir == Direction::South || dir == Direction::North)
+		return "horisontal";
+	return "vertical";
+}
 #endif

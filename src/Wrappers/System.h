@@ -7,5 +7,5 @@
 #include <string>
 
 namespace System {
-    void ErrorBox(const std::string& title, const std::string& text);
+	void ErrorBox(const std::string& title, const std::string& text);
 }

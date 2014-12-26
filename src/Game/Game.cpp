@@ -10,53 +10,53 @@
 using namespace Wulf;
 
 Game::Game(const Difficulty difficulty)
-: map(nullptr), running(false), dtime(0)
-, emgr(EntityManager::GetInstance()), cmgr(CollisionManager::GetInstance())
+	: map(nullptr), running(false), dtime(0)
+	, emgr(EntityManager::GetInstance()), cmgr(CollisionManager::GetInstance())
 {
-    Wulf::Enemies::RegisterEntities();
-    rendr.AddRenderChunk(Wulf::Enemies::GetRenderChunk);
-    ply.SetDifficulty(difficulty);
+	Wulf::Enemies::RegisterEntities();
+	rendr.AddRenderChunk(Wulf::Enemies::GetRenderChunk);
+	ply.SetDifficulty(difficulty);
 }
 
 Game::~Game()
 {
-    delete map;
+	delete map;
 }
 
 void Game::LoadMap(const word mapnum)
 {
-    delete map;
-    map = new Map::Map(mapnum);
-    rendr.SetMap(*map);
-    ply.ProcessMapInput(*map);
-    Wulf::Enemies::SpawnRelevent(*map, ply);
-    cmgr.SetMap(*map);
-    running = true;
+	delete map;
+	map = new Map::Map(mapnum);
+	rendr.SetMap(*map);
+	ply.ProcessMapInput(*map);
+	Wulf::Enemies::SpawnRelevent(*map, ply);
+	cmgr.SetMap(*map);
+	running = true;
 
 	map->doors.at(11).Open();
 }
 
 bool Game::IsRunning() const
 {
-    if (!running)
-        return false;
-    return rendr.IsWindowStillOpen();
+	if (!running)
+		return false;
+	return rendr.IsWindowStillOpen();
 }
 
 void Game::Run()
 {
-    const Wulf::Input::Data& in = input.GetInput();
-    if (in.Exit) {
-        running = false;
-        return;
-    }
-    ply.ProcessUserInput(in, dtime);
-    rendr.UpdatePlayerInfo(ply);
+	const Wulf::Input::Data& in = input.GetInput();
+	if (in.Exit) {
+		running = false;
+		return;
+	}
+	ply.ProcessUserInput(in, dtime);
+	rendr.UpdatePlayerInfo(ply);
 	emgr.Think(dtime);
 	map->DoorThink(dtime);
 	for (Doors::DoorInfo& door : map->doors) {
 		rendr.UpdateDoor(door.doorID, door.openPercent());
 		cmgr.UpdateDoor(door.x, door.y, door.isSolid());
 	}
-    dtime = rendr.Render();
+	dtime = rendr.Render();
 }

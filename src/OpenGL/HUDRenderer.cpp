@@ -10,43 +10,43 @@ using namespace Wulf::OpenGL;
 
 HUDRenderer::HUDRenderer()
 {
-    // . . .
+	// . . .
 }
 HUDRenderer::~HUDRenderer()
 {
-    // . . .
+	// . . .
 }
 
 void HUDRenderer::Setup(Wulf::OpenGL::ResourceManager& mgr, GLsizei textxureoffset)
 {
-    VAO = mgr.CreateVAO();
+	VAO = mgr.CreateVAO();
 
-    shader = mgr.LoadShaders("HUD", "HUD", "HUD");
+	shader = mgr.LoadShaders("HUD", "HUD", "HUD");
 
-    glUseProgram(shader);
+	glUseProgram(shader);
 
-    GLsizei bgtex = textxureoffset;
-    // other texes are + etc
-    glActiveTexture(GL_TEXTURE0 + bgtex);
+	GLsizei bgtex = textxureoffset;
+	// other texes are + etc
+	glActiveTexture(GL_TEXTURE0 + bgtex);
 	glBindTexture(GL_TEXTURE_2D, mgr.LoadSingleTexture("pics/STATUSBARPIC.tga"));
 
-    // BG Texture unit
-    glUniform1i(glGetUniformLocation(shader, "bgsampler"), bgtex);
+	// BG Texture unit
+	glUniform1i(glGetUniformLocation(shader, "bgsampler"), bgtex);
 
-    // All done
-    glUseProgram(0);
+	// All done
+	glUseProgram(0);
 }
 
 void HUDRenderer::Draw()
 {
-    glUseProgram(shader);
-    glBindVertexArray(VAO);
-    glDrawArrays(GL_POINTS, 0, 1);
-    glBindVertexArray(0);
-    glUseProgram(0);
+	glUseProgram(shader);
+	glBindVertexArray(VAO);
+	glDrawArrays(GL_POINTS, 0, 1);
+	glBindVertexArray(0);
+	glUseProgram(0);
 }
 
 void HUDRenderer::UpdatePlayerInfo(const Wulf::Player& ply)
 {
-    // . . .
+	// . . .
 }

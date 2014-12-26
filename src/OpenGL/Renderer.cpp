@@ -40,7 +40,7 @@ void GenericRenderFunction (const OpenGL::RenderChunk& self)
 }
 
 OpenGL::Renderer::Renderer()
-: mgr(), fnt(mgr), strbuff(nullptr)
+	: mgr(), fnt(mgr), strbuff(nullptr)
 {
 	/*
 		A lot of the boilerplate code in this function is originally
@@ -342,8 +342,8 @@ void OpenGL::Renderer::SetMap(const Map::Map& map)
 		reinterpret_cast<void*> (sizeof(GLfloat) * 3)); // The texcoord is the second bit of data
 
 	/*
-	 * STATIC POINT SPRITES
-	 */
+	* STATIC POINT SPRITES
+	*/
 	std::vector<short int> spritedata;
 	GLuint iNumStatix = map.GetPackedSprites(spritedata);
 	Statics.NumObjs = iNumStatix;

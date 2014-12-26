@@ -11,15 +11,15 @@ namespace Wulf {
 	CREATE_EXCEPTION(InvalidEntID, std::runtime_error);
 	CREATE_EXCEPTION(InvalidClassname, std::logic_error);
 	class EntityManager {
-        struct EntFactory {
-            virtual Entity* Create() = 0;
-            virtual ~EntFactory() {}
-        };
-        template<class Derived>
-        struct SpecificEntFactory : public EntityManager::EntFactory {
-            Entity* Create() { return new Derived; }
-            ~SpecificEntFactory() {}
-        };
+		struct EntFactory {
+			virtual Entity* Create() = 0;
+			virtual ~EntFactory() {}
+		};
+		template<class Derived>
+		struct SpecificEntFactory : public EntityManager::EntFactory {
+			Entity* Create() { return new Derived; }
+			~SpecificEntFactory() {}
+		};
 	public:
 		static EntityManager& GetInstance() { return instance; }
 
@@ -28,8 +28,8 @@ namespace Wulf {
 		// Registration
 		template <class E>
 		void RegisterEntity(const std::string& classname) {
-            factories[classname] = new SpecificEntFactory<E>;
-        }
+			factories[classname] = new SpecificEntFactory<E>;
+		}
 
 		Entity* CreateEntity(const std::string& classname, Vector pos, Vector heading);
 

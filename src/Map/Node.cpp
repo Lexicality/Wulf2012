@@ -19,22 +19,22 @@ static bool isSolid(const StaticSprites::StaticSprite spr);
 static bool isPickup(const StaticSprites::StaticSprite spr);
 
 Node::Node(const coord x, const coord y, const word blockdata, const word metadata)
-: x(-x), y(y), blockdata(blockdata), metadata(metadata), area(0)
-, wall(false), solid(false), pickup(false), spawn(false), door(false)
-, material(0), sprite(StaticSprites::NONE)
-, htested(false), vtested(false)
+	: x(-x), y(y), blockdata(blockdata), metadata(metadata), area(0)
+	, wall(false), solid(false), pickup(false), spawn(false), door(false)
+	, material(0), sprite(StaticSprites::NONE)
+	, htested(false), vtested(false)
 {
 	for (int i = 0; i < 4; ++i) {
 		self.walls[i] = false;
 		self.neighbours[i] = nullptr;
 	}
 
-    ParseMainData();
-    ParseMetaData();
+	ParseMainData();
+	ParseMetaData();
 }
 void Node::ParseMainData()
 {
-    if (blockdata >= Wulf::FirstWall && blockdata <= Wulf::LastWall) {
+	if (blockdata >= Wulf::FirstWall && blockdata <= Wulf::LastWall) {
 		if (Wulf::Doors::IsDoor(blockdata)) {
 			door = true;
 			// Door like things done by map.cpp
@@ -54,13 +54,13 @@ void Node::ParseMainData()
 
 void Node::ParseMetaData()
 {
-    if (metadata >= StaticSprites::First && metadata <= StaticSprites::Last) {
+	if (metadata >= StaticSprites::First && metadata <= StaticSprites::Last) {
 		// Decorative sprites
 		sprite = StaticSprites::ToSprite(metadata);
 		if (isSolid(sprite))
 			solid = true;
-        if (isPickup(sprite))
-            pickup = true;
+		if (isPickup(sprite))
+			pickup = true;
 	} else if (metadata >= 0x13 && metadata <= 0x16) {
 		spawn = true;
 	} else if (metadata >= 0x5A && metadata <= 0x61) {
@@ -75,127 +75,127 @@ void Node::ParseMetaData()
 	} else if (metadata == 0x63) {
 		// TODO: Exit tile!
 	} else if (metadata == 124) {
-        // replicate dead-guard-in-wall glitch
-        solid = false;
-        // TODO: Dead guard
-    }
+		// replicate dead-guard-in-wall glitch
+		solid = false;
+		// TODO: Dead guard
+	}
 }
 
 std::unique_ptr<Wall> Node::GenWall(const Direction dir)
 {
-    assert(dir == Direction::East || dir == Direction::South);
-    Wall *wall = nullptr;
-    if (dir == Direction::East) {
-        hWallStart(wall);
-    } else if (dir == Direction::South) {
-        vWallStart(wall);
-    }
-    return std::unique_ptr<Wall>(wall);
+	assert(dir == Direction::East || dir == Direction::South);
+	Wall *wall = nullptr;
+	if (dir == Direction::East) {
+		hWallStart(wall);
+	} else if (dir == Direction::South) {
+		vWallStart(wall);
+	}
+	return std::unique_ptr<Wall>(wall);
 }
 
 void Node::vWallStart(Wulf::Map::Wall*& wall)
 {
-    if (vtested || !walls[Direction::East])
-        return;
+	if (vtested || !walls[Direction::East])
+		return;
 
-    const bool air = !this->wall;
+	const bool air = !this->wall;
 
-    wall = new Wall(air ? Direction::West : Direction::East);
+	wall = new Wall(air ? Direction::West : Direction::East);
 
-    Material mat = material;
-    if (air)
-        mat = neighbours[Direction::East]->material;
+	Material mat = material;
+	if (air)
+		mat = neighbours[Direction::East]->material;
 
-    if (door || (!air && neighbours[Direction::East]->door))
-        mat = Wulf::Doors::WallTexture;
+	if (door || (!air && neighbours[Direction::East]->door))
+		mat = Wulf::Doors::WallTexture;
 
-    wall->SetMaterial(mat);
+	wall->SetMaterial(mat);
 
-    wall->SetStart(*this);
+	wall->SetStart(*this);
 
-    const Node *last = this;
-    // Doors are always 1 unit
-    if (mat != Wulf::Doors::WallTexture) {
-        vWallWalk(mat, air, last);
-    }
-    wall->SetEnd(*last);
+	const Node *last = this;
+	// Doors are always 1 unit
+	if (mat != Wulf::Doors::WallTexture) {
+		vWallWalk(mat, air, last);
+	}
+	wall->SetEnd(*last);
 }
 
 void Node::vWallWalk(const Material mat, const bool air, const Node*& last)
 {
-    if (!walls[Direction::East])
-        return;
+	if (!walls[Direction::East])
+		return;
 
-    const Node *n = air ? neighbours[Direction::East] : this;
-    if (!n->wall || n->material != mat)
-        return;
+	const Node *n = air ? neighbours[Direction::East] : this;
+	if (!n->wall || n->material != mat)
+		return;
 
-    vtested = true;
-    last = this;
+	vtested = true;
+	last = this;
 
-    Node *next = neighbours[Direction::South];
-    if (next != nullptr)
-        next->vWallWalk(mat, air, last);
+	Node *next = neighbours[Direction::South];
+	if (next != nullptr)
+		next->vWallWalk(mat, air, last);
 }
 
 void Node::hWallStart(Wulf::Map::Wall*& wall)
 {
-    if (htested || !walls[Direction::South])
-    return;
+	if (htested || !walls[Direction::South])
+		return;
 
-    const bool air = !this->wall;
+	const bool air = !this->wall;
 
-    wall = new Wall(air ? Direction::North : Direction::South);
+	wall = new Wall(air ? Direction::North : Direction::South);
 
-    Material mat = material;
-    if (air)
-        mat = neighbours[Direction::South]->material;
+	Material mat = material;
+	if (air)
+		mat = neighbours[Direction::South]->material;
 
-    if (door || (!air && neighbours[Direction::South]->door))
-        mat = Wulf::Doors::WallTexture;
+	if (door || (!air && neighbours[Direction::South]->door))
+		mat = Wulf::Doors::WallTexture;
 
-    wall->SetMaterial(mat);
+	wall->SetMaterial(mat);
 
-    wall->SetStart(*this);
+	wall->SetStart(*this);
 
-    const Node *last = this;
-    // Doors are always 1 unit
-    if (mat != Wulf::Doors::WallTexture) {
-        hWallWalk(mat, air, last);
-    }
-    wall->SetEnd(*last);
+	const Node *last = this;
+	// Doors are always 1 unit
+	if (mat != Wulf::Doors::WallTexture) {
+		hWallWalk(mat, air, last);
+	}
+	wall->SetEnd(*last);
 }
 
 void Node::hWallWalk(const Material mat, const bool air, const Node*& last)
 {
-    if (!walls[Direction::South])
-        return;
+	if (!walls[Direction::South])
+		return;
 
-    const Node *n = air ? neighbours[Direction::South] : this;
-    if (!n->wall || n->material != mat)
-        return;
+	const Node *n = air ? neighbours[Direction::South] : this;
+	if (!n->wall || n->material != mat)
+		return;
 
-    htested = true;
-    last = this;
+	htested = true;
+	last = this;
 
-    Node *next = neighbours[Direction::East];
-    if (next != nullptr)
-        next->hWallWalk(mat, air, last);
+	Node *next = neighbours[Direction::East];
+	if (next != nullptr)
+		next->hWallWalk(mat, air, last);
 }
 
 Direction Node::GetSpawnDirection() const
 {
 	switch (metadata) {
-		case 0x13:
-			return Direction::North;
-		case 0x14:
-			return Direction::East;
-		case 0x15:
-			return Direction::South;
-		case 0x16:
-			return Direction::West;
-		default:
-			return Direction::North;
+	case 0x13:
+		return Direction::North;
+	case 0x14:
+		return Direction::East;
+	case 0x15:
+		return Direction::South;
+	case 0x16:
+		return Direction::West;
+	default:
+		return Direction::North;
 	}
 }
 
@@ -212,12 +212,12 @@ void Node::AddNeighbour(const Direction direction, Node& neighbour, const bool c
 }
 
 Node::Node(Node&& other)
-: x(other.x), y(other.y)
-, blockdata(other.blockdata), metadata(other.metadata), area(other.area)
-, wall(other.wall), solid(other.solid)
-, pickup(other.pickup), spawn(other.spawn), door(other.door)
-, material(other.material), sprite(other.sprite)
-, htested(other.htested), vtested(other.vtested)
+	: x(other.x), y(other.y)
+	, blockdata(other.blockdata), metadata(other.metadata), area(other.area)
+	, wall(other.wall), solid(other.solid)
+	, pickup(other.pickup), spawn(other.spawn), door(other.door)
+	, material(other.material), sprite(other.sprite)
+	, htested(other.htested), vtested(other.vtested)
 {
 	for (int i = 0; i < 4; ++i) {
 		self.walls[i] = other.walls[i];
@@ -244,7 +244,7 @@ Node& Node::operator=(Node&& other)
 	self.solid     = other.solid;
 	self.door      = other.door;
 	self.spawn     = other.spawn;
-    self.pickup    = other.pickup;
+	self.pickup    = other.pickup;
 
 	self.area      = other.area;
 
@@ -261,7 +261,7 @@ Node& Node::operator=(Node&& other)
 }
 
 static
-Direction reverseDirection(const Direction dir)
+	Direction reverseDirection(const Direction dir)
 {
 	switch (dir) {
 	case Direction::South:
@@ -278,61 +278,61 @@ Direction reverseDirection(const Direction dir)
 
 // hurr
 inline static
-Direction reverseDirection(const int dir)
+	Direction reverseDirection(const int dir)
 {
 	return reverseDirection(static_cast<Direction>(dir));
 }
 
 static
-bool isSolid(const StaticSprites::StaticSprite spr)
+	bool isSolid(const StaticSprites::StaticSprite spr)
 {
-    switch(spr) {
-        case StaticSprites::BARREL_GREEN:
-        case StaticSprites::TABLE_CHAIRS:
-        case StaticSprites::LAMP_FLOOR:
-        case StaticSprites::SKELETON_HUNG:
-        case StaticSprites::PILLAR:
-        case StaticSprites::POT_TREE:
-        case StaticSprites::SINK:
-        case StaticSprites::POT_PLANT:
-        case StaticSprites::POT_URN:
-        case StaticSprites::TABLE_BARE:
-        case StaticSprites::ARMOR:
-        case StaticSprites::CAGE_EMPTY:
-        case StaticSprites::CAGE_SKELETON:
-        case StaticSprites::BED:
-        case StaticSprites::BARREL_WOOD:
-        case StaticSprites::WELL_FULL:
-        case StaticSprites::WELL_EMPTY:
-        case StaticSprites::FLAG:
-        case StaticSprites::STOVE:
-        case StaticSprites::SPEARS:
-            return true;
-        default:
-            return false;
-    }
+	switch(spr) {
+	case StaticSprites::BARREL_GREEN:
+	case StaticSprites::TABLE_CHAIRS:
+	case StaticSprites::LAMP_FLOOR:
+	case StaticSprites::SKELETON_HUNG:
+	case StaticSprites::PILLAR:
+	case StaticSprites::POT_TREE:
+	case StaticSprites::SINK:
+	case StaticSprites::POT_PLANT:
+	case StaticSprites::POT_URN:
+	case StaticSprites::TABLE_BARE:
+	case StaticSprites::ARMOR:
+	case StaticSprites::CAGE_EMPTY:
+	case StaticSprites::CAGE_SKELETON:
+	case StaticSprites::BED:
+	case StaticSprites::BARREL_WOOD:
+	case StaticSprites::WELL_FULL:
+	case StaticSprites::WELL_EMPTY:
+	case StaticSprites::FLAG:
+	case StaticSprites::STOVE:
+	case StaticSprites::SPEARS:
+		return true;
+	default:
+		return false;
+	}
 }
 
 static
-bool isPickup(const StaticSprites::StaticSprite spr)
+	bool isPickup(const StaticSprites::StaticSprite spr)
 {
-    switch(spr) {
-        case StaticSprites::FOOD_GRUEL:
-        case StaticSprites::KEY_GOLD:
-        case StaticSprites::KEY_BLUE:
-        case StaticSprites::FOOD_TURKEY:
-        case StaticSprites::FIRSTAID:
-        case StaticSprites::GUN_AMMO:
-        case StaticSprites::GUN_SMG:
-        case StaticSprites::GUN_CHAINGUN:
-        case StaticSprites::TREASURE_CHALICE:
-        case StaticSprites::TREASURE_CHEST:
-        case StaticSprites::TREASURE_CROWN:
-        case StaticSprites::NEWLIFE:
-        case StaticSprites::FOOD_GORE_1:
-        case StaticSprites::FOOD_GORE_2:
-            return true;
-        default:
-            return false;
-    }
+	switch(spr) {
+	case StaticSprites::FOOD_GRUEL:
+	case StaticSprites::KEY_GOLD:
+	case StaticSprites::KEY_BLUE:
+	case StaticSprites::FOOD_TURKEY:
+	case StaticSprites::FIRSTAID:
+	case StaticSprites::GUN_AMMO:
+	case StaticSprites::GUN_SMG:
+	case StaticSprites::GUN_CHAINGUN:
+	case StaticSprites::TREASURE_CHALICE:
+	case StaticSprites::TREASURE_CHEST:
+	case StaticSprites::TREASURE_CROWN:
+	case StaticSprites::NEWLIFE:
+	case StaticSprites::FOOD_GORE_1:
+	case StaticSprites::FOOD_GORE_2:
+		return true;
+	default:
+		return false;
+	}
 }

@@ -25,13 +25,13 @@ static word readShort(PhysFS::FileStream& str);
 
 Map::Map::Map(const word mapNum)
 {
-    LoadFile(mapNum);
+	LoadFile(mapNum);
 
-    ParseNodes();
+	ParseNodes();
 
 	DebugOutput();
 
-    ParseWalls();
+	ParseWalls();
 }
 
 void Map::Map::LoadFile(const word mapNum)
@@ -46,14 +46,14 @@ void Map::Map::LoadFile(const word mapNum)
 
 	char data[6] = {0};
 	file.read(data, 4);
-    if (std::strcmp(data, "!ID!") != 0)
+	if (std::strcmp(data, "!ID!") != 0)
 		throw std::runtime_error(fname + " is not a valid map file!");
 
 	word RLEWTag = readShort(file);
-    word width   = readShort(file);
-    word height  = readShort(file);
-    if (width != 64 && height != 64)
-        throw std::runtime_error("Map has invalid dimensions!");
+	word width   = readShort(file);
+	word height  = readShort(file);
+	if (width != 64 && height != 64)
+		throw std::runtime_error("Map has invalid dimensions!");
 
 	file.read(data, 4);
 	ceilingColour = Vector(data[0], data[1], data[2]);
@@ -88,26 +88,26 @@ void Map::Map::LoadFile(const word mapNum)
 
 	// END OF HEADER
 
-    // Read file
+	// Read file
 	for (byte i = 0; i < 2; ++i) {
 		file.seekg(offsets[i], std::ios_base::beg);
 		std::vector<byte> rawdata(lengths[i], 0);
-        char *rawptr = reinterpret_cast<char*>(&rawdata[0]);
+		char *rawptr = reinterpret_cast<char*>(&rawdata[0]);
 		file.read(rawptr, lengths[i]);
 		std::vector<word> RLEWdata = CompressionTools::CarmackExpand(rawdata);
 		std::vector<word> uncompressed = CompressionTools::RLEWExpand(RLEWdata, RLEWTag);
 		if (i == 0)
 			map = std::move(uncompressed);
 		else
-            objs = std::move(uncompressed);
+			objs = std::move(uncompressed);
 	}
 }
 
 void Map::Map::ParseNodes()
 {
-    // Displaced coordinates.
+	// Displaced coordinates.
 	for (byte x = 0; x < width; ++x) {
-        auto& cnodes = nodes[x];
+		auto& cnodes = nodes[x];
 		cnodes.reserve(height);
 		for (byte y = 0; y < height; ++y) {
 			size_t i = x + y * (word) width;
@@ -122,18 +122,18 @@ void Map::Map::ParseNodes()
 			if (node.spawn) {
 				spawnPos = Vector(node.x, node.y, 0.65f);
 				switch(node.GetSpawnDirection()) {
-					case Direction::North:
-						spawnAng = 3.1415f;
-						break;
-					case Direction::East:
-						spawnAng = 3.1415f * 1.5f;
-						break;
-					case Direction::South:
-						spawnAng = 0.0f;
-						break;
-					case Direction::West:
-						spawnAng = 3.1415f * 0.5f;
-						break;
+				case Direction::North:
+					spawnAng = 3.1415f;
+					break;
+				case Direction::East:
+					spawnAng = 3.1415f * 1.5f;
+					break;
+				case Direction::South:
+					spawnAng = 0.0f;
+					break;
+				case Direction::West:
+					spawnAng = 3.1415f * 0.5f;
+					break;
 				}
 			}
 			// Static sprites
@@ -161,17 +161,17 @@ void Map::Map::ParseWalls()
 	for (auto& xnodes : nodes) {
 		for (Node& node : xnodes) {
 			// Check for vertical walls
-            {
-                std::unique_ptr<Wall> ptr = node.GenWall(Direction::South);
-                if (ptr != nullptr)
-                    walls.push_back(std::move(*ptr));
-            }
+			{
+				std::unique_ptr<Wall> ptr = node.GenWall(Direction::South);
+				if (ptr != nullptr)
+					walls.push_back(std::move(*ptr));
+			}
 			// Now do the horisontals
-            {
-                std::unique_ptr<Wall> ptr = node.GenWall(Direction::East);
-                if (ptr != nullptr)
-                    walls.push_back(std::move(*ptr));
-            }
+			{
+				std::unique_ptr<Wall> ptr = node.GenWall(Direction::East);
+				if (ptr != nullptr)
+					walls.push_back(std::move(*ptr));
+			}
 		}
 	}
 }
@@ -179,91 +179,91 @@ void Map::Map::ParseWalls()
 void Map::Map::DebugOutput()
 {
 #ifdef DEBUG_MAPSPEW
-    std::cout << " vim: nowrap listchars=" << std::endl;
-    std::cout.setf(std::ios_base::right);
-    std::cout.fill(' ');
-    std::cout.width(3);
-    std::cout << "  ";
-    std::ostringstream bluh;
-    bluh << "   ";
-    for (byte x = 0; x < width; ++x) {
-        std::cout.width(3);
-        std::cout << -(x - halfwidth);
-        std::cout << ' ';
-        bluh << "****";
-    }
-    std::cout << std::endl;
-    std::cout << bluh.str() << std::endl;
-    for (byte y = 0; y < height; ++y) {
-        std::cout.width(3);
-        std::cout << y - halfheight << '*';
-        std::ostringstream honk;
-        honk << "   *";
-        for (byte x = 0; x < width; ++x) {
-            Node& node = nodes[x][y];
-            const auto& metadata = node.metadata;
-            std::cout.width(3);
-            // Pickups
-            if (node.pickup)
-                std::cout << " P ";
-            // Sprites
-            else if (metadata >= StaticSprites::First && metadata <= StaticSprites::Last)
-            {
-                if (node.solid)
-                    std::cout << " S ";
-                else
-                    std::cout << " s ";
-            }
-            // Spawn point
-            else if (metadata >= 0x13 && metadata <= 0x16)
-                std::cout << " * ";
-            // Waypoints
-            else if (metadata == 0x5A)
-                std::cout << " > ";
-            else if (metadata == 0x5B)
-                std::cout << " ^>";
-            else if (metadata == 0x5C)
-                std::cout << " ^ ";
-            else if (metadata == 0x5D)
-                std::cout << "<^ ";
-            else if (metadata == 0x5E)
-                std::cout << " < ";
-            else if (metadata == 0x5F)
-                std::cout << "<v ";
-            else if (metadata == 0x60)
-                std::cout << " v ";
-            else if (metadata == 0x61)
-                std::cout << " v>";
-            // Pushwall
-            else if (metadata == 0x62)
-                std::cout << " D ";
-            // Exit
-            else if (metadata == 0x63)
-                std::cout << " E ";
-            // Pre-prepared corpse
-            else if (metadata == 124)
-                std::cout << " c ";
-            else if (node.door)
-                std::cout << " # ";
-            // Something that won't display on the map
-            else if (metadata > 999)
-                std::cout << " ! ";
-            // Unknown object
-            else if (metadata)
-                std::cout << metadata;
-            else if (node.area)
-                std::cout << node.area;
-            else if (node.walls[0] || node.walls[1] || node.walls[2] || node.walls[3])
-                std::cout << node.material;
-            else
-                std::cout << ' ';
-            std::cout << (node.walls[Direction::East] ? '|' : ' ');
-            honk << (node.walls[Direction::South] ? "---" : "   ");
-            honk << ' ';
-        }
-        std::cout << std::endl;
-        std::cout << honk.str() << std::endl;
-    }
+	std::cout << " vim: nowrap listchars=" << std::endl;
+	std::cout.setf(std::ios_base::right);
+	std::cout.fill(' ');
+	std::cout.width(3);
+	std::cout << "  ";
+	std::ostringstream bluh;
+	bluh << "   ";
+	for (byte x = 0; x < width; ++x) {
+		std::cout.width(3);
+		std::cout << -(x - halfwidth);
+		std::cout << ' ';
+		bluh << "****";
+	}
+	std::cout << std::endl;
+	std::cout << bluh.str() << std::endl;
+	for (byte y = 0; y < height; ++y) {
+		std::cout.width(3);
+		std::cout << y - halfheight << '*';
+		std::ostringstream honk;
+		honk << "   *";
+		for (byte x = 0; x < width; ++x) {
+			Node& node = nodes[x][y];
+			const auto& metadata = node.metadata;
+			std::cout.width(3);
+			// Pickups
+			if (node.pickup)
+				std::cout << " P ";
+			// Sprites
+			else if (metadata >= StaticSprites::First && metadata <= StaticSprites::Last)
+			{
+				if (node.solid)
+					std::cout << " S ";
+				else
+					std::cout << " s ";
+			}
+			// Spawn point
+			else if (metadata >= 0x13 && metadata <= 0x16)
+				std::cout << " * ";
+			// Waypoints
+			else if (metadata == 0x5A)
+				std::cout << " > ";
+			else if (metadata == 0x5B)
+				std::cout << " ^>";
+			else if (metadata == 0x5C)
+				std::cout << " ^ ";
+			else if (metadata == 0x5D)
+				std::cout << "<^ ";
+			else if (metadata == 0x5E)
+				std::cout << " < ";
+			else if (metadata == 0x5F)
+				std::cout << "<v ";
+			else if (metadata == 0x60)
+				std::cout << " v ";
+			else if (metadata == 0x61)
+				std::cout << " v>";
+			// Pushwall
+			else if (metadata == 0x62)
+				std::cout << " D ";
+			// Exit
+			else if (metadata == 0x63)
+				std::cout << " E ";
+			// Pre-prepared corpse
+			else if (metadata == 124)
+				std::cout << " c ";
+			else if (node.door)
+				std::cout << " # ";
+			// Something that won't display on the map
+			else if (metadata > 999)
+				std::cout << " ! ";
+			// Unknown object
+			else if (metadata)
+				std::cout << metadata;
+			else if (node.area)
+				std::cout << node.area;
+			else if (node.walls[0] || node.walls[1] || node.walls[2] || node.walls[3])
+				std::cout << node.material;
+			else
+				std::cout << ' ';
+			std::cout << (node.walls[Direction::East] ? '|' : ' ');
+			honk << (node.walls[Direction::South] ? "---" : "   ");
+			honk << ' ';
+		}
+		std::cout << std::endl;
+		std::cout << honk.str() << std::endl;
+	}
 #endif
 }
 
@@ -333,9 +333,9 @@ word readShort(PhysFS::FileStream& str)
 /*
 dword readLong(PhysFS::FileStream& str)
 {
-	dword read;
-	str.read(reinterpret_cast<char*>(&read), 4);
-	return read;
+dword read;
+str.read(reinterpret_cast<char*>(&read), 4);
+return read;
 }
 */
 

@@ -11,25 +11,25 @@
 #include "Game/EntityManager.h"
 
 namespace Wulf {
-    class Game {
-    public:
-        Game(const Difficulty difficulty);
-        ~Game();
+	class Game {
+	public:
+		Game(const Difficulty difficulty);
+		~Game();
 
-        void LoadMap(const word MapNum);
+		void LoadMap(const word MapNum);
 
-        bool IsRunning() const;
+		bool IsRunning() const;
 
-        void Run();
+		void Run();
 
-    private:
-        OpenGL::Renderer rendr;
-        Wulf::Input::Manager input;
-        Wulf::Player ply;
-        Wulf::Map::Map *map;
+	private:
+		OpenGL::Renderer rendr;
+		Wulf::Input::Manager input;
+		Wulf::Player ply;
+		Wulf::Map::Map *map;
 		Wulf::EntityManager& emgr;
 		Wulf::CollisionManager& cmgr;
-        bool running;
-        double dtime;
-    };
+		bool running;
+		double dtime;
+	};
 }

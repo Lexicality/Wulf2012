@@ -7,35 +7,35 @@
 #include "WulfConstants.h"
 
 namespace Wulf {
-    namespace Input {
-        struct Data {
-            bool Forwards;
-            bool Backwards;
-            bool Left;
-            bool Right;
-            bool Shoot;
-            bool Use;
-            bool InventoryPrev;
-            bool InventoryNext;
-            bool Slot1;
-            bool Slot2;
-            bool Slot3;
-            bool Slot4;
-            bool Exit;
-        #ifdef FREE_VIEW
-            float DeltaViewY;
-            float DeltaViewX;
-        #else
-            float DeltaView;
-        #endif
-        };
-        class Manager {
-        public:
-            Manager();
-            const Data GetInput();
-        private:
-            int lastx, lasty;
-            bool lostFocus;
-        };
-    }
+	namespace Input {
+		struct Data {
+			bool Forwards;
+			bool Backwards;
+			bool Left;
+			bool Right;
+			bool Shoot;
+			bool Use;
+			bool InventoryPrev;
+			bool InventoryNext;
+			bool Slot1;
+			bool Slot2;
+			bool Slot3;
+			bool Slot4;
+			bool Exit;
+#ifdef FREE_VIEW
+			float DeltaViewY;
+			float DeltaViewX;
+#else
+			float DeltaView;
+#endif
+		};
+		class Manager {
+		public:
+			Manager();
+			const Data GetInput();
+		private:
+			int lastx, lasty;
+			bool lostFocus;
+		};
+	}
 }

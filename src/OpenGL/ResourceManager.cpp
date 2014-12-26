@@ -41,7 +41,7 @@ OpenGL::ResourceManager::ResourceManager() {
 	// . . .
 }
 OpenGL::ResourceManager::ResourceManager(ResourceManager&& other)
-: vbos(other.vbos), vaos(other.vaos), programs(other.programs), textures(other.textures)
+	: vbos(other.vbos), vaos(other.vaos), programs(other.programs), textures(other.textures)
 {
 	other.vbos.clear();
 	other.vaos.clear();
@@ -128,9 +128,9 @@ GLuint OpenGL::ResourceManager::LoadShaders(const std::string& vertex, const std
 		GLsizei len;
 		glGetProgramiv(Program, GL_INFO_LOG_LENGTH, &len);
 		std::string msg;
-        if (!len) {
-            msg = "No message.";
-        } else {
+		if (!len) {
+			msg = "No message.";
+		} else {
 			std::vector<char> log(len);
 			glGetProgramInfoLog(Program, len, NULL, &log[0]);
 			msg = &log[0];
@@ -227,15 +227,15 @@ void genericShaderLoad (GLuint shaderID, const std::string& name, const std::str
 	{
 		GLsizei len;
 		glGetShaderiv(shaderID, GL_INFO_LOG_LENGTH, &len);
-        std::ostringstream msg;
+		std::ostringstream msg;
 		msg << name << ext << ":\n";
-        if (!len) {
-            msg << "No message.";
-        } else {
-            std::vector<char> log(len);
-            glGetShaderInfoLog(shaderID, len, NULL, &log[0]);
-            msg << &log[0];
-        }
+		if (!len) {
+			msg << "No message.";
+		} else {
+			std::vector<char> log(len);
+			glGetShaderInfoLog(shaderID, len, NULL, &log[0]);
+			msg << &log[0];
+		}
 		std::string smsg = msg.str();
 #ifdef SHADER_DEBUG
 		std::cout << smsg << std::endl;
@@ -391,7 +391,7 @@ GLuint OpenGL::ResourceManager::genericTextureLoad(std::vector<std::string>& fil
 	imgdata *fimg = &images[0];
 
 	glTexImage3D(GL_TEXTURE_2D_ARRAY, 0, GL_RGBA8, fimg->width, fimg->height,
-						images.size(), 0, GL_RGBA, GL_UNSIGNED_BYTE, NULL);
+		images.size(), 0, GL_RGBA, GL_UNSIGNED_BYTE, NULL);
 
 	i = 0;
 	for (auto itr = images.begin(), end = images.end(); itr < end; ++itr) {
