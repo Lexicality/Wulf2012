@@ -103,7 +103,7 @@ Vector CollisionManager::CollisionClamp(const Entity& entity, const Vector& velo
 	CollisionObj ent = getObj(entity);
 
      Vector pos = entity.GetPos();
-	const KeyType currentNode = key(entity.GetPos());
+	const coords currentNode(entity.GetPos());
 	std::vector<MapType::mapped_type> pnodes = grabTiles(currentNode);
     
 	// Merge ajacent faces
@@ -319,31 +319,13 @@ OpenGL::RenderChunk * CollisionManager::GetRenderChunk(OpenGL::ResourceManager& 
 
 void CollisionManager::UpdateDoor(const coord x, const coord y, const bool state)
 {
-	map[key(x, y)]->Solid = state;
+	map[coords(x, y)]->Solid = state;
 }
 
 inline 
-CollisionManager::KeyType CollisionManager::key(const Map::Node& node) const
+coords CollisionManager::key(const Map::Node& node) const
 {
-	return std::make_pair(node.x, node.y);
-}
-
-inline
-CollisionManager::KeyType CollisionManager::key(const coord x, const coord y) const
-{
-	return std::make_pair(x, y);
-}
-
-inline
-CollisionManager::KeyType CollisionManager::key(const float x, const float y) const
-{
-	return std::make_pair(static_cast<coord>(std::floor(x+.5)), static_cast<coord>(std::floor(y+.5)));
-}
-
-inline
-CollisionManager::KeyType CollisionManager::key(const Vector& pos) const
-{
-	return key(pos.x, pos.y);
+	return coords(node.x, node.y);
 }
 
 inline
@@ -370,14 +352,14 @@ CollisionManager::MapType::value_type CollisionManager::prep(const Map::Node& no
 	return std::make_pair(key(node), data);
 }
 
-std::vector<CollisionManager::TileData*> CollisionManager::grabTiles(const CollisionManager::KeyType& pos) const
+std::vector<CollisionManager::TileData*> CollisionManager::grabTiles(const coords& pos) const
 {
 	std::vector<TileData*> ret;
-	coord x_ = pos.first, y_ = pos.second;
+	coord x_ = pos.x, y_ = pos.y;
 	const auto& none = map.end();
 	for (coord x = x_-1; x <= x_+1; ++x) {
 		for (coord y = y_-1; y <= y_+1; ++y) {
-			const auto& itr = map.find(key(x, y));
+			const auto& itr = map.find(coords(x, y));
 			TileData *res = (itr != none) ? itr->second : nullptr;
             if (res != nullptr && res->Solid)
                 ret.push_back(res);

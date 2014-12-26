@@ -50,20 +50,16 @@ namespace Wulf {
 		GLsizei *counts;
 
 		// Augauruguughhh
-		typedef std::map<std::pair<coord, coord>, TileData*> MapType;
-		typedef MapType::key_type KeyType;
+		typedef std::map<coords, TileData*> MapType;
 
 		// Various ways of nabbing a key
-		KeyType key(const Map::Node& node) const;
-		KeyType key(const coord x, const coord y) const;
-		KeyType key(const float x, const float y) const;
-		KeyType key(const Vector& pos) const;
+		coords key(const Map::Node& node) const;
 
 		// Convert a mapnode to a collision tile
 		MapType::value_type prep(const Map::Node& node) const;
 
 		// Get the 9 closest tiles to this one (including this one)
-		std::vector<TileData*> grabTiles(const KeyType&) const;
+		std::vector<TileData*> grabTiles(const coords&) const;
 		MapType map;
 	};
 }
