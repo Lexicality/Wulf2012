@@ -44,8 +44,31 @@ namespace Wulf {
 
 	typedef unsigned short int EntID;
 
-	typedef short int coord;
-
 	typedef uint16_t word;
 	typedef uint8_t  byte;
+
+	typedef short int coord;
+	class coords {
+	public:
+		coord x, y;
+
+		float distance(coords const pos) const { return distance(pos.x, pos.y); }
+		float distance(Vector const pos) const { return distance(pos.x, pos.y); }
+		float distance(float px, float py) const {
+			return glm::distance(glm::vec2(x, y), glm::vec2(px, py) );
+		}
+
+		coords() : x(0), y(0) {}
+		coords(coord x, coord y) : x(x), y(y) {}
+		coords(float x, float y) : x(fromfloat(x)), y(fromfloat(y)) {}
+		coords(Vector pos) : x(fromfloat(pos.x)), y(fromfloat(pos.y)) {}
+
+		bool operator==(coords const& o) const { return x == o.x && y == o.y; }
+		bool operator!=(coords const& o) const { return !(*this == o); }
+		bool operator<(coords const& o) const { return x < o.x && y < o.y; }
+	private:
+		coord fromfloat(float const num) const {
+			return static_cast<coord>(num + 0.5);
+		}
+	};
 }
