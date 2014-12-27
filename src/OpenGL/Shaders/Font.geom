@@ -29,16 +29,16 @@ void main() {
 	float left   = pos.x + poses[0];
 	float bottom = pos.y;
 	// Infos
-	int char = int(chars[0]);
-	float charwidth = widths[char];
+	int char_ = int(chars[0]);
+	float charwidth = widths[char_];
 
 	// Posses
 	float top   = bottom + blockSize.y * screenScale.y;
 	float right = left   + charwidth   * screenScale.x;
 
 	// Texture info
-	float row = float(char / 16) * blockSize.y;
-	float col = float(char % 16) * blockSize.x;
+	float row = float(char_ / 16) * blockSize.y;
+	float col = float(char_ % 16) * blockSize.x;
 
 	// Top Left
 	gl_Position = vec4(left, top, -1, 1);
