@@ -45,7 +45,7 @@ namespace Wulf {
 
 			static const byte width = 64;
 			static const byte height = 64;
-			static const byte halfwidth  = 32;
+			static const byte halfwidth = 32;
 			static const byte halfheight = 32;
 
 			std::string parString;

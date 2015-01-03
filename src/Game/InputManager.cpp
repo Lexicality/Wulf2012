@@ -11,7 +11,7 @@
 using namespace Wulf;
 
 bool keypress(int key);
-bool mpress  (int btn);
+bool mpress(int btn);
 
 Input::Manager::Manager() : lostFocus(true)
 {

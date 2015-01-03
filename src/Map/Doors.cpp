@@ -6,17 +6,17 @@ using namespace Wulf::Doors;
 DoorInfo::DoorInfo(coord x, coord y, word data)
 	: x(x), y(y), tex(BaseTexture), dir(Horizontal), status(OpeningStatus::Closed), openPercentReal(0), locked(false)
 {
-	switch(data) {
+	switch (data) {
 	case VertNormal:
 		tex += 1;
-		dir  = Vertical;
+		dir = Vertical;
 	case HoriNormal:
 		tex += DoorOffset;
 		break;
 	case VertGold:
 	case VertSilver:
 		tex += 1;
-		dir  = Vertical;
+		dir = Vertical;
 	case HoriGold:
 	case HoriSilver:
 		tex += LockOffset;
@@ -24,7 +24,7 @@ DoorInfo::DoorInfo(coord x, coord y, word data)
 		break;
 	case VertEle:
 		tex += 1;
-		dir  = Vertical;
+		dir = Vertical;
 	case HoriEle:
 		tex += ElevOffset;
 		break;
@@ -36,13 +36,15 @@ DoorInfo::DoorInfo(coord x, coord y, word data)
 	// else key = random garbage woo fake tristate
 }
 
-void DoorInfo::Open() {
+void DoorInfo::Open()
+{
 	locked = false;
 	status = OpeningStatus::Opening;
 	closeCountdown = CloseAfter;
 }
 
-void DoorInfo::Think(double dtime) {
+void DoorInfo::Think(double dtime)
+{
 	if (status == OpeningStatus::Closed)
 		return;
 	if (status == OpeningStatus::Open) {
@@ -69,11 +71,13 @@ void DoorInfo::Think(double dtime) {
 	}
 }
 
-byte DoorInfo::openPercent() const {
+byte DoorInfo::openPercent() const
+{
 	return static_cast<byte>(openPercentReal * 100 + 0.5);
 }
 
-bool DoorInfo::isSolid() const {
+bool DoorInfo::isSolid() const
+{
 	if (status == OpeningStatus::Open)
 		return false;
 	if (status == OpeningStatus::Closed)

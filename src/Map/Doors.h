@@ -64,7 +64,8 @@ namespace Wulf {
 			double openPercentReal;
 		};
 
-		static inline bool IsDoor(const word data) {
+		static inline bool IsDoor(const word data)
+		{
 			return (data >= 0x5a && data <= 0x5F)
 				|| data == 0x64 || data == 0x65;
 		}

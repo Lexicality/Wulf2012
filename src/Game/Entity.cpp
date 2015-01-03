@@ -18,7 +18,8 @@ Entity::Entity()
 	// honk
 }
 
-void Entity::Move(const Vector& vel) {
+void Entity::Move(const Vector& vel)
+{
 	mPos += cmgr.CollisionClamp(*this, vel);
 }
 

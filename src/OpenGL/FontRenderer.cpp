@@ -34,7 +34,7 @@ void OpenGL::FontRenderer::Initialize(const GLuint textureOffset)
 
 	GLsizei numfonts = 2;
 	programs = mgr.LoadShaders(numfonts, "Font", "Font", "Font");
-	charWidths.resize (numfonts);
+	charWidths.resize(numfonts);
 	charPosses.reserve(numfonts);
 	posPosses.reserve(numfonts);
 
@@ -57,9 +57,9 @@ void OpenGL::FontRenderer::Initialize(const GLuint textureOffset)
 			throw std::runtime_error(datfile + " is not a valida font data file!");
 
 		unsigned char blockWidth, blockHeight, numChars;
-		file.read((char*) &blockWidth,  1);
-		file.read((char*) &blockHeight, 1);
-		file.read((char*) &numChars,    1);
+		file.read((char*)&blockWidth, 1);
+		file.read((char*)&blockHeight, 1);
+		file.read((char*)&numChars, 1);
 
 		// numChars is stored in a little endian long for no reason.
 		// The next 3 chars are always 0 since it's a goddamn char, so ignore 'em
@@ -130,7 +130,7 @@ void OpenGL::FontRenderer::Initialize(const GLuint textureOffset)
 		std::vector<char>::iterator itr = widths.begin();
 		std::vector<char>::iterator end = widths.end();
 		for (; itr < end; ++itr) {
-			fwidths.push_back(static_cast<GLfloat>(*itr) /  fWidth);
+			fwidths.push_back(static_cast<GLfloat>(*itr) / fWidth);
 			swidths.push_back(static_cast<GLfloat>(*itr) / hvWidth);
 		}
 		glUniform1fv(
@@ -196,7 +196,7 @@ void OpenGL::FontRenderer::DrawString(const GLfloat x, const GLfloat y, const ch
 	glUseProgram(programs[font]);
 
 	// Tell the shader where it can stick it
-	glUniform2f( posPosses[font], x, y);
+	glUniform2f(posPosses[font], x, y);
 
 	// Build an entirely new buffer to display this text. (woo)
 	// TODO: Maybe don't? Have a large GL_DYNAMIC_DRAW buffer and rewrite sections of it.

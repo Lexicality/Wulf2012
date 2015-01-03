@@ -8,12 +8,12 @@
 #include "OpenGL/ResourceManager.h"
 
 namespace Wulf {
-    namespace OpenGL {
-        class HasRenderChunk {
-        public:
-            virtual RenderChunk * GetRenderChunk(ResourceManager& mgr, glm::mat4 const& projMat) = 0;
-        protected:
-            RenderChunk mRenderChunk;
-        };
-    }
+	namespace OpenGL {
+		class HasRenderChunk {
+		public:
+			virtual RenderChunk * GetRenderChunk(ResourceManager& mgr, glm::mat4 const& projMat) = 0;
+		protected:
+			RenderChunk mRenderChunk;
+		};
+	}
 }

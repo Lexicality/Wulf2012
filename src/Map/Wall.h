@@ -17,7 +17,7 @@ namespace Wulf {
 		public:
 			Wall(const Direction direction);
 			void SetStart(const Node& start);
-			void SetEnd  (const Node& end  );
+			void SetEnd(const Node& end);
 			void SetMaterial(const Material material);
 
 			// Enable movement

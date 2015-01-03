@@ -221,8 +221,7 @@ Enemies::Enemy* EnemySpawner::makeone(const Wulf::Map::Node &node, const word di
 }
 
 static const size_t NUM_ENEMIES = 5;
-struct EnemyRenderChunk : public OpenGL::RenderChunk
-{
+struct EnemyRenderChunk : public OpenGL::RenderChunk {
 	void mRenderFunction(const RenderChunk&) const;
 	void Setup(OpenGL::ResourceManager& mgr, glm::mat4 const&);
 
@@ -241,13 +240,13 @@ EnemyRenderChunk::EnemyRenderChunk()
 {
 	Starts = new GLint[NUM_ENEMIES];
 	Counts = new GLsizei[NUM_ENEMIES];
-	Texes  = new GLint[NUM_ENEMIES];
+	Texes = new GLint[NUM_ENEMIES];
 }
 EnemyRenderChunk::~EnemyRenderChunk()
 {
-	delete [] Starts;
-	delete [] Counts;
-	delete [] Texes;
+	delete[] Starts;
+	delete[] Counts;
+	delete[] Texes;
 }
 
 void errchck(const char* str);
@@ -280,7 +279,7 @@ void EnemyRenderChunk::Setup(OpenGL::ResourceManager &mgr, glm::mat4 const& proj
 {
 	dozero(Starts, NUM_ENEMIES);
 	dozero(Counts, NUM_ENEMIES);
-	dozero(Texes,  NUM_ENEMIES);
+	dozero(Texes, NUM_ENEMIES);
 
 	RenderFunction = std::bind(&EnemyRenderChunk::mRenderFunction, this, std::placeholders::_1);
 
@@ -303,8 +302,8 @@ void EnemyRenderChunk::Setup(OpenGL::ResourceManager &mgr, glm::mat4 const& proj
 	glUseProgram(0);
 
 	ViewUniform = glGetUniformLocation(Program, "View");
-	PlyPos      = glGetUniformLocation(Program, "PlayerPosition");
-	TexPos      = glGetUniformLocation(Program, "Texture");
+	PlyPos = glGetUniformLocation(Program, "PlayerPosition");
+	TexPos = glGetUniformLocation(Program, "Texture");
 
 	/*
 	* Textures
@@ -325,7 +324,7 @@ OpenGL::RenderChunk* Enemies::GetRenderChunk(OpenGL::ResourceManager& mgr, glm::
 }
 
 inline
-	float workOutHeading(const glm::vec3& heading)
+float workOutHeading(const glm::vec3& heading)
 {
 	return std::atan2f(heading.y, heading.x);
 }
@@ -353,9 +352,9 @@ void Wulf::DoOpenGLStuff(std::vector<Enemies::Enemy*>& enemies)
 	glBindBuffer(GL_ARRAY_BUFFER, mChunk.VBO);
 	glBufferData(GL_ARRAY_BUFFER, enemydata.size() * size, &enemydata[0], GL_STATIC_DRAW);
 	// Grid position
-	glVertexAttribPointer (0, 2, GL_FLOAT, GL_FALSE, size * 3, reinterpret_cast<void*>(       0));
+	glVertexAttribPointer(0, 2, GL_FLOAT, GL_FALSE, size * 3, reinterpret_cast<void*>(0));
 	// Heading
-	glVertexAttribPointer (1, 1, GL_FLOAT, GL_FALSE, size * 3, reinterpret_cast<void*>(size * 2));
+	glVertexAttribPointer(1, 1, GL_FLOAT, GL_FALSE, size * 3, reinterpret_cast<void*>(size * 2));
 	// Integer data
 	glBindBuffer(GL_ARRAY_BUFFER, mChunk.Other["VBO2"]);
 	glBufferData(GL_ARRAY_BUFFER, sizeof(GLubyte) * activities.size(), &activities[0], GL_STATIC_DRAW);

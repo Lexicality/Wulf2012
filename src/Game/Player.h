@@ -18,7 +18,7 @@ namespace Wulf {
 		~Player() {};
 
 		void ProcessUserInput(const Input::Data& input, const double dtime);
-		void ProcessMapInput (const Map::Map& map);
+		void ProcessMapInput(const Map::Map& map);
 #ifdef FREE_VIEW
 		glm::vec3 GetUp() const { return mUp; }
 #endif

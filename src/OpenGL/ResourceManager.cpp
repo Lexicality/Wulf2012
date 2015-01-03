@@ -20,7 +20,7 @@ using namespace Wulf;
 // Image loading routines
 int  img_read(void *vstream, char *data, int amt);
 void img_skip(void *vstream, unsigned int amt);
-int  img_eof (void *vstream);
+int  img_eof(void *vstream);
 static const stbi_io_callbacks cbacks = {
 	&img_read,
 	&img_skip,
@@ -33,11 +33,12 @@ struct imgdata {
 };
 
 // Locals
-void   genericShaderLoad (GLuint shaderID, const std::string& name, const std::string ext);
+void genericShaderLoad(GLuint shaderID, const std::string& name, const std::string ext);
 
 void errchck(const char* str);
 
-OpenGL::ResourceManager::ResourceManager() {
+OpenGL::ResourceManager::ResourceManager()
+{
 	// . . .
 }
 OpenGL::ResourceManager::ResourceManager(ResourceManager&& other)
@@ -70,7 +71,7 @@ GLuint OpenGL::ResourceManager::CreateVBO()
 	return id;
 }
 
-GLuintVector OpenGL::ResourceManager::CreateVBOs (GLsizei n)
+GLuintVector OpenGL::ResourceManager::CreateVBOs(GLsizei n)
 {
 	GLuintVector nbuffers(n);
 	glGenBuffers(n, &nbuffers[0]);
@@ -88,7 +89,7 @@ GLuint OpenGL::ResourceManager::CreateVAO()
 	return id;
 }
 
-GLuintVector OpenGL::ResourceManager::CreateVAOs (GLsizei n)
+GLuintVector OpenGL::ResourceManager::CreateVAOs(GLsizei n)
 {
 	GLuintVector nbuffers(n);
 	glGenVertexArrays(n, &nbuffers[0]);
@@ -189,7 +190,7 @@ GLuintVector OpenGL::ResourceManager::LoadShaders(GLsizei n, const std::string& 
 			throw CorruptShaderException(msg);
 		}
 
-		res     .push_back(Program);
+		res.push_back(Program);
 		programs.push_back(Program);
 	}
 #ifdef SHADER_DEBUG
@@ -201,7 +202,7 @@ GLuintVector OpenGL::ResourceManager::LoadShaders(GLsizei n, const std::string& 
 	return res;
 }
 
-void genericShaderLoad (GLuint shaderID, const std::string& name, const std::string ext)
+void genericShaderLoad(GLuint shaderID, const std::string& name, const std::string ext)
 {
 	std::string path = "shaders/" + (name + ext);
 	if (!PhysFS::exists(path))
@@ -256,7 +257,7 @@ GLuint OpenGL::ResourceManager::LoadTextureArray(const std::string& path)
 		files.push_back(path + '/' + *i);
 	return genericTextureLoad(files);
 }
-GLuint OpenGL::ResourceManager::LoadTextureArray( const std::string& path, const short int start, const short int end)
+GLuint OpenGL::ResourceManager::LoadTextureArray(const std::string& path, const short int start, const short int end)
 {
 	// *shrug*
 	if (start > end)
@@ -280,7 +281,7 @@ GLuint OpenGL::ResourceManager::LoadSingleTexture(const std::string& path, GLuin
 {
 	if (!PhysFS::exists(path))
 		throw NoSuchTextureException("Could not find " + path);
-	imgdata data = {nullptr, 0, 0};
+	imgdata data = { nullptr, 0, 0 };
 
 	try {
 		int i;
@@ -294,14 +295,14 @@ GLuint OpenGL::ResourceManager::LoadSingleTexture(const std::string& path, GLuin
 		throw NoSuchTextureException("Cannot load " + path + ":" + e.what());
 	}
 	// Helpful stuph
-	if (width  != nullptr)
+	if (width != nullptr)
 		*width = data.width;
 	if (height != nullptr)
 		*height = data.height;
 	// load it into opengl
 	GLuint res;
 	glGenTextures(1, &res);
-	glBindTexture  (GL_TEXTURE_2D, res);
+	glBindTexture(GL_TEXTURE_2D, res);
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
@@ -355,7 +356,7 @@ GLuint OpenGL::ResourceManager::genericTextureLoad(std::vector<std::string>& fil
 		std::string cpath = *itr;
 		if (!boost::algorithm::iends_with(cpath, ".tga"))
 			continue;
-		int x,y;
+		int x, y;
 		byte *data;
 		try {
 			PhysFS::FileStream file(cpath, PhysFS::OM_READ);
@@ -368,7 +369,7 @@ GLuint OpenGL::ResourceManager::genericTextureLoad(std::vector<std::string>& fil
 			std::cerr << "Failed to load " << cpath << ": " << e.what() << std::endl;
 			continue;
 		}
-		imgdata idata = {data, x, y};
+		imgdata idata = { data, x, y };
 		images.push_back(idata);
 	}
 

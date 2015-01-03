@@ -44,8 +44,7 @@ int main(int argc, char **argv)
 	}
 
 	// Checkity check for contentity tent
-	if (!check_content())
-	{
+	if (!check_content()) {
 		System::ErrorBox("Content error:", "You are missing some required content.");
 		return -1;
 	}
@@ -55,7 +54,7 @@ int main(int argc, char **argv)
 		game.LoadMap(0);
 		while (game.IsRunning())
 			game.Run();
-	} catch(std::exception& e) {
+	} catch (std::exception& e) {
 		System::ErrorBox("Uncaught exception: ", e.what());
 		throw;
 	}
@@ -93,7 +92,7 @@ void close_physfs()
 {
 	try {
 		PhysFS::deinit();
-	} catch(PhysFS::Exception&) {}
+	} catch (PhysFS::Exception&) {}
 }
 
 bool check_content()

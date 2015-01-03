@@ -65,11 +65,11 @@ void Node::ParseMetaData()
 		spawn = true;
 	} else if (metadata >= 0x5A && metadata <= 0x61) {
 		// TODO: Navigation waypoints!
-	}  else if (metadata == 0x62) {
+	} else if (metadata == 0x62) {
 		// TODO: Secret wall door!
 		// For now, just act like ur air
 		solid = false;
-		wall  = false;
+		wall = false;
 		material = 0;
 		self.blockdata = 0;
 	} else if (metadata == 0x63) {
@@ -261,7 +261,7 @@ Node& Node::operator=(Node&& other)
 }
 
 static
-	Direction reverseDirection(const Direction dir)
+Direction reverseDirection(const Direction dir)
 {
 	switch (dir) {
 	case Direction::South:
@@ -278,15 +278,15 @@ static
 
 // hurr
 inline static
-	Direction reverseDirection(const int dir)
+Direction reverseDirection(const int dir)
 {
 	return reverseDirection(static_cast<Direction>(dir));
 }
 
 static
-	bool isSolid(const StaticSprites::StaticSprite spr)
+bool isSolid(const StaticSprites::StaticSprite spr)
 {
-	switch(spr) {
+	switch (spr) {
 	case StaticSprites::BARREL_GREEN:
 	case StaticSprites::TABLE_CHAIRS:
 	case StaticSprites::LAMP_FLOOR:
@@ -314,9 +314,9 @@ static
 }
 
 static
-	bool isPickup(const StaticSprites::StaticSprite spr)
+bool isPickup(const StaticSprites::StaticSprite spr)
 {
-	switch(spr) {
+	switch (spr) {
 	case StaticSprites::FOOD_GRUEL:
 	case StaticSprites::KEY_GOLD:
 	case StaticSprites::KEY_BLUE:

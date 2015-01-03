@@ -10,21 +10,21 @@
 #include "gl.h"
 
 namespace Wulf {
-    namespace OpenGL {
-        class HUDRenderer {
-        public:
-            HUDRenderer();
-            ~HUDRenderer();
+	namespace OpenGL {
+		class HUDRenderer {
+		public:
+			HUDRenderer();
+			~HUDRenderer();
 
-            void Setup(ResourceManager& mgr, GLsizei textureoffset = 15);
+			void Setup(ResourceManager& mgr, GLsizei textureoffset = 15);
 
-            void UpdatePlayerInfo(const Player& ply);
+			void UpdatePlayerInfo(const Player& ply);
 
-            void Draw();
-        private:
-            GLuint VAO;
-            GLuint shader;
-            GLuint fbuff;
-        };
-    }
+			void Draw();
+		private:
+			GLuint VAO;
+			GLuint shader;
+			GLuint fbuff;
+		};
+	}
 }

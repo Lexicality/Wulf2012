@@ -28,8 +28,9 @@ namespace Wulf {
 
 		// Registration
 		template <class E>
-		void RegisterEntity(const std::string& classname) {
-			factories[classname] = new SpecificEntFactory<E>;
+		void RegisterEntity(const std::string& classname)
+		{
+			factories[classname] = new SpecificEntFactory<E>();
 		}
 
 		Entity* CreateEntity(const std::string& classname, Vector pos, Vector heading);

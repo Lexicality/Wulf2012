@@ -13,7 +13,7 @@ Player::Player()
 	: Entity()
 #ifdef FREE_VIEW
 	, fhViewAngle(0.0f), fvViewAngle(3.14f * 2.0f)
-	, mUp(0,0,1)
+	, mUp(0, 0, 1)
 #else // !FREE_VIEW
 	, fViewAngle(0.0f)
 #endif // /FREE_VIEW
@@ -49,7 +49,7 @@ void Player::ProcessUserInput(const Input::Data& input, const double dtime)
 						   sin(fvViewAngle)
 	);
 	float fhvang = fhViewAngle - 3.14f / 2.0f;
-	glm::vec3 right (
+	glm::vec3 right(
 		sin(fhvang),
 		cos(fhvang),
 		0
@@ -57,14 +57,14 @@ void Player::ProcessUserInput(const Input::Data& input, const double dtime)
 	mUp = glm::cross(mDir, right);
 #else
 	fViewAngle -= fMouseSpeed * input.DeltaView;
-	mDir = glm::vec3 (
+	mDir = glm::vec3(
 		sin(fViewAngle),
 		cos(fViewAngle),
 		0
 	);
 	glm::vec3 right = glm::cross(up, mDir);
 #endif
-	glm::vec3 vel(0,0,0);
+	glm::vec3 vel(0, 0, 0);
 	float amt = ftime * fKeySpeed;
 	if (input.Forwards)
 		vel += mDir * amt;
@@ -93,7 +93,7 @@ void Player::ProcessMapInput(const Map::Map& map)
 						   sin(fvViewAngle)
 	);
 	float fhvang = fhViewAngle - 3.14f / 2.0f;
-	glm::vec3 right (
+	glm::vec3 right(
 		sin(fhvang),
 		cos(fhvang),
 		0
@@ -101,7 +101,7 @@ void Player::ProcessMapInput(const Map::Map& map)
 	mUp = glm::cross(mDir, right);
 #else // !FREE_VIEW
 	fViewAngle = map.spawnAng;
-	mDir = glm::vec3 (
+	mDir = glm::vec3(
 		sin(fViewAngle),
 		cos(fViewAngle),
 		0

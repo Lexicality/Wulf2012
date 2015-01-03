@@ -26,7 +26,7 @@ namespace Wulf {
 
 		bool IsAlive() const { return mHealth > 0; }
 		byte GetHealth() const { return mHealth; }
-		void SetHealth (const byte health) { mHealth = health; }
+		void SetHealth(const byte health) { mHealth = health; }
 		void TakeDamage(const byte damage) { mHealth -= damage; }
 
 		Vector GetCollisionBounds() const { return mBounds; }

@@ -44,14 +44,14 @@ void Map::Map::LoadFile(const word mapNum)
 	// TODO: maybe I should spin my own error messages.
 	file.exceptions(PhysFS::FileStream::eofbit | PhysFS::FileStream::failbit | PhysFS::FileStream::badbit);
 
-	char data[6] = {0};
+	char data[6] = { 0 };
 	file.read(data, 4);
 	if (std::strcmp(data, "!ID!") != 0)
 		throw std::runtime_error(fname + " is not a valid map file!");
 
 	word RLEWTag = readShort(file);
-	word width   = readShort(file);
-	word height  = readShort(file);
+	word width = readShort(file);
+	word height = readShort(file);
 	if (width != 64 && height != 64)
 		throw std::runtime_error("Map has invalid dimensions!");
 
@@ -60,7 +60,7 @@ void Map::Map::LoadFile(const word mapNum)
 	ceilingColour /= 0xFF;
 
 	file.read(data, 4);
-	floorColour   = Vector(data[0], data[1], data[2]);
+	floorColour = Vector(data[0], data[1], data[2]);
 	floorColour /= 0xFF;
 
 	word lengths[3];
@@ -110,7 +110,7 @@ void Map::Map::ParseNodes()
 		auto& cnodes = nodes[x];
 		cnodes.reserve(height);
 		for (byte y = 0; y < height; ++y) {
-			size_t i = x + y * (word) width;
+			size_t i = x + y * (word)width;
 			cnodes.emplace_back(x - halfwidth, y - halfheight, map[i], objs[i]);
 			Node& node = cnodes.back();
 			// Space building
@@ -121,7 +121,7 @@ void Map::Map::ParseNodes()
 			// Spawnpoint
 			if (node.spawn) {
 				spawnPos = Vector(node.x, node.y, 0.65f);
-				switch(node.GetSpawnDirection()) {
+				switch (node.GetSpawnDirection()) {
 				case Direction::North:
 					spawnAng = 3.1415f;
 					break;
@@ -207,8 +207,7 @@ void Map::Map::DebugOutput()
 			if (node.pickup)
 				std::cout << " P ";
 			// Sprites
-			else if (metadata >= StaticSprites::First && metadata <= StaticSprites::Last)
-			{
+			else if (metadata >= StaticSprites::First && metadata <= StaticSprites::Last) {
 				if (node.solid)
 					std::cout << " S ";
 				else
@@ -279,7 +278,7 @@ GLuint Map::Map::GetPackedQuads(VectorVector& packed) const
 		// Loop through each of the four points and shove them at the back of each one
 		for (int i = 0; i < 4; ++i) {
 			packed.push_back(wall.points[i]);
-			packed.push_back(wall.stps  [i]);
+			packed.push_back(wall.stps[i]);
 		}
 	}
 	return numWalls;
@@ -317,7 +316,8 @@ GLuint Map::Map::GetPackedDoors(std::vector<short int>& packed) const
 	return res;
 }
 
-void Map::Map::DoorThink(double dtime) {
+void Map::Map::DoorThink(double dtime)
+{
 	for (auto& door : doors) {
 		door.Think(dtime);
 	}

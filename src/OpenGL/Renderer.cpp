@@ -34,7 +34,7 @@ void OpenGL::Renderer::WallsRenderChunk::mRenderFunction(const OpenGL::RenderChu
 	glMultiDrawArrays(GL_TRIANGLE_FAN, &(*vFirsts)[0], &(*vCounts)[0], NumObjs);
 }
 
-void GenericRenderFunction (const OpenGL::RenderChunk& self)
+void GenericRenderFunction(const OpenGL::RenderChunk& self)
 {
 	glDrawArrays(self.DrawMode, 0, self.NumObjs);
 }
@@ -49,8 +49,7 @@ OpenGL::Renderer::Renderer()
 	*/
 
 	// Initialize GLFW
-	if( !glfwInit() )
-	{
+	if (!glfwInit()) {
 		throw std::runtime_error("Failed to initialize GLFW");
 	}
 
@@ -58,7 +57,7 @@ OpenGL::Renderer::Renderer()
 	// Therefore we delay any exceptions for a moment to do so.
 	try {
 		//glfwOpenWindowHint(GLFW_FSAA_SAMPLES, 4);
-		glfwOpenWindowHint(GLFW_WINDOW_NO_RESIZE,GL_TRUE);
+		glfwOpenWindowHint(GLFW_WINDOW_NO_RESIZE, GL_TRUE);
 		glfwOpenWindowHint(GLFW_OPENGL_VERSION_MAJOR, 3);
 		glfwOpenWindowHint(GLFW_OPENGL_VERSION_MINOR, 0);
 		//glfwOpenWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
@@ -76,8 +75,7 @@ OpenGL::Renderer::Renderer()
 		hudHeight = static_cast<GLsizei>(0.5 + static_cast<double>(windowHeight) * ratio);
 		// Our unauthentic borderless viewport gets everything left.
 		viewportHeight = windowHeight - hudHeight;
-		if( !glfwOpenWindow( windowWidth, windowHeight, 0,0,0,0, 32,0, GLFW_WINDOW ) )
-		{
+		if (!glfwOpenWindow(windowWidth, windowHeight, 0, 0, 0, 0, 32, 0, GLFW_WINDOW)) {
 			throw std::runtime_error("Failed to open GLFW window");
 		}
 
@@ -111,7 +109,7 @@ OpenGL::Renderer::Renderer()
 
 		glfwDisable(GLFW_MOUSE_CURSOR);
 
-		glfwSetWindowTitle( "Wulf2012" );
+		glfwSetWindowTitle("Wulf2012");
 
 		// Vshink
 		//glfwSwapInterval(1);
@@ -156,8 +154,8 @@ OpenGL::Renderer::Renderer()
 
 		// Do the render chunks
 		Walls.RenderFunction = std::bind(&WallsRenderChunk::mRenderFunction, &Walls, arg::_1);
-		Floor.RenderFunction   = std::bind(GenericRenderFunction, arg::_1);
-		Doors.RenderFunction   = std::bind(GenericRenderFunction, arg::_1);
+		Floor.RenderFunction = std::bind(GenericRenderFunction, arg::_1);
+		Doors.RenderFunction = std::bind(GenericRenderFunction, arg::_1);
 		Statics.RenderFunction = std::bind(GenericRenderFunction, arg::_1);
 
 		Floor.DrawMode = GL_TRIANGLE_FAN;
@@ -468,8 +466,8 @@ void OpenGL::Renderer::LoadShaders()
 	Statics.ViewUniform = glGetUniformLocation(StatixProg, "View");
 
 	// Uniform Uniforms
-	GLuint progs[] = {WallsProg, StatixProg, DoorsProg, 0};
-	GLuint texes[] = {0, 1, 0};
+	GLuint progs[] = { WallsProg, StatixProg, DoorsProg, 0 };
+	GLuint texes[] = { 0, 1, 0 };
 	int i = 0;
 	GLuint prog;
 	// I dunno what type this actually is lol
