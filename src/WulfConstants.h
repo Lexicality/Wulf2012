@@ -47,15 +47,16 @@ namespace Wulf {
 	typedef uint16_t word;
 	typedef uint8_t  byte;
 
-	typedef short int coord;
+	typedef int16_t coord;
 	class coords {
 	public:
 		coord x, y;
 
 		float distance(coords const pos) const { return distance(pos.x, pos.y); }
 		float distance(Vector const pos) const { return distance(pos.x, pos.y); }
-		float distance(float px, float py) const {
-			return glm::distance(glm::vec2(x, y), glm::vec2(px, py) );
+		float distance(float px, float py) const
+		{
+			return glm::distance(glm::vec2(x, y), glm::vec2(px, py));
 		}
 
 		coords() : x(0), y(0) {}
@@ -67,8 +68,21 @@ namespace Wulf {
 		bool operator!=(coords const& o) const { return !(*this == o); }
 		bool operator<(coords const& o) const { return x < o.x && y < o.y; }
 	private:
-		coord fromfloat(float const num) const {
+		coord fromfloat(float const num) const
+		{
 			return static_cast<coord>(num + 0.5);
+		}
+	};
+}
+namespace std {
+	template <> struct hash < Wulf::coords > {
+		inline size_t operator() (const Wulf::coords& coords) const
+		{
+			uint16_t x, y;
+			x = static_cast<uint16_t>(coords.x);
+			y = static_cast<uint16_t>(coords.y);
+			uint32_t pos = (x << 16) | y;
+			return std::hash<uint32_t>()(pos);
 		}
 	};
 }
