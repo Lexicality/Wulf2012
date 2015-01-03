@@ -3,18 +3,19 @@
 // Copyright (C) 2012 Lexi Robinson
 // This code is freely available under the MIT licence.
 //
+#include <functional>
 #include "Game/Game.h"
-#include "Game/CollisionManager.h"
 #include "Map/Doors.h"
 
 using namespace Wulf;
 
 Game::Game(const Difficulty difficulty)
 	: map(nullptr), running(false), dtime(0)
-	, emgr(EntityManager::GetInstance()), cmgr(CollisionManager::GetInstance())
+	, emgr(EntityManager::GetInstance()), cmgr(Physics::Manager::GetInstance())
 {
 	Wulf::Enemies::RegisterEntities();
 	rendr.AddRenderChunk(Wulf::Enemies::GetRenderChunk);
+	rendr.AddRenderChunk(std::bind(&Wulf::Physics::Manager::GetRenderChunk, &cmgr, std::placeholders::_1, std::placeholders::_2));
 	ply.SetDifficulty(difficulty);
 }
 
@@ -56,7 +57,7 @@ void Game::Run()
 	map->DoorThink(dtime);
 	for (Doors::DoorInfo& door : map->doors) {
 		rendr.UpdateDoor(door.doorID, door.openPercent());
-		cmgr.UpdateDoor(door.x, door.y, door.isSolid());
+		cmgr.UpdateDoor(coords(door.x, door.y), door.isSolid());
 	}
 	dtime = rendr.Render();
 }

@@ -6,6 +6,7 @@
 #include "WulfConstants.h"
 #include "Game/Entity.h"
 #include <map>
+#include <vector>
 
 namespace Wulf {
 	CREATE_EXCEPTION(InvalidEntID, std::runtime_error);

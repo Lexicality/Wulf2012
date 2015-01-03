@@ -5,10 +5,12 @@
 //
 #pragma once
 #include "WulfConstants.h"
-#include "Game/CollisionManager.h"
+//#include "Game/CollisionManager.h"
 
 namespace Wulf {
-	class CollisionManager;
+	namespace Physics {
+		class Manager;
+	}
 	class Entity {
 		friend class EntityManager;
 	public:
@@ -43,7 +45,7 @@ namespace Wulf {
 		Vector mDir;
 		Vector mBounds;
 		byte mHealth;
-		const CollisionManager& cmgr;
+		const Physics::Manager& cmgr;
 
 	private:
 		// No copying

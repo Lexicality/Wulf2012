@@ -9,6 +9,7 @@
 #include "Game/Player.h"
 #include "Game/InputManager.h"
 #include "Game/EntityManager.h"
+#include "Game/Physics/Manager.h"
 
 namespace Wulf {
 	class Game {
@@ -28,7 +29,7 @@ namespace Wulf {
 		Wulf::Player ply;
 		Wulf::Map::Map *map;
 		Wulf::EntityManager& emgr;
-		Wulf::CollisionManager& cmgr;
+		Wulf::Physics::Manager& cmgr;
 		bool running;
 		double dtime;
 	};

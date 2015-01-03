@@ -4,6 +4,7 @@
 // This code is freely available under the MIT licence.
 //
 #include "Game/Entity.h"
+#include "Game/Physics/Manager.h"
 
 using namespace Wulf;
 
@@ -12,7 +13,7 @@ Entity::Entity()
 	, mDir(1, 0, 0)
 	, mBounds(0.75, 0.75, 1)
 	, mHealth(100)
-	, cmgr(CollisionManager::GetInstance())
+	, cmgr(Physics::Manager::GetInstance())
 {
 	// honk
 }

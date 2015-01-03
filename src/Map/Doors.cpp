@@ -63,6 +63,8 @@ void DoorInfo::Think(double dtime) {
 		if (openPercentReal <= 0) {
 			status = OpeningStatus::Closed;
 			openPercentReal = 0;
+			// DOCTOR DEBUG
+			Open();
 		}
 	}
 }
