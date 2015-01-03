@@ -70,7 +70,7 @@ namespace Wulf {
 	private:
 		coord fromfloat(float const num) const
 		{
-			return static_cast<coord>(num + 0.5);
+			return static_cast<coord>(std::round(num));
 		}
 	};
 }
