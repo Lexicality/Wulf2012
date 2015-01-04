@@ -35,6 +35,7 @@ namespace Wulf {
 			word metadata;
 			word area;
 
+			bool visibleWall;
 			bool wall;
 			bool solid;
 

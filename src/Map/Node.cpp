@@ -204,8 +204,10 @@ void Node::AddNeighbour(const Direction direction, Node& neighbour, const bool c
 	// Remember them
 	self.neighbours[direction] = &neighbour;
 	// Check for walls
-	if ((self.wall != neighbour.wall) && (self.blockdata != neighbour.blockdata))
+	if ((self.wall != neighbour.wall) && (self.blockdata != neighbour.blockdata)) {
 		self.walls[direction] = true;
+		self.visibleWall = true;
+	}
 	// Poke them
 	if (!callback)
 		neighbour.AddNeighbour(reverseDirection(direction), self, true);
