@@ -16,8 +16,10 @@ TileData::TileData(Map::Node const& node)
 			Type = TileType::Empty;
 		}
 	} else if (Solid) {
-		Type = TileType::SolidSprite;
+		Type = TileType::Sprite;
+	} else if (node.pickup) {
+		Type = TileType::Pickup;
 	} else {
-		Type = TileType::Decoration;
+		Type = TileType::Empty;
 	}
 }

@@ -8,8 +8,8 @@ namespace Wulf {
 			Empty = 0,
 			Wall,
 			Door,
-			SolidSprite,
-			Decoration,
+			Sprite,
+			Pickup,
 		};
 		struct CollisionObj {
 			float Left;
