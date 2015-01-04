@@ -4,6 +4,7 @@
 #include <glm\glm.hpp>
 #include "Game/Physics/Manager.h"
 #include "Game/Physics/TileData.h"
+#include "Game/Physics/MergeBuilder.h"
 
 using namespace Wulf;
 using namespace Wulf::Physics;
@@ -66,155 +67,14 @@ Manager::TileSet Manager::grabTiles(const Vector& pos) const
 	return ret;
 }
 
-struct MergeBuilder {
-	coords topLeft;
-	TileType type;
-
-	coord width, height;
-	bool done;
-
-	MergeBuilder(Map::Node const& node)
-		: topLeft(node.x, node.y), type(NodeToTile(node))
-		, width(1), height(1)
-		, done(false)
-		, mTileData(nullptr)
-	{
-	}
-
-	bool compatible(MergeBuilder const* other) const
-	{
-		if (other == nullptr || other->done || other->type != type)
-			return false;
-		return true;
-	}
-
-	// This returns the tiledata for the merged mass.
-	// It is safe to call multiple times as it only returns one TileData.
-	TileData* toTile()
-	{
-		if (mTileData != nullptr)
-			return mTileData;
-		// Because short + short coerces to int if left to itself.
-		coord brx = topLeft.x + width, bry = topLeft.y + height;
-		mTileData = new TileData(topLeft, coords(brx, bry), type);
-		return mTileData;
-	}
-private:
-	// Note that this should not be deleted - that is handled elsewhere.
-	TileData* mTileData;
-};
-
 void Manager::SetMap(Map::Map const& m)
 {
-	const auto& nodes = m.nodes;
-
-	const size_t xsize = Map::Map::width, ysize = Map::Map::height;
-
-	// Initial creation run
-	std::array<std::array<MergeBuilder*, ysize>, xsize> setup;
-	// nullptrs for everyone
-	for (auto& nodes : setup)
-		std::fill(nodes.begin(), nodes.end(), nullptr);
-
-	// Insert all viable tiles into a static 64x64 array
-	// Leaves unviable (ie wall cavities) as nullptr;
-	for (int x = 0; x < xsize; x++) {
-		const auto& xnodes = nodes[x];
-		for (int y = 0; y < ysize; y++) {
-			const auto& node = xnodes[y];
-			// Filter out walls the player can never hit
-			if (node.wall && !node.visibleWall) {
-				// Make sure corners are included
-				byte i = 0;
-				for (Map::Node *neighbour : node.neighbours) {
-					if (neighbour != nullptr && neighbour->visibleWall) {
-						i++;
-					}
-				}
-				if (i < 2)
-					continue;
-			}
-			setup[x][y] = new MergeBuilder(node);
-			// If I was massochistic (and this was performance critical), I could do the horizonal merge here.
-			// Neither is the case.
-		}
-	}
-	// Vars defined out here for probable performance increase?
-	byte i, j, yadd;
-	MergeBuilder *node, *other;
-	bool xbroke;
-	// Go through everything and start merging.
-	// This replaces merged tiles with multiple pointers to the same tiledata.
-	for (int x = 0; x < xsize; x++) {
-		for (int y = 0; y < ysize; y++) {
-			node = setup[x][y];
-			if (node == nullptr || node->done)
-				continue;
-			// Merge vertically first due to how the loop is layed out.
-			i = 1;
-			while (y + i < ysize) { // Ensure we stay within bounds
-				other = setup[x][y + i];
-				// Check if the node is the same kind as us. (includes a nullptr check)
-				if (!node->compatible(other))
-					break;
-
-				// Eat the node
-				node->height++;
-				delete other;
-				setup[x][y + i] = node;
-
-				i++;
-			}
-			// yadd lets us skip consumed nodes for the next iteration of y.
-			yadd = i - 1;
-
-			i = 1;
-			xbroke = false;
-			// Consume horizontally
-			while (x + i < xsize) {
-				// Make sure that we can consume all x tiles for our height
-				for (j = 0; j < node->height; j++) {
-					other = setup[x + i][y + j];
-					if (!node->compatible(other)) {
-						xbroke = true;
-						break;
-					}
-				}
-				if (xbroke)
-					break;
-				node->width++;
-				// Eat all nodes for our height
-				for (j = 0; j < node->height; j++) {
-					delete setup[x + i][y + j];
-					setup[x + i][y + j] = node;
-				}
-
-				i++;
-			}
-			node->done = true;
-
-			// Skip the ones we consumed on this column
-			y += yadd;
-		}
-	}
+	MergeBuilder builder(m);
+	auto& newNodes = builder.getTileData();
 
 	map.clear();
-	// I've got no idea how much this really needs, but this seems a saneish value.
-	map.reserve(xsize * ysize / 2);
-	// Convert the merged data into tiledatas.
-	for (coord x = 0; x < xsize; x++) {
-		for (coord y = 0; y < ysize; y++) {
-			node = setup[x][y];
-			if (node == nullptr)
-				continue;
-			map.insert(std::make_pair(coords(x, y), node->toTile()));
-		}
-	}
-	// Cleanup
-	for (auto& x : setup) {
-		for (MergeBuilder *y : x) {
-			delete y;
-		}
+	for (auto& node : newNodes) {
+		map.insert(node);
 	}
 }
 
