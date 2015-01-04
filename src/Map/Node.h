@@ -51,9 +51,9 @@ namespace Wulf {
 			bool walls[4];
 
 			Doors::DoorInfo* doorInfo;
+			Node *neighbours[4];
 
 		private:
-			Node *neighbours[4];
 
 			bool htested;
 			bool vtested;

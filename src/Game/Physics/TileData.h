@@ -30,8 +30,6 @@ namespace Wulf {
 		public:
 			bool Solid;
 			TileType Type;
-			// FIXME: These are meaningless
-			coord x, y;
 			Vector center;
 			union {
 				CollisionObj Bounds;
@@ -41,7 +39,7 @@ namespace Wulf {
 			// Gets the closest point on the bounds to pos
 			Vector ClosestPoint(Vector pos) const;
 
-			TileData(Map::Node const& node);
+			TileData(coords const topLeft, coords const bottomRight, TileType type);
 		};
 
 		TileType NodeToTile(Map::Node const& node);

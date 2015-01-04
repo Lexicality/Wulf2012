@@ -41,18 +41,12 @@ namespace Wulf {
 			Manager& operator=(const Manager& other);
 
 			typedef std::unordered_map<coords, TileData*> MapType;
-
-			// Various ways of nabbing a key
-			coords key(const Map::Node& node) const;
-
-			// Convert a mapnode to a collision tile
-			MapType::value_type prep(const Map::Node& node) const;
+			MapType map;
 
 			// Get the 9 cloest tiles to this one (including this one)
 			typedef std::set<TileData const*, std::function<bool(TileData const*, TileData const*)>> TileSet;
 			TileSet grabTiles(const Vector& pos) const;
 
-			MapType map;
 			Debugger debugger;
 		};
 	}

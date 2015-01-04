@@ -3,11 +3,12 @@
 using namespace Wulf;
 using namespace Wulf::Physics;
 
-TileData::TileData(Map::Node const& node)
-	: Solid(node.solid), x(node.x), y(node.y)
-	, center(node.x, node.y, 0), Bounds({ x - 0.5f, y - 0.5f, x + 0.5f, y + 0.5f })
-	, Type(NodeToTile(node))
+TileData::TileData(coords const topLeft, coords const bottomRight, TileType type)
+	: Solid(type == TileType::Wall || type == TileType::Sprite), Type(type)
+	, center((topLeft.x + bottomRight.x) / 2.0, (topLeft.y + bottomRight.y) / 2.0, 0)
+	, Bounds({ topLeft.x - 0.5f, topLeft.y - 0.5f, bottomRight.x + 0.5f, bottomRight.y + 0.5f })
 {
+	// FIXME: TODO
 }
 
 TileType Physics::NodeToTile(Map::Node const& node)
