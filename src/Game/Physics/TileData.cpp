@@ -6,20 +6,23 @@ using namespace Wulf::Physics;
 TileData::TileData(Map::Node const& node)
 	: Solid(node.solid), x(node.x), y(node.y)
 	, center(node.x, node.y, 0), Bounds({ x - 0.5f, y - 0.5f, x + 0.5f, y + 0.5f })
+	, Type(NodeToTile(node))
+{
+}
+
+TileType Physics::NodeToTile(Map::Node const& node)
 {
 	if (node.door) {
-		Type = TileType::Door;
+		return TileType::Door;
 	} else if (node.sprite == StaticSprites::NONE) {
-		if (Solid) {
-			Type = TileType::Wall;
-		} else {
-			Type = TileType::Empty;
+		if (node.solid) {
+			return TileType::Wall;
 		}
-	} else if (Solid) {
-		Type = TileType::Sprite;
+		return TileType::Empty;
+	} else if (node.solid) {
+		return TileType::Sprite;
 	} else if (node.pickup) {
-		Type = TileType::Pickup;
-	} else {
-		Type = TileType::Empty;
+		return TileType::Pickup;
 	}
+	return TileType::Empty;
 }

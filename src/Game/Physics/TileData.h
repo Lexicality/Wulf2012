@@ -43,5 +43,7 @@ namespace Wulf {
 
 			TileData(Map::Node const& node);
 		};
+
+		TileType NodeToTile(Map::Node const& node);
 	}
 }
