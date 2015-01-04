@@ -20,7 +20,7 @@ static bool isPickup(const StaticSprites::StaticSprite spr);
 
 Node::Node(const coord x, const coord y, const word blockdata, const word metadata)
 	: x(-x), y(y), blockdata(blockdata), metadata(metadata), area(0)
-	, wall(false), solid(false), pickup(false), spawn(false), door(false)
+	, wall(false), solid(false), pickup(false), spawn(false), door(false), visibleWall(false)
 	, material(0), sprite(StaticSprites::NONE)
 	, htested(false), vtested(false)
 {
@@ -216,7 +216,7 @@ void Node::AddNeighbour(const Direction direction, Node& neighbour, const bool c
 Node::Node(Node&& other)
 	: x(other.x), y(other.y)
 	, blockdata(other.blockdata), metadata(other.metadata), area(other.area)
-	, wall(other.wall), solid(other.solid)
+	, wall(other.wall), solid(other.solid), visibleWall(other.visibleWall)
 	, pickup(other.pickup), spawn(other.spawn), door(other.door)
 	, material(other.material), sprite(other.sprite)
 	, htested(other.htested), vtested(other.vtested)
@@ -233,25 +233,26 @@ Node& Node::operator=(Node&& other)
 {
 	if (other.x == self.x && other.y == self.y)
 		return self;
-	self.x         = other.x;
-	self.y         = other.y;
+	self.x = other.x;
+	self.y = other.y;
 
 	self.blockdata = other.blockdata;
-	self.metadata  = other.metadata;
+	self.metadata = other.metadata;
 
-	self.material  = other.material;
-	self.sprite    = other.sprite;
+	self.material = other.material;
+	self.sprite = other.sprite;
 
-	self.wall      = other.wall;
-	self.solid     = other.solid;
-	self.door      = other.door;
-	self.spawn     = other.spawn;
-	self.pickup    = other.pickup;
+	self.visibleWall = other.visibleWall;
+	self.wall = other.wall;
+	self.solid = other.solid;
+	self.door = other.door;
+	self.spawn = other.spawn;
+	self.pickup = other.pickup;
 
-	self.area      = other.area;
+	self.area = other.area;
 
-	self.htested   = other.htested;
-	self.vtested   = other.vtested;
+	self.htested = other.htested;
+	self.vtested = other.vtested;
 
 	for (int i = 0; i < 4; ++i) {
 		self.walls[i] = other.walls[i];
