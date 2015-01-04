@@ -14,11 +14,8 @@ TileType Physics::NodeToTile(Map::Node const& node)
 {
 	if (node.door) {
 		return TileType::Door;
-	} else if (node.sprite == StaticSprites::NONE) {
-		if (node.solid) {
-			return TileType::Wall;
-		}
-		return TileType::Empty;
+	} else if (node.wall) {
+		return TileType::Wall;
 	} else if (node.solid) {
 		return TileType::Sprite;
 	} else if (node.pickup) {
