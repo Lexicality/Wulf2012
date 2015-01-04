@@ -23,6 +23,10 @@ namespace Wulf {
 	namespace Map {
 		class Map {
 		public:
+			static const byte width = 64;
+			static const byte height = 64;
+			static const byte halfwidth = 32;
+			static const byte halfheight = 32;
 
 			// funcs
 			Map(const word mapNum);
@@ -32,7 +36,7 @@ namespace Wulf {
 			void DoorThink(double dtime);
 
 			// Vars
-			std::array<std::vector<Node>, 64> nodes;
+			std::array<std::vector<Node>, width> nodes;
 			std::vector<Wall> walls;
 			std::vector<StaticSprites::Sprite> sprites;
 			std::vector<Doors::DoorInfo> doors;
@@ -42,11 +46,6 @@ namespace Wulf {
 
 			Vector  spawnPos;
 			GLfloat spawnAng;
-
-			static const byte width = 64;
-			static const byte height = 64;
-			static const byte halfwidth = 32;
-			static const byte halfheight = 32;
 
 			std::string parString;
 			float       parTime;
