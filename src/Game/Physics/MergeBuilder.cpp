@@ -70,63 +70,67 @@ void MergeBuilder::loadMap(Map::Map const& map)
 		}
 	}
 }
+inline
+int MergeBuilder::verticalMerge(int x, int y)
+{
+	MergeNode *node = nodes[x][y];
+	int i = 1;
+	while (y + i < ysize) { // Ensure we stay within bounds
+		MergeNode *other = nodes[x][y + i];
+		// Check if the node is the same kind as us. (includes a nullptr check)
+		if (!node->compatible(other))
+			break;
+
+		// Eat the node
+		node->height++;
+		delete other;
+		nodes[x][y + i] = node;
+
+		i++;
+	}
+	return i - 1;
+}
+inline
+void MergeBuilder::horizontalMerge(int x, int y)
+{
+	MergeNode *node = nodes[x][y];
+	int i = 1;
+	bool xbroke = false;
+	// Consume horizontally
+	while (x + i < xsize) {
+		// Make sure that we can consume all x tiles for our height
+		for (int j = 0; j < node->height; j++) {
+			MergeNode *other = nodes[x + i][y + j];
+			if (!node->compatible(other)) {
+				return;
+			}
+		}
+		if (xbroke)
+			break;
+		node->width++;
+		// Eat all nodes for our height
+		for (int j = 0; j < node->height; j++) {
+			delete nodes[x + i][y + j];
+			nodes[x + i][y + j] = node;
+		}
+
+		i++;
+	}
+}
 
 inline
 void MergeBuilder::performMerges()
 {
-	// Vars defined out here for probable performance increase?
-	byte i, j, yadd;
-	MergeNode *node, *other;
-	bool xbroke;
 	for (int x = 0; x < xsize; x++) {
 		for (int y = 0; y < ysize; y++) {
-			node = nodes[x][y];
+			MergeNode *node = nodes[x][y];
 			if (node == nullptr || node->done)
 				continue;
 			// Merge vertically first due to how the loop is layed out.
-			i = 1;
-			while (y + i < ysize) { // Ensure we stay within bounds
-				other = nodes[x][y + i];
-				// Check if the node is the same kind as us. (includes a nullptr check)
-				if (!node->compatible(other))
-					break;
-
-				// Eat the node
-				node->height++;
-				delete other;
-				nodes[x][y + i] = node;
-
-				i++;
-			}
-			// yadd lets us skip consumed nodes for the next iteration of y.
-			yadd = i - 1;
-
-			i = 1;
-			xbroke = false;
-			// Consume horizontally
-			while (x + i < xsize) {
-				// Make sure that we can consume all x tiles for our height
-				for (j = 0; j < node->height; j++) {
-					other = nodes[x + i][y + j];
-					if (!node->compatible(other)) {
-						xbroke = true;
-						break;
-					}
-				}
-				if (xbroke)
-					break;
-				node->width++;
-				// Eat all nodes for our height
-				for (j = 0; j < node->height; j++) {
-					delete nodes[x + i][y + j];
-					nodes[x + i][y + j] = node;
-				}
-
-				i++;
-			}
+			int yadd = verticalMerge(x, y);
+			horizontalMerge(x, y);
 			node->done = true;
-
-			// Skip the ones we consumed on this column
+			// yadd lets us skip consumed nodes for the next iteration of y.
 			y += yadd;
 		}
 	}

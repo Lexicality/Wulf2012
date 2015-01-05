@@ -40,6 +40,9 @@ namespace Wulf {
 			// This replaces merged tiles with multiple pointers to the same tiledata.
 			void performMerges();
 
+			int verticalMerge(int x, int y);
+			void horizontalMerge(int x, int y);
+
 			static const size_t xsize = Map::Map::width;
 			static const size_t ysize = Map::Map::height;
 			std::array<std::array<MergeNode*, xsize>, ysize> nodes;
