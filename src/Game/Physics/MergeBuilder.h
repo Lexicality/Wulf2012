@@ -17,6 +17,7 @@ namespace Wulf {
 			bool done;
 
 			MergeNode(Map::Node const& node);
+			~MergeNode() {}
 			// Checks if other is stuitable for absorbsion. Returns false for nullptr
 			bool compatible(MergeNode const* other) const;
 			// This returns the tiledata for the merged mass.

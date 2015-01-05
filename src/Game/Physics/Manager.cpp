@@ -34,8 +34,12 @@ CollisionObj getObj(const Entity& ent)
 
 Manager::~Manager()
 {
+	// Use a set because we have duplicate pointers
+	std::set<TileData*> pointrs;
 	for (auto& value : map)
-		delete value.second;
+		pointrs.insert(value.second);
+	for (TileData* node : pointrs)
+		delete node;
 }
 
 void Manager::UpdateDoor(const coords pos, const bool state)

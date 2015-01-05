@@ -1,3 +1,4 @@
+#include <set>
 #include "Game/Physics/MergeBuilder.h"
 
 using namespace Wulf;
@@ -39,10 +40,13 @@ MergeBuilder::MergeBuilder(Map::Map const& map)
 }
 MergeBuilder::~MergeBuilder()
 {
+	// Use a set because we have duplicate pointers
+	std::set<MergeNode*> pointrs;
 	for (auto& xnodes : nodes) {
-		for (MergeNode* node : xnodes) {
-			delete node;
-		}
+		pointrs.insert(xnodes.begin(), xnodes.end());
+	}
+	for (MergeNode* node : pointrs) {
+		delete node;
 	}
 }
 
