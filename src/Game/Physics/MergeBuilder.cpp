@@ -176,26 +176,24 @@ int MergeBuilder::verticalMerge(int x, int y)
 	}
 	return i - 1;
 }
+
 inline
 void MergeBuilder::horizontalMerge(int x, int y)
 {
 	MergeNode *node = nodes[x][y];
 	int i = 1;
-	bool xbroke = false;
 	// Consume horizontally
 	while (x + i < xsize) {
 		// Make sure that we can consume all x tiles for our height
-		for (int j = 0; j < node->height; j++) {
+		for (int j = 0; j <= node->height; j++) {
 			MergeNode *other = nodes[x + i][y + j];
 			if (!node->compatible(other)) {
 				return;
 			}
 		}
-		if (xbroke)
-			break;
 		node->width++;
 		// Eat all nodes for our height
-		for (int j = 0; j < node->height; j++) {
+		for (int j = 0; j <= node->height; j++) {
 			delete nodes[x + i][y + j];
 			nodes[x + i][y + j] = node;
 		}
