@@ -2,7 +2,7 @@
 #include "Game/Physics/MergeBuilder.h"
 
 #ifdef DEBUG
-#define DEBUG_MAPSPEW
+//#define DEBUG_MAPSPEW
 #endif
 #ifdef DEBUG_MAPSPEW
 #include <iostream>
@@ -39,7 +39,13 @@ TileData* MergeNode::toTile()
 	if (mTileData != nullptr)
 		return mTileData;
 	// Because short + short coerces to int if left to itself.
-	coord brx = topLeft.x + width, bry = topLeft.y + height;
+	coord width = this->width;
+	coords topLeft = this->topLeft;
+	if (width > 0) {
+		width += 2;
+		topLeft.x += 1;
+	}
+	coord brx = topLeft.x - width, bry = topLeft.y + height;
 	mTileData = new TileData(topLeft, coords(brx, bry), type);
 	return mTileData;
 }
