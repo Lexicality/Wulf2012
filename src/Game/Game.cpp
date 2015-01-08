@@ -34,7 +34,10 @@ void Game::LoadMap(const word mapnum)
 	cmgr.SetMap(*map);
 	running = true;
 
-	map->doors.at(11).Open();
+	//map->doors.at(11).Open();
+	for (auto& door : map->doors) {
+		door.Open();
+	}
 }
 
 bool Game::IsRunning() const
