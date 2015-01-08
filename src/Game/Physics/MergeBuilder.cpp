@@ -6,7 +6,7 @@ using namespace Wulf::Physics;
 
 MergeNode::MergeNode(Map::Node const& node)
 	: topLeft(node.x, node.y), type(NodeToTile(node))
-	, width(1), height(1)
+	, width(0), height(0)
 	, done(false)
 	, mTileData(nullptr)
 {
