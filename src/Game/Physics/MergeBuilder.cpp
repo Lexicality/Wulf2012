@@ -1,6 +1,14 @@
 #include <set>
 #include "Game/Physics/MergeBuilder.h"
 
+#ifdef DEBUG
+#define DEBUG_MAPSPEW
+#endif
+#ifdef DEBUG_MAPSPEW
+#include <iostream>
+#include <sstream>
+#endif
+
 using namespace Wulf;
 using namespace Wulf::Physics;
 
@@ -30,6 +38,80 @@ TileData* MergeNode::toTile()
 	mTileData = new TileData(topLeft, coords(brx, bry), type);
 	return mTileData;
 }
+
+std::tuple<std::string, std::string, std::string> MergeNode::toString(coords tile) const
+{
+#ifdef DEBUG_MAPSPEW
+	std::string contents;
+	if (type == TileType::Empty) {
+		contents = ".";
+	} else if (type == TileType::Pickup) {
+		contents = "x";
+	} else if (type == TileType::Sprite) {
+		contents = "~";
+	} else if (type == TileType::Door) {
+		contents = "D";
+	} else {
+		contents = "#";
+	}
+
+	std::stringstream a, b, c;
+	coords bottomRight(topLeft.x - width, topLeft.y + height);
+	if (tile == topLeft) {
+		a << "/-";
+		b << "|";
+	} else if (tile.x == topLeft.x) {
+		a << "|" << contents;
+		b << "|";
+	} else if (tile.y == topLeft.y) {
+		a << "--";
+		b << contents;
+	} else {
+		a << contents << contents;
+		b << contents;
+	}
+	b << contents;
+	if (tile.y == topLeft.y) {
+		if (tile.x == bottomRight.x) {
+			a << "\\";
+			b << "|";
+		} else {
+			a << "-";
+			b << contents;
+		}
+	} else if (tile.x == bottomRight.x) {
+		a << "|";
+		b << "|";
+	} else {
+		a << contents;
+		b << contents;
+	}
+	if (tile.x == topLeft.x) {
+		if (tile.y == bottomRight.y) {
+			c << "\\-";
+		} else {
+			c << "|" << contents;
+		}
+	} else if (tile.y == bottomRight.y) {
+		c << "--";
+	} else {
+		c << contents << contents;
+	}
+	if (tile == bottomRight) {
+		c << "/";
+	} else if (tile.x == bottomRight.x) {
+		c << "|";
+	} else if (tile.y == bottomRight.y) {
+		c << "-";
+	} else {
+		c << contents;
+	}
+	return std::make_tuple(a.str(), b.str(), c.str());
+#else
+	return std::make_tuple("", "", "");
+#endif
+}
+
 
 MergeBuilder::MergeBuilder(Map::Map const& map)
 {
@@ -147,6 +229,9 @@ std::vector<std::pair<coords, TileData*>> MergeBuilder::getTileData() const
 	const coord xhalf = Map::Map::halfwidth;
 	const coord yhalf = Map::Map::halfheight;
 
+	// SPAM
+	DebugOutput();
+
 	for (coord x = 0; x < xsize; x++) {
 		for (coord y = 0; y < ysize; y++) {
 			MergeNode* node = nodes[x][y];
@@ -159,4 +244,54 @@ std::vector<std::pair<coords, TileData*>> MergeBuilder::getTileData() const
 	}
 
 	return ret;
+}
+
+void MergeBuilder::DebugOutput() const
+{
+#ifdef DEBUG_MAPSPEW
+	const coord xhalf = Map::Map::halfwidth;
+	const coord yhalf = Map::Map::halfheight;
+
+	coord xcoord, ycoord;
+
+	std::cout << " vim: nowrap listchars=" << std::endl;
+	std::cout.setf(std::ios_base::right);
+	std::cout.fill(' ');
+	std::cout.width(3);
+	std::cout << "  ";
+	std::ostringstream bluh;
+	bluh << "   ";
+	for (byte x = 0; x < xsize; ++x) {
+		std::cout.width(3);
+		std::cout << -(x - xhalf);
+		bluh << "***";
+	}
+	std::cout << std::endl;
+	std::cout << bluh.str() << std::endl;
+	for (byte y = 0; y < ysize; ++y) {
+		ycoord = (y - yhalf);
+		std::stringstream a, b, c;
+		a << "   *";
+		b.width(3);
+		b << ycoord << '*';
+		c << "   *";
+		for (byte x = 0; x < xsize; ++x) {
+			xcoord = -(x - xhalf);
+			MergeNode *node = nodes[x][y];
+			if (node == nullptr) {
+				a << "   ";
+				b << "   ";
+				c << "   ";
+				continue;
+			}
+			auto lines = node->toString(coords(xcoord, ycoord));
+			a << std::get<0>(lines);
+			b << std::get<1>(lines);
+			c << std::get<2>(lines);
+		}
+		std::cout << a.str() << std::endl;
+		std::cout << b.str() << std::endl;
+		std::cout << c.str() << std::endl;
+	}
+#endif
 }

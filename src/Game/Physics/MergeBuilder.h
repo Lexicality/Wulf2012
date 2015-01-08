@@ -2,6 +2,7 @@
 #include <array>
 #include <vector>
 #include <utility>
+#include <tuple>
 #include "WulfConstants.h"
 #include "Map/Map.h"
 #include "Game/Physics/TileData.h"
@@ -23,6 +24,8 @@ namespace Wulf {
 			// This returns the tiledata for the merged mass.
 			// It is safe to call multiple times as it only returns one TileData.
 			TileData* toTile();
+
+			std::tuple<std::string, std::string, std::string> toString(coords tile) const;
 		private:
 			// Deletion is handled elsewhere
 			TileData* mTileData;
@@ -43,6 +46,8 @@ namespace Wulf {
 
 			int verticalMerge(int x, int y);
 			void horizontalMerge(int x, int y);
+
+			void DebugOutput() const;
 
 			static const size_t xsize = Map::Map::width;
 			static const size_t ysize = Map::Map::height;
