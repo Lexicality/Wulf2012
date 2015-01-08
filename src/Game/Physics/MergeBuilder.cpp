@@ -12,6 +12,11 @@
 using namespace Wulf;
 using namespace Wulf::Physics;
 
+bool notMergable(TileType type)
+{
+	return type == TileType::Door || type == TileType::Pickup;
+}
+
 MergeNode::MergeNode(Map::Node const& node)
 	: topLeft(node.x, node.y), type(NodeToTile(node))
 	, width(0), height(0)
@@ -22,7 +27,7 @@ MergeNode::MergeNode(Map::Node const& node)
 
 bool MergeNode::compatible(MergeNode const* other) const
 {
-	if (other == nullptr || other->done || other->type != type || other->type == TileType::Door)
+	if (other == nullptr || other->done || other->type != type || notMergable(other->type))
 		return false;
 	return true;
 }
@@ -208,7 +213,7 @@ void MergeBuilder::performMerges()
 	for (int x = 0; x < xsize; x++) {
 		for (int y = 0; y < ysize; y++) {
 			MergeNode *node = nodes[x][y];
-			if (node == nullptr || node->done || node->type == TileType::Door)
+			if (node == nullptr || node->done || notMergable(node->type))
 				continue;
 			// Merge vertically first due to how the loop is layed out.
 			int yadd = verticalMerge(x, y);
