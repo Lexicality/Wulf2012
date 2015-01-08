@@ -61,6 +61,7 @@ namespace Wulf {
 
 		coords() : x(0), y(0) {}
 		coords(coord x, coord y) : x(x), y(y) {}
+		coords(int x, int y) : x(x), y(y) {}
 		coords(float x, float y) : x(fromfloat(x)), y(fromfloat(y)) {}
 		coords(Vector pos) : x(fromfloat(pos.x)), y(fromfloat(pos.y)) {}
 
