@@ -14,7 +14,7 @@ MergeNode::MergeNode(Map::Node const& node)
 
 bool MergeNode::compatible(MergeNode const* other) const
 {
-	if (other == nullptr || other->done || other->type != type)
+	if (other == nullptr || other->done || other->type != type || other->type == TileType::Door)
 		return false;
 	return true;
 }
@@ -128,7 +128,7 @@ void MergeBuilder::performMerges()
 	for (int x = 0; x < xsize; x++) {
 		for (int y = 0; y < ysize; y++) {
 			MergeNode *node = nodes[x][y];
-			if (node == nullptr || node->done)
+			if (node == nullptr || node->done || node->type == TileType::Door)
 				continue;
 			// Merge vertically first due to how the loop is layed out.
 			int yadd = verticalMerge(x, y);
