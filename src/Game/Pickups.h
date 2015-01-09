@@ -28,7 +28,7 @@ namespace Wulf {
 		StaticSprites::StaticSprite Sprite;
 		byte Health;
 		byte Ammo;
-		byte Score;
+		word Score;
 		Weapon Weapon;
 		PickupData(Pickup type, StaticSprites::StaticSprite s);
 	};
