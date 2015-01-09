@@ -164,7 +164,7 @@ void OpenGL::FontRenderer::Initialize(const GLuint textureOffset)
 }
 /*
  * Example usage:
- * fonts.DrawString(-1, -1, "honk", fonts::FONT_BOLD);
+ * fonts.DrawString(-1, -1, "honk", Font::Bold);
  */
 void OpenGL::FontRenderer::DrawString(const GLfloat x, const GLfloat y, const char *words, const Font font)
 {
@@ -172,7 +172,9 @@ void OpenGL::FontRenderer::DrawString(const GLfloat x, const GLfloat y, const ch
 	if (len == 0)
 		return;
 
-	std::vector<GLfloat>& widths = charWidths[font];
+	int ifont = static_cast<int>(font);
+
+	std::vector<GLfloat>& widths = charWidths[ifont];
 
 	chars.clear();
 	poses.clear();
@@ -181,7 +183,7 @@ void OpenGL::FontRenderer::DrawString(const GLfloat x, const GLfloat y, const ch
 
 	width = 0;
 
-	mchars = charNums[font];
+	mchars = charNums[ifont];
 	for (int i = 0; i < len; ++i) {
 		cchar = words[i] - 32;
 		if (cchar < 0 || cchar > mchars)
@@ -194,10 +196,10 @@ void OpenGL::FontRenderer::DrawString(const GLfloat x, const GLfloat y, const ch
 
 	len = chars.size();
 
-	glUseProgram(programs[font]);
+	glUseProgram(programs[ifont]);
 
 	// Tell the shader where it can stick it
-	glUniform2f(posPosses[font], x, y);
+	glUniform2f(posPosses[ifont], x, y);
 
 	// Build an entirely new buffer to display this text. (woo)
 	// TODO: Maybe don't? Have a large GL_DYNAMIC_DRAW buffer and rewrite sections of it.

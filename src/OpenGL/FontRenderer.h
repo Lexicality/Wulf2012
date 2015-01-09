@@ -8,18 +8,17 @@
 
 namespace Wulf {
 	namespace OpenGL {
+		enum class Font {
+			Normal = 0,
+			Bold
+		};
 		class FontRenderer {
 		public:
-			enum Font {
-				FONT_NORMAL = 0,
-				FONT_BOLD
-			};
-
 			FontRenderer(ResourceManager& mgr);
 			~FontRenderer();
 			void Initialize(const GLuint textureOffset = 10);
-			void DrawString(const GLfloat x, const GLfloat y, const char *words, const Font font = FONT_NORMAL);
-			void DrawStringXY(const GLuint  x, const GLuint  y, const char *words, const Font font = FONT_NORMAL);
+			void DrawString(const GLfloat x, const GLfloat y, const char *words, const Font font = Font::Normal);
+			void DrawStringXY(const GLuint  x, const GLuint  y, const char *words, const Font font = Font::Normal);
 
 		private:
 			ResourceManager& mgr;
