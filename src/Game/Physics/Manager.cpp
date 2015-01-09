@@ -103,6 +103,8 @@ Vector Manager::CollisionClamp(const Entity& entity, const Vector& velocity) con
 
 	float x = velocity.x;
 	float y = velocity.y;
+	// Anti infinite loop
+	int i = 0;
 	do {
 		collided = false;
 		for (const TileData *ctile : nodes) {
@@ -146,8 +148,9 @@ Vector Manager::CollisionClamp(const Entity& entity, const Vector& velocity) con
 			// Reboot the loop with the new velocity
 			break;
 		}
-		// TODO: Anti infinite-loop protection
-	} while (collided);
+		// Anti infinite-loop protection
+		i++;
+	} while (collided && i < 10);
 
 	return Vector(x, y, 0);
 }
