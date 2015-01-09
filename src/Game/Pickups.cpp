@@ -36,12 +36,40 @@ void setupSprites()
 	}
 	{
 		PickupData p(StaticSprites::GUN_AMMO);
-		p.Ammo = 10;
+		p.Ammo = 8;
 		pickups.emplace(
 			Pickup::Ammo,
 			p
 		);
 	}
+	{
+		PickupData p(StaticSprites::GUN_SMG);
+		p.Weapon = Weapon::Smg;
+		pickups.emplace(
+			Pickup::Smg,
+			p
+		);
+	}
+	{
+		PickupData p(StaticSprites::TREASURE_CHEST);
+		p.Score = 1000;
+		pickups.emplace(
+			Pickup::Chest,
+			p
+		);
+	}
+	{
+		PickupData p(StaticSprites::TREASURE_CHALICE);
+		p.Score = 100;
+		pickups.emplace(
+			Pickup::Chalice,
+			p
+		);
+	}
+	// gruel is 4hp
+	// blood is 1hp if < 11hp
+	// medkit is 25 hp
+	95 - 70
 }
 
 PickupData* Wulf::GetPickup(Pickup pickup)
