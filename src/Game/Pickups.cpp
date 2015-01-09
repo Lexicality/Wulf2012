@@ -4,8 +4,8 @@ using namespace Wulf;
 
 std::map<Pickup, PickupData> pickups;
 
-PickupData::PickupData(StaticSprites::StaticSprite s)
-	: Sprite(s)
+PickupData::PickupData(Pickup type, StaticSprites::StaticSprite s)
+	: Sprite(s), Type(type)
 	, Health(0), Ammo(0), Score(0), Weapon(Weapon::None)
 {
 }
@@ -27,49 +27,48 @@ void setupSprites()
 {
 	// Serious hate.
 	{
-		PickupData p(StaticSprites::FOOD_TURKEY);
+		PickupData p(Pickup::Food, StaticSprites::FOOD_TURKEY);
 		p.Health = 10;
 		pickups.emplace(
-			Pickup::Food,
+			p.Type,
 			p
 		);
 	}
 	{
-		PickupData p(StaticSprites::GUN_AMMO);
+		PickupData p(Pickup::Ammo, StaticSprites::GUN_AMMO);
 		p.Ammo = 8;
 		pickups.emplace(
-			Pickup::Ammo,
+			p.Type,
 			p
 		);
 	}
 	{
-		PickupData p(StaticSprites::GUN_SMG);
+		PickupData p(Pickup::Smg, StaticSprites::GUN_SMG);
 		p.Weapon = Weapon::Smg;
 		pickups.emplace(
-			Pickup::Smg,
+			p.Type,
 			p
 		);
 	}
 	{
-		PickupData p(StaticSprites::TREASURE_CHEST);
+		PickupData p(Pickup::Chest, StaticSprites::TREASURE_CHEST);
 		p.Score = 1000;
 		pickups.emplace(
-			Pickup::Chest,
+			p.Type,
 			p
 		);
 	}
 	{
-		PickupData p(StaticSprites::TREASURE_CHALICE);
+		PickupData p(Pickup::Chalice, StaticSprites::TREASURE_CHALICE);
 		p.Score = 100;
 		pickups.emplace(
-			Pickup::Chalice,
+			p.Type,
 			p
 		);
 	}
 	// gruel is 4hp
 	// blood is 1hp if < 11hp
 	// medkit is 25 hp
-	95 - 70
 }
 
 PickupData* Wulf::GetPickup(Pickup pickup)

@@ -6,14 +6,6 @@
 #include "Map/Constants.h"
 
 namespace Wulf {
-	struct PickupData {
-		StaticSprites::StaticSprite Sprite;
-		byte Health;
-		byte Ammo;
-		byte Score;
-		Weapon Weapon;
-		PickupData(StaticSprites::StaticSprite s);
-	};
 	enum class Pickup {
 		None = 0,
 		Ammo,
@@ -30,6 +22,15 @@ namespace Wulf {
 		Chalice,
 		Chest,
 		Crown,
+	};
+	struct PickupData {
+		Pickup Type;
+		StaticSprites::StaticSprite Sprite;
+		byte Health;
+		byte Ammo;
+		byte Score;
+		Weapon Weapon;
+		PickupData(Pickup type, StaticSprites::StaticSprite s);
 	};
 	PickupData* GetPickup(Pickup pickup);
 	Pickup SpriteToPickup(StaticSprites::StaticSprite s);
