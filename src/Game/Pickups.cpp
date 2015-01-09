@@ -2,6 +2,8 @@
 
 using namespace Wulf;
 
+std::map<Pickup, PickupData> pickups;
+
 PickupData::PickupData(StaticSprites::StaticSprite s)
 	: Sprite(s)
 	, Health(0), Ammo(0), Score(0), Weapon(Weapon::None)
@@ -21,7 +23,7 @@ Pickup Wulf::SpriteToPickup(StaticSprites::StaticSprite s)
 	}
 }
 
-int setupSprites()
+void setupSprites()
 {
 	// Serious hate.
 	{
@@ -40,8 +42,17 @@ int setupSprites()
 			p
 		);
 	}
-	return 0;
 }
 
-// some weird hackage
-int a = setupSprites();
+PickupData* Wulf::GetPickup(Pickup pickup)
+{
+	static bool setup = false;
+	if (!setup) {
+		setup = true;
+		setupSprites();
+	}
+	auto& ret = pickups.find(pickup);
+	if (ret != pickups.end())
+		return &ret->second;
+	return nullptr;
+}

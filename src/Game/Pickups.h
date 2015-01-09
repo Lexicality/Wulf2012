@@ -31,6 +31,6 @@ namespace Wulf {
 		Chest,
 		Crown,
 	};
-	std::map<Pickup, PickupData> pickups;
+	PickupData* GetPickup(Pickup pickup);
 	Pickup SpriteToPickup(StaticSprites::StaticSprite s);
 }
