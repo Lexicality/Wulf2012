@@ -2,7 +2,7 @@
 #include <functional>
 #include <map>
 #include "WulfConstants.h"
-#include "Game/Player.h"
+#include "Game/Constants.h"
 #include "Map/Constants.h"
 
 namespace Wulf {
