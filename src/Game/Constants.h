@@ -13,4 +13,11 @@ namespace Wulf {
 		MEDI = 3,
 		HARD = 4
 	};
+	enum class Weapon {
+		None = 0,
+		Knife,
+		Pistol,
+		Smg,
+		Minigun
+	};
 }
