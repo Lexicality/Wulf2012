@@ -23,6 +23,9 @@ MergeNode::MergeNode(Map::Node const& node)
 	, done(false)
 	, mTileData(nullptr)
 {
+	// For us, pickups don't exist
+	if (type == TileType::Pickup)
+		type = TileType::Empty;
 }
 
 bool MergeNode::compatible(MergeNode const* other) const
