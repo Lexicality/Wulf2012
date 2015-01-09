@@ -23,6 +23,9 @@ namespace Wulf {
 		glm::vec3 GetUp() const { return mUp; }
 #endif
 
+		byte Ammo;
+		word Score;
+
 		Difficulty GetDifficulty() const { return mDifficulty; }
 		void SetDifficulty(Difficulty nDiff) { mDifficulty = nDiff; }
 
