@@ -21,6 +21,7 @@ OpenGL::FontRenderer::FontRenderer(OpenGL::ResourceManager& mgr)
 OpenGL::FontRenderer::~FontRenderer()
 {
 	// I'm fairly sure I was supposed to do something here but I'm damned if I know what it was
+	// Possibly free OpenGL resources?
 }
 
 void OpenGL::FontRenderer::Initialize(const GLuint textureOffset)
