@@ -38,15 +38,11 @@ TileData* MergeNode::toTile()
 {
 	if (mTileData != nullptr)
 		return mTileData;
-	// Because short + short coerces to int if left to itself.
-	coord width = this->width;
 	coords topLeft = this->topLeft;
-	if (width > 0) {
-		width += 2;
-		topLeft.x += 1;
-	}
-	coord brx = topLeft.x - width, bry = topLeft.y + height;
-	mTileData = new TileData(topLeft, coords(brx, bry), type);
+	int tlx = topLeft.x;
+	topLeft.x -= width;
+	coords bottomRight = coords(tlx, topLeft.y + height);
+	mTileData = new TileData(topLeft, bottomRight, type);
 	return mTileData;
 }
 
@@ -122,6 +118,14 @@ std::tuple<std::string, std::string, std::string> MergeNode::toString(coords til
 	return std::make_tuple("", "", "");
 #endif
 }
+
+
+
+
+
+
+
+
 
 
 MergeBuilder::MergeBuilder(Map::Map const& map)
