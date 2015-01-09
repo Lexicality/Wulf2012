@@ -53,7 +53,17 @@ Manager::TileSet Manager::grabTiles(const Vector& pos) const
 {
 	// Distance to center may not be a very useful metric
 	TileSet ret([pos](TileData const * a, TileData const * b) -> bool {
-		return glm::distance(a->center, pos) < glm::distance(b->center, pos);
+		// Equality check
+		if (a == b)
+			return false;
+		float d1, d2;
+		d1 = glm::distance(a->center, pos);
+		d2 = glm::distance(b->center, pos);
+		if (d1 != d2)
+			return d1 < d2;
+		// The user is exactly centered between two tiles. (Most likely a corner!)
+		// At this point order doesn't matter, so use pointer value.
+		return a < b;
 	});
 	coords const cpos(pos);
 	auto const& none = map.end();
