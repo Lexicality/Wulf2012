@@ -243,7 +243,9 @@ std::vector<std::pair<coords, TileData*>> MergeBuilder::getTileData() const
 	const coord yhalf = Map::Map::halfheight;
 
 	// SPAM
+#ifdef DEBUG_MAPSPEW
 	DebugOutput();
+#endif
 
 	for (coord x = 0; x < xsize; x++) {
 		for (coord y = 0; y < ysize; y++) {

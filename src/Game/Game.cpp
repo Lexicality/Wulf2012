@@ -15,7 +15,7 @@ Game::Game(const Difficulty difficulty)
 {
 	Wulf::Enemies::RegisterEntities();
 	rendr.AddRenderChunk(Wulf::Enemies::GetRenderChunk);
-	rendr.AddRenderChunk(std::bind(&Wulf::Physics::Manager::GetRenderChunk, &cmgr, std::placeholders::_1, std::placeholders::_2));
+	//rendr.AddRenderChunk(std::bind(&Wulf::Physics::Manager::GetRenderChunk, &cmgr, std::placeholders::_1, std::placeholders::_2));
 	ply.SetDifficulty(difficulty);
 }
 

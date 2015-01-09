@@ -92,13 +92,6 @@ void Manager::SetMap(Map::Map const& m)
 	}
 }
 
-/*
- * TODO:
- * Instead of selecting the 9 ajacent blocks and merging their faces
- *  consider merging all blocks at the start and then selecting the close ones.
- * This probably needs some kind of spatial management.
- */
-
 Vector Manager::CollisionClamp(const Entity& entity, const Vector& velocity) const
 {
 	// Uh.
@@ -107,7 +100,7 @@ Vector Manager::CollisionClamp(const Entity& entity, const Vector& velocity) con
 	auto nodes = grabTiles(entity.GetPos());
 
 	// Debuggering
-	debugger.UpdateScreen(entity, std::vector<TileData const * const>(nodes.cbegin(), nodes.cend()));
+	//debugger.UpdateScreen(entity, std::vector<TileData const * const>(nodes.cbegin(), nodes.cend()));
 
 	bool collided = false;
 
