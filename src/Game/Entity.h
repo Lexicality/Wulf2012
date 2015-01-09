@@ -24,10 +24,9 @@ namespace Wulf {
 		Vector GetHeading() const { return mDir; }
 		void SetHeading(const Vector& heading) { mDir = heading; }
 
-		bool IsAlive() const { return mHealth > 0; }
-		byte GetHealth() const { return mHealth; }
-		void SetHealth(const byte health) { mHealth = health; }
-		void TakeDamage(const byte damage) { mHealth -= damage; }
+		byte Health;
+		bool IsAlive() const { return Health > 0; }
+		void TakeDamage(byte damage);
 
 		Vector GetCollisionBounds() const { return mBounds; }
 		void SetCollisionBounds(const Vector& bounds) { mBounds = bounds; }
@@ -44,7 +43,6 @@ namespace Wulf {
 		Vector mPos;
 		Vector mDir;
 		Vector mBounds;
-		byte mHealth;
 		const Physics::Manager& cmgr;
 
 	private:

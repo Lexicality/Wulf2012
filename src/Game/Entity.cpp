@@ -12,7 +12,7 @@ Entity::Entity()
 	: mPos(0, 0, 0)
 	, mDir(1, 0, 0)
 	, mBounds(0.75, 0.75, 1)
-	, mHealth(100)
+	, Health(100)
 	, cmgr(Physics::Manager::GetInstance())
 {
 	// honk
@@ -21,6 +21,13 @@ Entity::Entity()
 void Entity::Move(const Vector& vel)
 {
 	mPos += cmgr.CollisionClamp(*this, vel);
+}
+
+void Entity::TakeDamage(byte damage)
+{
+	if (damage > Health)
+		damage = Health;
+	Health -= damage;
 }
 
 /*
