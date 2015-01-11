@@ -223,7 +223,7 @@ OpenGL::Renderer::Renderer()
 
 		// Static sprites
 		glActiveTexture(GL_TEXTURE1);
-		mgr.LoadTextureArray("sprites", StaticSprites::Start, StaticSprites::End);
+		mgr.LoadTextureArray("sprites", Map::Sprites::Start, Map::Sprites::End);
 
 		errchck("texture loadage");
 
@@ -517,7 +517,7 @@ void OpenGL::Renderer::UpdatePlayerInfo(const Player& ply)
 	viewMatrix = glm::lookAt(vPlyPos, vPlyPos + vPlyDir, vPlyUp);
 }
 
-void OpenGL::Renderer::LoadSprites(RenderChunk& chunk, std::vector<StaticSprites::Sprite> const& sprites) const
+void OpenGL::Renderer::LoadSprites(RenderChunk& chunk, std::vector<Map::Sprite> const& sprites) const
 {
 	std::vector<short int> packed;
 	packed.reserve(sprites.size() * 3);
@@ -535,7 +535,7 @@ void OpenGL::Renderer::LoadSprites(RenderChunk& chunk, std::vector<StaticSprites
 	GLsizeiptr spritessize = size * packed.size();
 	glBufferData(GL_ARRAY_BUFFER, spritessize, &packed[0], GL_STATIC_DRAW);
 }
-void OpenGL::Renderer::UpdatePickups(std::vector<StaticSprites::Sprite> const & pickups)
+void OpenGL::Renderer::UpdatePickups(std::vector<Map::Sprite> const & pickups)
 {
 	LoadSprites(Pickups, pickups);
 }

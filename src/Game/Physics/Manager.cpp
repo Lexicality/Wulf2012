@@ -187,10 +187,10 @@ PickupData* Manager::CheckPickup(Player const& ply) const
 	return nullptr;
 }
 
-std::vector<StaticSprites::Sprite> Manager::GetPickups()
+std::vector<Map::Sprite> Manager::GetPickups()
 {
 	pickupsDirty = false;
-	std::vector<StaticSprites::Sprite> ret;
+	std::vector<Map::Sprite> ret;
 	PickupData const* pickup;
 	for (auto& itr : pickups) {
 		pickup = itr.second;

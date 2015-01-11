@@ -32,13 +32,13 @@ namespace Wulf {
 			Map(const word mapNum);
 			GLuint GetPackedQuads  (VectorVector& packed) const;
 			GLuint GetPackedDoors  (std::vector<short int>& packed) const;
-			std::vector<StaticSprites::Sprite> const& GetSprites() const;
+			std::vector<Sprite> const& GetSprites() const;
 			void DoorThink(double dtime);
 
 			// Vars
 			std::array<std::vector<Node>, width> nodes;
 			std::vector<Wall> walls;
-			std::vector<StaticSprites::Sprite> sprites;
+			std::vector<Sprite> sprites;
 			std::vector<Doors::DoorInfo> doors;
 
 			Vector floorColour;

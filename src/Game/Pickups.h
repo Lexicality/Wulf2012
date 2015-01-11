@@ -25,13 +25,13 @@ namespace Wulf {
 	};
 	struct PickupData {
 		Pickup Type;
-		StaticSprites::StaticSprite Sprite;
+		Map::Sprites::SpriteNum Sprite;
 		byte Health;
 		byte Ammo;
 		word Score;
 		Weapon Weapon;
-		PickupData(Pickup type, StaticSprites::StaticSprite s);
+		PickupData(Pickup type, Map::Sprites::SpriteNum s);
 	};
 	PickupData* GetPickup(Pickup pickup);
-	Pickup SpriteToPickup(StaticSprites::StaticSprite s);
+	Pickup SpriteToPickup(Map::Sprites::SpriteNum s);
 }

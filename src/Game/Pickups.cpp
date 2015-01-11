@@ -1,21 +1,22 @@
 #include "Game/Pickups.h"
 
 using namespace Wulf;
+namespace Sprites = Wulf::Map::Sprites;
 
 std::map<Pickup, PickupData> pickups;
 
-PickupData::PickupData(Pickup type, StaticSprites::StaticSprite s)
+PickupData::PickupData(Pickup type, Sprites::SpriteNum s)
 	: Sprite(s), Type(type)
 	, Health(0), Ammo(0), Score(0), Weapon(Weapon::None)
 {
 }
 
-Pickup Wulf::SpriteToPickup(StaticSprites::StaticSprite s)
+Pickup Wulf::SpriteToPickup(Sprites::SpriteNum s)
 {
 	switch (s) {
-	case StaticSprites::FOOD_TURKEY:
+	case Sprites::FOOD_TURKEY:
 		return Pickup::Food;
-	case StaticSprites::GUN_AMMO:
+	case Sprites::GUN_AMMO:
 		return Pickup::Ammo;
 	// TODO - Everything else
 	default:
@@ -27,7 +28,7 @@ void setupSprites()
 {
 	// Serious hate.
 	{
-		PickupData p(Pickup::Food, StaticSprites::FOOD_TURKEY);
+		PickupData p(Pickup::Food, Sprites::FOOD_TURKEY);
 		p.Health = 10;
 		pickups.emplace(
 			p.Type,
@@ -35,7 +36,7 @@ void setupSprites()
 		);
 	}
 	{
-		PickupData p(Pickup::Ammo, StaticSprites::GUN_AMMO);
+		PickupData p(Pickup::Ammo, Sprites::GUN_AMMO);
 		p.Ammo = 8;
 		pickups.emplace(
 			p.Type,
@@ -43,7 +44,7 @@ void setupSprites()
 		);
 	}
 	{
-		PickupData p(Pickup::Smg, StaticSprites::GUN_SMG);
+		PickupData p(Pickup::Smg, Sprites::GUN_SMG);
 		p.Weapon = Weapon::Smg;
 		pickups.emplace(
 			p.Type,
@@ -51,7 +52,7 @@ void setupSprites()
 		);
 	}
 	{
-		PickupData p(Pickup::Chest, StaticSprites::TREASURE_CHEST);
+		PickupData p(Pickup::Chest, Sprites::TREASURE_CHEST);
 		p.Score = 1000;
 		pickups.emplace(
 			p.Type,
@@ -59,7 +60,7 @@ void setupSprites()
 		);
 	}
 	{
-		PickupData p(Pickup::Chalice, StaticSprites::TREASURE_CHALICE);
+		PickupData p(Pickup::Chalice, Sprites::TREASURE_CHALICE);
 		p.Score = 100;
 		pickups.emplace(
 			p.Type,

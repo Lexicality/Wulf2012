@@ -46,7 +46,7 @@ namespace Wulf {
 			bool door;
 
 			Material material;
-			StaticSprites::StaticSprite sprite;
+			Sprites::SpriteNum sprite;
 
 			bool walls[4];
 

@@ -12,16 +12,17 @@
 using namespace Wulf;
 using Map::Node;
 using Map::Wall;
+namespace Sprites = Wulf::Map::Sprites;
 
 static Direction reverseDirection(const Direction dir);
 static Direction reverseDirection(const int dir);
-static bool isSolid(const StaticSprites::StaticSprite spr);
-static bool isPickup(const StaticSprites::StaticSprite spr);
+static bool isSolid(const Sprites::SpriteNum spr);
+static bool isPickup(const Sprites::SpriteNum spr);
 
 Node::Node(const coord x, const coord y, const word blockdata, const word metadata)
 	: x(-x), y(y), blockdata(blockdata), metadata(metadata), area(0)
 	, wall(false), solid(false), pickup(false), spawn(false), door(false), visibleWall(false)
-	, material(0), sprite(StaticSprites::NONE)
+	, material(0), sprite(Sprites::NONE)
 	, htested(false), vtested(false)
 {
 	for (int i = 0; i < 4; ++i) {
@@ -54,9 +55,9 @@ void Node::ParseMainData()
 
 void Node::ParseMetaData()
 {
-	if (metadata >= StaticSprites::First && metadata <= StaticSprites::Last) {
+	if (metadata >= Sprites::First && metadata <= Sprites::Last) {
 		// Decorative sprites
-		sprite = StaticSprites::ToSprite(metadata);
+		sprite = Sprites::ToSprite(metadata);
 		if (isSolid(sprite))
 			solid = true;
 		if (isPickup(sprite))
@@ -287,29 +288,29 @@ Direction reverseDirection(const int dir)
 }
 
 static
-bool isSolid(const StaticSprites::StaticSprite spr)
+bool isSolid(const Sprites::SpriteNum spr)
 {
 	switch (spr) {
-	case StaticSprites::BARREL_GREEN:
-	case StaticSprites::TABLE_CHAIRS:
-	case StaticSprites::LAMP_FLOOR:
-	case StaticSprites::SKELETON_HUNG:
-	case StaticSprites::PILLAR:
-	case StaticSprites::POT_TREE:
-	case StaticSprites::SINK:
-	case StaticSprites::POT_PLANT:
-	case StaticSprites::POT_URN:
-	case StaticSprites::TABLE_BARE:
-	case StaticSprites::ARMOR:
-	case StaticSprites::CAGE_EMPTY:
-	case StaticSprites::CAGE_SKELETON:
-	case StaticSprites::BED:
-	case StaticSprites::BARREL_WOOD:
-	case StaticSprites::WELL_FULL:
-	case StaticSprites::WELL_EMPTY:
-	case StaticSprites::FLAG:
-	case StaticSprites::STOVE:
-	case StaticSprites::SPEARS:
+	case Sprites::BARREL_GREEN:
+	case Sprites::TABLE_CHAIRS:
+	case Sprites::LAMP_FLOOR:
+	case Sprites::SKELETON_HUNG:
+	case Sprites::PILLAR:
+	case Sprites::POT_TREE:
+	case Sprites::SINK:
+	case Sprites::POT_PLANT:
+	case Sprites::POT_URN:
+	case Sprites::TABLE_BARE:
+	case Sprites::ARMOR:
+	case Sprites::CAGE_EMPTY:
+	case Sprites::CAGE_SKELETON:
+	case Sprites::BED:
+	case Sprites::BARREL_WOOD:
+	case Sprites::WELL_FULL:
+	case Sprites::WELL_EMPTY:
+	case Sprites::FLAG:
+	case Sprites::STOVE:
+	case Sprites::SPEARS:
 		return true;
 	default:
 		return false;
@@ -317,23 +318,23 @@ bool isSolid(const StaticSprites::StaticSprite spr)
 }
 
 static
-bool isPickup(const StaticSprites::StaticSprite spr)
+bool isPickup(const Sprites::SpriteNum spr)
 {
 	switch (spr) {
-	case StaticSprites::FOOD_GRUEL:
-	case StaticSprites::KEY_GOLD:
-	case StaticSprites::KEY_BLUE:
-	case StaticSprites::FOOD_TURKEY:
-	case StaticSprites::FIRSTAID:
-	case StaticSprites::GUN_AMMO:
-	case StaticSprites::GUN_SMG:
-	case StaticSprites::GUN_CHAINGUN:
-	case StaticSprites::TREASURE_CHALICE:
-	case StaticSprites::TREASURE_CHEST:
-	case StaticSprites::TREASURE_CROWN:
-	case StaticSprites::NEWLIFE:
-	case StaticSprites::FOOD_GORE_1:
-	case StaticSprites::FOOD_GORE_2:
+	case Sprites::FOOD_GRUEL:
+	case Sprites::KEY_GOLD:
+	case Sprites::KEY_BLUE:
+	case Sprites::FOOD_TURKEY:
+	case Sprites::FIRSTAID:
+	case Sprites::GUN_AMMO:
+	case Sprites::GUN_SMG:
+	case Sprites::GUN_CHAINGUN:
+	case Sprites::TREASURE_CHALICE:
+	case Sprites::TREASURE_CHEST:
+	case Sprites::TREASURE_CROWN:
+	case Sprites::NEWLIFE:
+	case Sprites::FOOD_GORE_1:
+	case Sprites::FOOD_GORE_2:
 		return true;
 	default:
 		return false;

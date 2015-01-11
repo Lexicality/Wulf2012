@@ -18,6 +18,7 @@
 #endif
 
 using namespace Wulf;
+namespace Sprites = Wulf::Map::Sprites;
 
 typedef unsigned int dword;
 static word readShort(PhysFS::FileStream& str);
@@ -137,8 +138,8 @@ void Map::Map::ParseNodes()
 				}
 			}
 			// Static sprites
-			if (node.sprite != StaticSprites::NONE && !node.pickup) {
-				StaticSprites::Sprite spr = {
+			if (node.sprite != Sprites::NONE && !node.pickup) {
+				Sprite spr = {
 					node.x,
 					node.y,
 					node.sprite
@@ -207,7 +208,7 @@ void Map::Map::DebugOutput()
 			if (node.pickup)
 				std::cout << " P ";
 			// Sprites
-			else if (metadata >= StaticSprites::First && metadata <= StaticSprites::Last) {
+			else if (metadata >= Sprites::First && metadata <= Sprites::Last) {
 				if (node.solid)
 					std::cout << " S ";
 				else
@@ -284,7 +285,7 @@ GLuint Map::Map::GetPackedQuads(VectorVector& packed) const
 	return numWalls;
 }
 
-std::vector<StaticSprites::Sprite> const& Map::Map::GetSprites() const
+std::vector<Map::Sprite> const& Map::Map::GetSprites() const
 {
 	return sprites;
 }

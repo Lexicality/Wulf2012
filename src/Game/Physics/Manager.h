@@ -40,7 +40,7 @@ namespace Wulf {
 			void RemovePickup(coords const pos);
 
 			bool RerenderPickups() const { return pickupsDirty;  }
-			std::vector<StaticSprites::Sprite> GetPickups();
+			std::vector<Map::Sprite> GetPickups();
 
 			OpenGL::RenderChunk * GetRenderChunk(OpenGL::ResourceManager& mgr, glm::mat4 const& proj) { return debugger.GetRenderChunk(mgr, proj); }
 
