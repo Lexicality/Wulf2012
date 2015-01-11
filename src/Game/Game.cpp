@@ -60,6 +60,9 @@ void Game::Run()
 		ply.HandlePickup(pickup);
 		cmgr.RemovePickup(ply.GetPos());
 	}
+	if (cmgr.RerenderPickups()) {
+		rendr.UpdatePickups(cmgr.GetPickups());
+	}
 	rendr.UpdatePlayerInfo(ply);
 	emgr.Think(dtime);
 	map->DoorThink(dtime);

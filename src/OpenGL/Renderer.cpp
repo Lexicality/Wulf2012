@@ -151,35 +151,40 @@ OpenGL::Renderer::Renderer()
 		AddRenderChunk(&Floor);
 		AddRenderChunk(&Statics);
 		AddRenderChunk(&Doors);
+		AddRenderChunk(&Pickups);
 
 		// Do the render chunks
 		Walls.RenderFunction = std::bind(&WallsRenderChunk::mRenderFunction, &Walls, arg::_1);
 		Floor.RenderFunction = std::bind(GenericRenderFunction, arg::_1);
 		Doors.RenderFunction = std::bind(GenericRenderFunction, arg::_1);
 		Statics.RenderFunction = std::bind(GenericRenderFunction, arg::_1);
+		Pickups.RenderFunction = std::bind(GenericRenderFunction, arg::_1);
 
 		Floor.DrawMode = GL_TRIANGLE_FAN;
 		Doors.DrawMode = GL_POINTS;
 		Statics.DrawMode = GL_POINTS;
+		Pickups.DrawMode = GL_POINTS;
 
 		Walls.vFirsts = &vFirsts;
 		Walls.vCounts = &vCounts;
 
 		// Load the VBOs
-		std::vector<GLuint> VBOs = mgr.CreateVBOs(5);
+		std::vector<GLuint> VBOs = mgr.CreateVBOs(6);
 		Walls.VBO   = VBOs[0];
 		Floor.VBO   = VBOs[1];
 		Statics.VBO = VBOs[2];
-		Doors.VBO   = VBOs[3];
+		Pickups.VBO = VBOs[2];
+		Doors.VBO   = VBOs[4];
 		// Such gluttony, demanding two vbos!
-		Doors.Other["VBO2"] = VBOs[4];
+		Doors.Other["VBO2"] = VBOs[5];
 
 		// Then the VAOs that use the VBOs (even if they don't use them yet)
-		std::vector<GLuint> VAOs = mgr.CreateVAOs(4);
+		std::vector<GLuint> VAOs = mgr.CreateVAOs(5);
 		Walls.VAO   = VAOs[0];
 		Floor.VAO   = VAOs[1];
 		Statics.VAO = VAOs[2];
-		Doors.VAO   = VAOs[3];
+		Pickups.VAO = VAOs[3];
+		Doors.VAO   = VAOs[4];
 
 		// Set them up
 		glBindVertexArray(Walls.VAO);
@@ -190,6 +195,10 @@ OpenGL::Renderer::Renderer()
 		glEnableVertexAttribArray(0);
 
 		glBindVertexArray(Statics.VAO);
+		glEnableVertexAttribArray(0);
+		glEnableVertexAttribArray(1);
+
+		glBindVertexArray(Pickups.VAO);
 		glEnableVertexAttribArray(0);
 		glEnableVertexAttribArray(1);
 
@@ -342,18 +351,23 @@ void OpenGL::Renderer::SetMap(const Map::Map& map)
 	/*
 	* STATIC POINT SPRITES
 	*/
-	std::vector<short int> spritedata;
-	GLuint iNumStatix = map.GetPackedSprites(spritedata);
-	Statics.NumObjs = iNumStatix;
-
-	std::size_t size = sizeof(short int);
-
 	// Happily this is far simpler.
 	glBindVertexArray(Statics.VAO);
 	glBindBuffer(GL_ARRAY_BUFFER, Statics.VBO);
-	GLsizeiptr spritessize = size * spritedata.size();
-	glBufferData(GL_ARRAY_BUFFER, spritessize, &spritedata[0], GL_STATIC_DRAW);
 
+	LoadSprites(Statics, map.GetSprites());
+
+	std::size_t size = sizeof(short int);
+	glVertexAttribPointer (0, 2, GL_SHORT, GL_FALSE, size * 3, reinterpret_cast<void*>(0));
+	glVertexAttribIPointer(1, 1, GL_SHORT, size * 3, reinterpret_cast<void*>(size * 2));
+
+	/*
+	* SEMI-STATIC POINT SPRITES
+	*/
+	// Since we won't have any right now, set everything to zero
+	Pickups.NumObjs = 0;
+	glBindVertexArray(Pickups.VAO);
+	glBindBuffer(GL_ARRAY_BUFFER, Pickups.VBO);
 	glVertexAttribPointer (0, 2, GL_SHORT, GL_FALSE, size * 3, reinterpret_cast<void*>(0));
 	glVertexAttribIPointer(1, 1, GL_SHORT, size * 3, reinterpret_cast<void*>(size * 2));
 
@@ -451,11 +465,13 @@ void OpenGL::Renderer::LoadShaders()
 	GLuint& FloorProg = Floor.Program;
 	GLuint& DoorsProg = Doors.Program;
 	GLuint& StatixProg = Statics.Program;
+	GLuint& PickupProg = Pickups.Program;
 	// Original function
 	WallsProg  = mgr.LoadShaders("Walls",                 "MultiTextured");
 	DoorsProg  = mgr.LoadShaders("Doors",     "Doors",    "MultiTextured");
 	StatixProg = mgr.LoadShaders("Statics",   "BBSprite", "MultiTextured");
-	FloorProg = mgr.LoadShaders("Floor", "SolidColour");
+	PickupProg = mgr.LoadShaders("Statics",   "BBSprite", "MultiTextured");
+	FloorProg  = mgr.LoadShaders("Floor", "SolidColour");
 
 	// Fling uniform uniforms at them
 	Floor.ViewUniform     = glGetUniformLocation(FloorProg, "View");
@@ -464,10 +480,11 @@ void OpenGL::Renderer::LoadShaders()
 	Walls.ViewUniform   = glGetUniformLocation(WallsProg,  "View");
 	Doors.ViewUniform   = glGetUniformLocation(DoorsProg,  "View");
 	Statics.ViewUniform = glGetUniformLocation(StatixProg, "View");
+	Pickups.ViewUniform = glGetUniformLocation(PickupProg, "View");
 
 	// Uniform Uniforms
-	GLuint progs[] = { WallsProg, StatixProg, DoorsProg, 0 };
-	GLuint texes[] = { 0, 1, 0 };
+	GLuint progs[] = { WallsProg, StatixProg, PickupProg, DoorsProg, 0 };
+	GLuint texes[] = { 0, 1, 1, 0 };
 	int i = 0;
 	GLuint prog;
 	// I dunno what type this actually is lol
@@ -498,6 +515,29 @@ void OpenGL::Renderer::UpdatePlayerInfo(const Player& ply)
 	vPlyUp  = ply.GetUp();
 #endif
 	viewMatrix = glm::lookAt(vPlyPos, vPlyPos + vPlyDir, vPlyUp);
+}
+
+void OpenGL::Renderer::LoadSprites(RenderChunk& chunk, std::vector<StaticSprites::Sprite> const& sprites) const
+{
+	std::vector<short int> packed;
+	packed.reserve(sprites.size() * 3);
+
+	for (auto& spr : sprites) {
+		packed.push_back(spr.x);
+		packed.push_back(spr.y);
+		packed.push_back(spr.spr);
+	}
+
+	const size_t size = sizeof(short int);
+	chunk.NumObjs = sprites.size();
+	glBindVertexArray(chunk.VAO);
+	glBindBuffer(GL_ARRAY_BUFFER, chunk.VBO);
+	GLsizeiptr spritessize = size * packed.size();
+	glBufferData(GL_ARRAY_BUFFER, spritessize, &packed[0], GL_STATIC_DRAW);
+}
+void OpenGL::Renderer::UpdatePickups(std::vector<StaticSprites::Sprite> const & pickups)
+{
+	LoadSprites(Pickups, pickups);
 }
 
 void OpenGL::Renderer::UpdateDoor(word doornum, byte openPercent)

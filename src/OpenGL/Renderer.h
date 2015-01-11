@@ -45,11 +45,14 @@ namespace Wulf {
 
 			void SetMap(const Map::Map& map);
 			void UpdateDoor(word doornum, byte openPercent);
+			void UpdatePickups(std::vector<StaticSprites::Sprite> const & pickups);
 			// void AddSprite(Sprite sprite);
 
 		private:
 
 			void LoadShaders();
+
+			void LoadSprites(RenderChunk& chunk, std::vector<StaticSprites::Sprite> const& sprites) const;
 
 			// Window related things
 			GLsizei windowWidth;
@@ -71,7 +74,7 @@ namespace Wulf {
 
 			std::vector<RenderChunk *> chunks;
 
-			RenderChunk Floor, Statics, Doors, Enemies;
+			RenderChunk Floor, Statics, Doors, Enemies, Pickups;
 			WallsRenderChunk Walls;
 
 			// Timing

@@ -284,18 +284,9 @@ GLuint Map::Map::GetPackedQuads(VectorVector& packed) const
 	return numWalls;
 }
 
-GLuint Map::Map::GetPackedSprites(std::vector<short int>& packed) const
+std::vector<StaticSprites::Sprite> const& Map::Map::GetSprites() const
 {
-	GLuint res = sprites.size();
-	packed.empty();
-	packed.reserve(res * 3);
-
-	for (auto& spr : sprites) {
-		packed.push_back(spr.x);
-		packed.push_back(spr.y);
-		packed.push_back(spr.spr);
-	}
-	return res;
+	return sprites;
 }
 
 GLuint Map::Map::GetPackedDoors(std::vector<short int>& packed) const
