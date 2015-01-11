@@ -27,6 +27,7 @@ namespace Wulf {
 			std::vector<char>   charNums;
 			std::vector<GLuint> charPosses;
 			std::vector<GLuint>  posPosses;
+			std::vector<GLuint> scalePosses;
 
 			// Aaaaaaaaaaaaaaaaaaaaa
 			std::vector<std::vector<GLfloat>> charWidths;
@@ -43,6 +44,8 @@ namespace Wulf {
 			GLuint charvbo, posvbo;
 
 			// Viewport tinks
+			GLfloat vWidth;
+			GLfloat vHeight;
 			GLfloat hvWidth;
 			GLfloat hvHeight;
 		};

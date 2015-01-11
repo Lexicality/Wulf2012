@@ -26,12 +26,12 @@ OpenGL::FontRenderer::~FontRenderer()
 
 void OpenGL::FontRenderer::Initialize(const GLuint textureOffset)
 {
-	GLint data[4];
-	glGetIntegerv(GL_VIEWPORT, data);
-	const GLuint vWidth  = data[2];
-	const GLuint vHeight = data[3];
-	hvWidth  = static_cast<GLfloat>(vWidth ) / 2.0f;
-	hvHeight = static_cast<GLfloat>(vHeight) / 2.0f;
+	GLfloat data[4];
+	glGetFloatv(GL_VIEWPORT, data);
+	vWidth  = data[2];
+	vHeight = data[3];
+	hvWidth  = vWidth  / 2.0f;
+	hvHeight = vHeight / 2.0f;
 
 	GLsizei numfonts = 2;
 	programs = mgr.LoadShaders(numfonts, "Font", "Font", "Font");
@@ -142,6 +142,7 @@ void OpenGL::FontRenderer::Initialize(const GLuint textureOffset)
 		// Render-time uniforms
 		charPosses.push_back(glGetUniformLocation(cprog, "char"));
 		posPosses.push_back(glGetUniformLocation(cprog,  "pos"));
+		scalePosses.push_back(glGetUniformLocation(cprog,  "viewportScale"));
 	}
 
 	vao = mgr.CreateVAO();
@@ -217,6 +218,13 @@ void OpenGL::FontRenderer::DrawString(const GLfloat x, const GLfloat y, const ch
 	glBufferData(GL_ARRAY_BUFFER, sizeof(GLfloat) * len, &poses[0], GL_STREAM_DRAW);
 	glVertexAttribPointer(1, 1, GL_FLOAT, GL_FALSE, 0, 0);
 
+	// Screen scale
+	GLfloat data[4];
+	glGetFloatv(GL_VIEWPORT, data);
+	GLfloat scrx = (data[2] - data[0]) / vWidth;
+	GLfloat scry = (data[3] - data[1]) / hvHeight;
+	glUniform2f(scalePosses[ifont], scrx, scry);
+		
 	// Now, draw the chars as a great big series of points
 	glDrawArrays(GL_POINTS, 0, len);
 

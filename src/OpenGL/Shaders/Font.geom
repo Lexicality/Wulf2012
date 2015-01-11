@@ -22,6 +22,9 @@ uniform float widths[127];
 uniform vec2  screenScale;
 uniform vec2  blockSize;
 
+// Joyous viewports
+uniform vec2 viewportScale;
+
 // Normalised screen position to draw the string from
 uniform vec2  pos;
 
@@ -33,8 +36,8 @@ void main() {
 	float charwidth = widths[char_];
 
 	// Posses
-	float top   = bottom + blockSize.y * screenScale.y;
-	float right = left   + charwidth   * screenScale.x;
+	float top   = bottom + blockSize.y * screenScale.y * (1/viewportScale.y*2);
+	float right = left   + charwidth   * screenScale.x * (1/viewportScale.x);
 
 	// Texture info
 	float row = float(char_ / 16) * blockSize.y;
@@ -44,17 +47,17 @@ void main() {
 	gl_Position = vec4(left, top, -1, 1);
 	fragST = vec2(col, row);
 	EmitVertex();
-    
-    // Bottom left
+	
+	// Bottom left
 	gl_Position = vec4(left, bottom, -1, 1);
 	fragST = vec2(col, row + blockSize.y);
 	EmitVertex();
-    
+	
 	// Top Right
 	gl_Position = vec4(right, top, -1, 1);
 	fragST = vec2(col + charwidth, row);
 	EmitVertex();
-    
+	
 	// Bottom right
 	gl_Position = vec4(right, bottom, -1, 1);
 	fragST = vec2(col + charwidth, row + blockSize.y);
