@@ -6,6 +6,7 @@
 #pragma once
 #include "WulfConstants.h"
 #include "OpenGL/ResourceManager.h"
+#include "OpenGL/FontRenderer.h"
 #include "Game/Player.h"
 #include "gl.h"
 
@@ -20,11 +21,15 @@ namespace Wulf {
 
 			void UpdatePlayerInfo(const Player& ply);
 
-			void Draw();
+			void Draw(FontRenderer& fnt);
 		private:
 			GLuint VAO;
 			GLuint shader;
 			GLuint fbuff;
+
+			word Score;
+			byte Health;
+			byte Ammo;
 		};
 	}
 }

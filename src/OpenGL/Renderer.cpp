@@ -271,7 +271,7 @@ double OpenGL::Renderer::Render()
 	glViewport(0, 0, windowWidth, hudHeight);
 
 	errchck("pre hud");
-	hud.Draw();
+	hud.Draw(fnt);
 	errchck("post hud");
 
 	glViewport(0, 0, windowWidth, windowHeight);

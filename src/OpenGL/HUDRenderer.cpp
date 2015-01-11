@@ -9,6 +9,7 @@
 using namespace Wulf::OpenGL;
 
 HUDRenderer::HUDRenderer()
+	: Score(0), Health(0), Ammo(0)
 {
 	// . . .
 }
@@ -37,16 +38,22 @@ void HUDRenderer::Setup(Wulf::OpenGL::ResourceManager& mgr, GLsizei textxureoffs
 	glUseProgram(0);
 }
 
-void HUDRenderer::Draw()
+void HUDRenderer::Draw(FontRenderer& fnt)
 {
 	glUseProgram(shader);
 	glBindVertexArray(VAO);
 	glDrawArrays(GL_POINTS, 0, 1);
 	glBindVertexArray(0);
 	glUseProgram(0);
+	// Ply data
+	fnt.DrawString(-0.62f, -0.35f, std::to_string(Score).c_str(), Font::Bold);
+	fnt.DrawString(0.35f, -0.35f, std::to_string(Ammo).c_str(), Font::Bold);
+	fnt.DrawString(0.1f, -0.35f, std::to_string(Health).c_str(), Font::Bold);
 }
 
 void HUDRenderer::UpdatePlayerInfo(const Wulf::Player& ply)
 {
-	// . . .
+	Score = ply.Score;
+	Health = ply.Health;
+	Ammo = ply.Ammo;
 }
