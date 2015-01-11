@@ -167,8 +167,9 @@ Vector Manager::CollisionClamp(const Entity& entity, const Vector& velocity) con
 	return Vector(x, y, 0);
 }
 
-void Manager::AddPickup(coords const pos, PickupData* pickup)
+void Manager::AddPickup(coords const pos, PickupData const* pickup)
 {
+	// TODO: Ensure pos is empty and move it to an empty square if it isn't!
 	pickups.emplace(pos, pickup);
 	pickupsDirty = true;
 }
@@ -179,7 +180,7 @@ void Manager::RemovePickup(coords const pos)
 	pickupsDirty = true;
 }
 
-PickupData* Manager::CheckPickup(Player const& ply) const
+PickupData const* Manager::CheckPickup(Player const& ply) const
 {
 	auto& itr = pickups.find(ply.GetPos());
 	if (itr != pickups.end())

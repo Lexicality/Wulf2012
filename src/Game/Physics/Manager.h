@@ -31,11 +31,10 @@ namespace Wulf {
 
 			void UpdateDoor(const coords pos, const bool state);
 
-			PickupData* CheckPickup(Player const& ply) const;
+			PickupData const* CheckPickup(Player const& ply) const;
 
 			// Adds a pickup to the nearest valid tile to pos
-			void AddPickup(coords const pos, PickupData* pickup);
-			void AddPickup(Vector const pos, PickupData* pickup);
+			void AddPickup(coords const pos, PickupData const* pickup);
 			// Removes a pickup that the player has picked up
 			void RemovePickup(coords const pos);
 
@@ -54,7 +53,7 @@ namespace Wulf {
 			Manager& operator=(const Manager& other);
 
 			std::unordered_map<coords, TileData*> map;
-			std::unordered_map<coords, PickupData*> pickups;
+			std::unordered_map<coords, PickupData const*> pickups;
 			bool pickupsDirty;
 
 			// Get the 9 cloest tiles to this one (including this one)

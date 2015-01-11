@@ -72,7 +72,7 @@ void setupSprites()
 	// medkit is 25 hp
 }
 
-PickupData* Wulf::GetPickup(Pickup pickup)
+PickupData const* Wulf::GetPickup(Pickup pickup)
 {
 	static bool setup = false;
 	if (!setup) {

@@ -32,6 +32,6 @@ namespace Wulf {
 		Weapon Weapon;
 		PickupData(Pickup type, Map::Sprites::SpriteNum s);
 	};
-	PickupData* GetPickup(Pickup pickup);
+	PickupData const* GetPickup(Pickup pickup);
 	Pickup SpriteToPickup(Map::Sprites::SpriteNum s);
 }
