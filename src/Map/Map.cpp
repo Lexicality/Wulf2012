@@ -137,7 +137,7 @@ void Map::Map::ParseNodes()
 				}
 			}
 			// Static sprites
-			if (node.sprite != StaticSprites::NONE) {
+			if (node.sprite != StaticSprites::NONE && !node.pickup) {
 				StaticSprites::Sprite spr = {
 					node.x,
 					node.y,
