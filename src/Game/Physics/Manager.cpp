@@ -90,6 +90,15 @@ void Manager::SetMap(Map::Map const& m)
 	for (auto& node : newNodes) {
 		map.insert(node);
 	}
+
+	pickups.clear();
+	for (auto const& xnodes : m.nodes) {
+		for (auto const& node : xnodes) {
+			if (node.pickup) {
+				AddPickup(coords(node.x, node.y), GetPickup(SpriteToPickup(node.sprite)));
+			}
+		}
+	}
 }
 
 Vector Manager::CollisionClamp(const Entity& entity, const Vector& velocity) const
@@ -156,4 +165,22 @@ Vector Manager::CollisionClamp(const Entity& entity, const Vector& velocity) con
 	} while (collided && i < 10);
 
 	return Vector(x, y, 0);
+}
+
+void Manager::AddPickup(coords const pos, PickupData* pickup)
+{
+	pickups.emplace(pos, pickup);
+}
+
+void Manager::RemovePickup(coords const pos)
+{
+	pickups.erase(pos);
+}
+
+PickupData* Manager::CheckPickup(Player const& ply) const
+{
+	auto& itr = pickups.find(ply.GetPos());
+	if (itr != pickups.end())
+		return itr->second;
+	return nullptr;
 }

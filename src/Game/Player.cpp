@@ -109,3 +109,37 @@ void Player::ProcessMapInput(const Map::Map& map)
 	);
 #endif // /FREE_VIEW
 }
+
+bool Player::CanPickup(PickupData const* pickup) const
+{
+	if (pickup == nullptr)
+		return false;
+	if (pickup->Ammo > 0 && this->Ammo >= 99)
+		return false;
+	if (pickup->Health > 0 && this->Health >= 100)
+		return false;
+	// I don't know if already possessing a weapon does anything when you walk on it.
+	// if (pickup->Weapon != Weapon::None)
+	//	// something
+	if (pickup->Type == Pickup::Blood && this->Health > 10)
+		return false;
+
+	return true;
+}
+
+void Player::HandlePickup(PickupData const* pickup)
+{
+	if (pickup == nullptr)
+		return;
+	Ammo += pickup->Ammo;
+	Health += pickup->Health;
+	Score += pickup->Score;
+
+	// TODO: Gun giving!
+
+	if (Ammo > 99)
+		Ammo = 99;
+	// I don't think anything in wolf3d puts you > 100?
+	if (Health > 100)
+		Health = 100;
+}

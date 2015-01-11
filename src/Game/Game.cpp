@@ -55,6 +55,11 @@ void Game::Run()
 		return;
 	}
 	ply.ProcessUserInput(in, dtime);
+	PickupData* pickup = cmgr.CheckPickup(ply);
+	if (pickup != nullptr && ply.CanPickup(pickup)) {
+		ply.HandlePickup(pickup);
+		cmgr.RemovePickup(ply.GetPos());
+	}
 	rendr.UpdatePlayerInfo(ply);
 	emgr.Think(dtime);
 	map->DoorThink(dtime);

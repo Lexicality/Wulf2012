@@ -6,6 +6,7 @@
 #pragma once
 #include <glm/glm.hpp>
 #include "WulfConstants.h"
+#include "Game/Pickups.h"
 #include "Game/InputManager.h"
 #include "Game/Constants.h"
 #include "Game/Entity.h"
@@ -28,6 +29,10 @@ namespace Wulf {
 
 		Difficulty GetDifficulty() const { return mDifficulty; }
 		void SetDifficulty(Difficulty nDiff) { mDifficulty = nDiff; }
+
+		bool CanPickup(PickupData const* pickup) const;
+
+		void HandlePickup(PickupData const* pickup);
 
 	private:
 		Difficulty mDifficulty;
