@@ -22,10 +22,10 @@ void main()
 }
 
 vec4 bgpositions[4] = vec4[](
-    vec4(-1,  1, -1, 1), // bottom left
-    vec4(-1, -1, -1, 1), // top left
-    vec4( 1,  1, -1, 1), // bottom right
-    vec4( 1, -1, -1, 1)  // top right
+    vec4(-1,  1, 0, 1), // bottom left
+    vec4(-1, -1, 0, 1), // top left
+    vec4( 1,  1, 0, 1), // bottom right
+    vec4( 1, -1, 0, 1)  // top right
 );
 vec3 bgstps[4] = vec3[](
     vec3(0, 0, 0),
