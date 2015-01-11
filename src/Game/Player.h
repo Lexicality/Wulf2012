@@ -26,6 +26,7 @@ namespace Wulf {
 
 		byte Ammo;
 		word Score;
+		byte Lives;
 
 		Difficulty GetDifficulty() const { return mDifficulty; }
 		void SetDifficulty(Difficulty nDiff) { mDifficulty = nDiff; }
