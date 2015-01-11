@@ -39,6 +39,9 @@ namespace Wulf {
 			// Removes a pickup that the player has picked up
 			void RemovePickup(coords const pos);
 
+			bool RerenderPickups() const { return pickupsDirty;  }
+			std::vector<StaticSprites::Sprite> GetPickups();
+
 			OpenGL::RenderChunk * GetRenderChunk(OpenGL::ResourceManager& mgr, glm::mat4 const& proj) { return debugger.GetRenderChunk(mgr, proj); }
 
 			~Manager();
@@ -52,6 +55,7 @@ namespace Wulf {
 
 			std::unordered_map<coords, TileData*> map;
 			std::unordered_map<coords, PickupData*> pickups;
+			bool pickupsDirty;
 
 			// Get the 9 cloest tiles to this one (including this one)
 			typedef std::set<TileData const*, std::function<bool(TileData const*, TileData const*)>> TileSet;

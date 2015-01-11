@@ -170,11 +170,13 @@ Vector Manager::CollisionClamp(const Entity& entity, const Vector& velocity) con
 void Manager::AddPickup(coords const pos, PickupData* pickup)
 {
 	pickups.emplace(pos, pickup);
+	pickupsDirty = true;
 }
 
 void Manager::RemovePickup(coords const pos)
 {
 	pickups.erase(pos);
+	pickupsDirty = true;
 }
 
 PickupData* Manager::CheckPickup(Player const& ply) const
@@ -183,4 +185,22 @@ PickupData* Manager::CheckPickup(Player const& ply) const
 	if (itr != pickups.end())
 		return itr->second;
 	return nullptr;
+}
+
+std::vector<StaticSprites::Sprite> Manager::GetPickups()
+{
+	pickupsDirty = false;
+	std::vector<StaticSprites::Sprite> ret;
+	PickupData const* pickup;
+	for (auto& itr : pickups) {
+		pickup = itr.second;
+		if (pickup != nullptr) {
+			ret.push_back({
+				itr.first.x,
+				itr.first.y,
+				pickup->Sprite
+			});
+		}
+	}
+	return ret;
 }
