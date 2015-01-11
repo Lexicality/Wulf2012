@@ -173,7 +173,7 @@ OpenGL::Renderer::Renderer()
 		Walls.VBO   = VBOs[0];
 		Floor.VBO   = VBOs[1];
 		Statics.VBO = VBOs[2];
-		Pickups.VBO = VBOs[2];
+		Pickups.VBO = VBOs[3];
 		Doors.VBO   = VBOs[4];
 		// Such gluttony, demanding two vbos!
 		Doors.Other["VBO2"] = VBOs[5];
