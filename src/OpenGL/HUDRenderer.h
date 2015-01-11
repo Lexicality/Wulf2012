@@ -30,6 +30,7 @@ namespace Wulf {
 			word Score;
 			byte Health;
 			byte Ammo;
+			byte Lives;
 		};
 	}
 }
