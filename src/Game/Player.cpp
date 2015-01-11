@@ -11,6 +11,7 @@ using namespace Wulf;
 
 Player::Player()
 	: Entity()
+	, Score(0), Ammo(8)
 #ifdef FREE_VIEW
 	, fhViewAngle(0.0f), fvViewAngle(3.14f * 2.0f)
 	, mUp(0, 0, 1)
