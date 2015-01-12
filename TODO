@@ -1,16 +1,13 @@
-- The physics is really glitchy, probably needs going over again.
 - The viewport shouldn't actually 5:3 since that's the ratio for the
   inner viewport - the HUD and border brought it up to 4:3 for the
   actual game.
 - The other mob types need some love
 - There's no AI
 - There's no traceline function in the physics
-- There's no collision callbacks in the physics - for pickups.
-- Pickups are currently in the same VBO as permanent statics - it'll
-  involve less updating if they were seperate.
+- The rest of the pickups need to be created.
 - Dead bodies
-- Doors. This will probably involve another class. Also I'm not sure
-  there's any code to spawn locked doors.
+- Doors need doing. They open/close but there's no way to trigger it.
+  Also I'm not sure if there's any code to spawn locked doors.
 - AI Areas: There's an 'area' field on Map::Node, but nothing pays any
   attention to it.
 - There's no code set up to deal with level transitions. Last I checked
